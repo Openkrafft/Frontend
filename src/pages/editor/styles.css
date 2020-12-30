@@ -1,0 +1,57 @@
+#components-layout-demo-custom-trigger .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#components-layout-demo-custom-trigger .trigger:hover {
+    color: #1890ff;
+}
+
+#components-layout-demo-custom-trigger .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 16px;
+}
+
+.ant-layout {
+    height: 100vh;
+}
+
+.ant-layout-sider-collapsed {
+    width: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+}
+
+.ant-layout-sider .ant-layout-sider-children .ant-menu-inline-collapsed {
+    width: 48px;
+}
+
+.ant-layout-sider .ant-layout-sider-children .ant-menu-item {
+    display: flex;
+    align-items: center;
+}
+
+.ant-layout-sider .ant-layout-sider-children .ant-menu-item .anticon {
+    font-size: 17px;
+}
+
+.ant-layout-sider .ant-layout-sider-children .sider-collapse-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+}
+
+.ant-layout-sider .ant-layout-sider-children .sider-collapse-btn .anticon {
+    font-size: 17px;
+    color: #a6adb4;
+}
+
+.ant-layout .ant-layout-content {
+    display: flex;
+    justify-content: center;
+    overflow-x: scroll;
+}

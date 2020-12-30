@@ -1,0 +1,27 @@
+.site-layout header.ant-layout-header {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 48px;
+    padding: 0 16px !important;
+    background: #fff;
+    line-height: 48px;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+}
+
+.site-layout header.ant-layout-header .ant-menu-submenu .ant-menu-submenu-title .ant-avatar {
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+}
+
+.site-layout header.ant-layout-header .ant-menu-submenu-selected {
+    color: #000000;
+    border-bottom: none;
+}
+
+.site-layout header.ant-layout-header .ant-menu-submenu-selected:hover {
+    color: #000000;
+    border-bottom: none;
+}

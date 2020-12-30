@@ -16,9 +16,9 @@ import {
   FormOutlined,
   PoweroffOutlined
 } from '@ant-design/icons';
-import { PageHeader } from 'antd';
+import PageHeader from './Header'
 
-import './styles.css'
+import '../styles.css'
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -40,7 +40,7 @@ export default class SiderDemo extends React.Component {
       <Layout>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
           {/* <div className="logo"><UserOutlined /></div> */}
-          <Menu mode="inline" defaultSelectedKeys={['1']}>
+          <Menu mode="inline">
             <Menu.Item key="1" icon={<PlusSquareOutlined />}>
               Create Template
             </Menu.Item>
@@ -63,34 +63,22 @@ export default class SiderDemo extends React.Component {
               Settings
             </Menu.Item>
           </Menu>
+          <div className="sider-collapse-btn">
+            {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+              className: 'trigger',
+              onClick: this.toggle,
+            })}
+          </div>
         </Sider>
         <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0 }}>
-            <div>
-              {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                className: 'trigger',
-                onClick: this.toggle,
-              })}
-            </div>
-            <div>
-              <Menu mode="horizontal">
-                <SubMenu key="SubMenu" icon={<Avatar style={{ backgroundColor: '#87d068', marginRight: 7 }} icon={<UserOutlined />} />} title="Navigation">
-                  <Menu.Item key="profile:1" icon={<UserOutlined />}>Profile</Menu.Item>
-                  <Menu.Item key="setting:2" icon={<SettingOutlined />}>Account settings</Menu.Item>
-                  <Menu.Item key="logout:3" icon={<PoweroffOutlined />}>Logout</Menu.Item>
-                </SubMenu>
-              </Menu>
-            </div>
-          </Header>
+          <PageHeader />
           <Content
             className="site-layout-background"
             style={{
-              margin: '24px 16px',
-              padding: 24,
-              minHeight: 280,
+              background: '#f0f2f5'
             }}
           >
-            Content
+            <div>Hello</div>
           </Content>
         </Layout>
       </Layout>

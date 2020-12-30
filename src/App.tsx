@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from './layouts/editorLayout'
+import Layout from '../src/pages/editor'
 
 function App() {
   return (
