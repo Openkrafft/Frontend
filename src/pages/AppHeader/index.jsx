@@ -1,23 +1,34 @@
-import React, { FC } from 'react'
-import { Layout, Menu, Button, Badge } from 'antd';
+import React from 'react'
+import html2pdf from 'html2pdf.js'
+import { Layout, Menu, Button } from 'antd';
 import { Avatar } from 'antd';
 import {
   UserOutlined,
   SettingOutlined,
   PoweroffOutlined,
   DownloadOutlined,
-  BellOutlined
+  ShareAltOutlined
 } from '@ant-design/icons';
 
-import { UserInfo, NotificationBell } from './Header.styles'
+import { UserInfo, Logo } from './Header.styles'
+
+import logo from '../../assets/logo.svg'
+
 import './styles.css'
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
-const PageHeader: FC = () => {
+export default class PageHeader extends React.Component {
+  printDocument = () => {
+    const resume = document.getElementById('resume-content')
+    html2pdf().from(resume).toPdf().save('my-resume')
+  }
+
+  render()  {
     return (
       <Header className="site-layout-background" style={{ padding: 0 }}>
+        {!this.props.hideLogo && <Logo><img src={logo} height='28' /></Logo>}
         <UserInfo>
           <Menu mode="horizontal">
             <SubMenu key="SubMenu" icon={<Avatar style={{ backgroundColor: '#87d068', marginRight: 7 }} icon={<UserOutlined />} />} title="Mohamed Ali">
@@ -26,21 +37,14 @@ const PageHeader: FC = () => {
               <Menu.Item key="logout:3" icon={<PoweroffOutlined />}>Logout</Menu.Item>
             </SubMenu>
           </Menu>
-          <NotificationBell>
-            <Badge count={25} style={{
-                position: 'relative',
-                left: '35px',
-                bottom: '15px'
-              }}
-            />
-            <BellOutlined style={{ fontSize: 16 }} />
-          </NotificationBell>
-          <Button type="primary" icon={<DownloadOutlined />} style={{ marginRight: 10 }}>
+          <Button type="primary" icon={<DownloadOutlined />} style={{ marginRight: 10 }} onClick={this.printDocument}>
             Download
+          </Button>
+          <Button icon={<ShareAltOutlined />} style={{ marginRight: 10 }}>
+            Share
           </Button>
         </UserInfo>
       </Header>
     )
+  }
 }
-
-export default PageHeader

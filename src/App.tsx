@@ -1,10 +1,11 @@
 import React from 'react';
-import Layout from '../src/pages/editor'
+import TemplateCreator from './pages/TemplateCreator'
+import DocumentEditor from './pages/DocumentEditor'
 
 function App() {
   return (
     <div className="App">
-      <Layout />
+      <DocumentEditor />
     </div>
   );
 }

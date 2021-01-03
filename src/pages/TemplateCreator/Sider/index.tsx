@@ -12,7 +12,7 @@ import {
     FormOutlined,
 } from '@ant-design/icons';
 import { Logo } from './Sider.styles'
-import logo from '../../assets/logo.svg'
+import logo from '../../../assets/logo.svg'
 
 const { Sider: SideBar } = Layout;
 
@@ -33,20 +33,20 @@ const Sider: React.FC<SiderProps> = ({ collapsible = true, collapsed, toggle }) 
                 <Menu.Item key="1" icon={<PlusSquareOutlined />}>
                 Create Template
                 </Menu.Item>
-                <Menu.Item key="2" icon={<FormatPainterOutlined />}>
+                <Menu.Item key="2" icon={<AppstoreOutlined />}>
+                Change Template
+                </Menu.Item>
+                <Menu.Item key="3" icon={<FormatPainterOutlined />}>
                 Appearance
                 </Menu.Item>
-                <Menu.Item key="3" icon={<LayoutOutlined />}>
+                <Menu.Item key="4" icon={<LayoutOutlined />}>
                 Page Layout
                 </Menu.Item>
-                <Menu.Item key="4" icon={<FormOutlined />}>
+                <Menu.Item key="5" icon={<FormOutlined />}>
                 Edit Content
                 </Menu.Item>
-                <Menu.Item key="5" icon={<FileTextOutlined />}>
+                <Menu.Item key="6" icon={<FileTextOutlined />}>
                 Use Sample Content
-                </Menu.Item>
-                <Menu.Item key="6" icon={<AppstoreOutlined />}>
-                Change Template
                 </Menu.Item>
                 <Menu.Item key="7" icon={<SettingOutlined />}>
                 Settings
