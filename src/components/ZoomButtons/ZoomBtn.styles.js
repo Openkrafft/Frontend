@@ -1,16 +1,16 @@
-import Style, {keyframes} from 'styled-components'
+import Style, { keyframes } from 'styled-components'
 import { bounceInRight } from 'react-animations'
 
 export const ZoomButtons = Style.div`
     position: fixed;
-    right: 70px;
-    top: 25%;
+    right: 50px;
+    top: 27%;
     height: 85px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     z-index: 10;
-    animation: .8s ${keyframes `${bounceInRight}`};
+    animation: .8s ${keyframes`${bounceInRight}`};
 `
 
 export const ZoomInButton = Style.button`

@@ -1,8 +1,8 @@
 import Style, { keyframes } from 'styled-components'
-import { bounceIn, headShake, bounceInLeft } from 'react-animations'
+import { bounceInLeft } from 'react-animations'
 
 export const ToolBarContainer = Style.div`
-    height: 200px;
+    height: 240px;
     width: 45px;
     position: fixed;
     left: 30px;
@@ -11,7 +11,7 @@ export const ToolBarContainer = Style.div`
     flex-direction: column;
     justify-content: space-between;
     z-index: 10;
-    animation: .8s ${keyframes `${bounceInLeft}`};
+    animation: .8s ${keyframes`${bounceInLeft}`};
 `
 
 export const ToolButton = Style.button`

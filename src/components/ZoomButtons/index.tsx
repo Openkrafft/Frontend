@@ -1,5 +1,4 @@
 import React from 'react'
-import { Tooltip } from 'antd';
 import {
     ZoomInOutlined,
     ZoomOutOutlined
@@ -10,16 +9,12 @@ import { ZoomButtons as ZoomButtonContainer, ZoomInButton, ZoomOutButton } from 
 const ZoomButtons: React.FC = () => {
     return (
         <ZoomButtonContainer>
-            <Tooltip placement="left" title={'Zoom In'}>
-                <ZoomInButton>
-                    <ZoomInOutlined />
-                </ZoomInButton>
-            </Tooltip>
-            <Tooltip placement="left" title={'Zoom Out'}>
-                <ZoomOutButton>
-                    <ZoomOutOutlined />
-                </ZoomOutButton>
-            </Tooltip>
+            <ZoomInButton>
+                <ZoomInOutlined />
+            </ZoomInButton>
+            <ZoomOutButton>
+                <ZoomOutOutlined />
+            </ZoomOutButton>
         </ZoomButtonContainer>
     )
 }
