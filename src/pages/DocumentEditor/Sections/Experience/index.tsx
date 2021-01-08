@@ -3,12 +3,7 @@ import ContentEditable from 'react-contenteditable'
 import { EditOutlined, PlusOutlined } from '@ant-design/icons'
 import Role from './Role'
 
-import {
-	ExperienceContainer,
-	SectionTitle,
-	EditExperience,
-	AddRole
-} from './Experience.styles'
+import { ExperienceContainer, SectionTitle, AddRole } from './Experience.styles'
 
 const experience = {
 	sectionTitle: 'Experience',
@@ -51,9 +46,6 @@ const Experience: React.FC = () => {
 		<ExperienceContainer
 			onMouseOver={() => setEditVisibility(true)}
 			onMouseLeave={() => setEditVisibility(false)}>
-			<EditExperience style={{ display: isEditVisible ? 'block' : 'none' }}>
-				<EditOutlined />
-			</EditExperience>
 			{roles.length > 0 && (
 				<AddRole style={{ display: isEditVisible ? 'block' : 'none' }}>
 					<PlusOutlined />

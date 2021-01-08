@@ -27,7 +27,7 @@ export const SectionTitle = Style.div`
     }
 `
 
-export const EditExperience = Style.button`
+export const AddRole = Style.button`
     border: none;
     outline: none;
     display: none;
@@ -39,7 +39,4 @@ export const EditExperience = Style.button`
     color: #fff;
     cursor: pointer;
     transition: .1s;
-`
-export const AddRole = Style(EditExperience)`
-    top: 40px
 `

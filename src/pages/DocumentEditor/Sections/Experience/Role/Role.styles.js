@@ -73,3 +73,17 @@ export const JobDescription = Style.div`
         }
     }
 `
+
+export const EditRole = Style.button`
+    border: none;
+    outline: none;
+    display: none;
+    position: absolute;
+    right: -35px;
+    background: #1890ff;
+    padding: 8px 10px;
+    top: 0px;
+    color: #fff;
+    cursor: pointer;
+    transition: .1s;
+`
