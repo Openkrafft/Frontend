@@ -10,7 +10,8 @@ export const SkillsContainer = Style.div`
         border: 1px dashed #1890ff;
     }
 `
-export const SectionTitle = Style.div`
+export const SectionTitle = Style.input`
+    width: 100%;
     color: #192a56;
     font-size: 25px;
     margin-top: 0px;

@@ -16,6 +16,7 @@ const skills = {
 
 const Skills: React.FC = () => {
 	const [ isVisible, setVisibility ] = useState<boolean>(false)
+	const [ title, setTitle ] = useState<string>(skills.sectionTitle)
 	return (
 		<SkillsContainer
 			onMouseOver={() => setVisibility(true)}
@@ -23,7 +24,11 @@ const Skills: React.FC = () => {
 			<EditSkills style={{ display: isVisible ? 'block' : 'none' }}>
 				<EditOutlined />
 			</EditSkills>
-			<SectionTitle contentEditable>{skills.sectionTitle}</SectionTitle>
+			<SectionTitle
+				type='text'
+				value={title}
+				onChange={(e) => setTitle(e.target.value)}
+			/>
 			<List contentEditable>
 				{skills.description.split('\n').map((skill) => <li>{skill}</li>)}
 			</List>
