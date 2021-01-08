@@ -62,12 +62,14 @@ export const Date = Style.div`
 `
 
 export const JobDescription = Style.div`
-    font-size: 14px;
-    border: 1px solid transparent;
-    transition: .1s;
-    outline: none;
-
-    &:hover {
-        border: 1px dashed #73bcff;
+    .job-description {
+        font-size: 14px;
+        border: 1px solid transparent;
+        transition: .1s;
+        outline: none;
+    
+        &:hover {
+            border: 1px dashed #73bcff;
+        }
     }
 `

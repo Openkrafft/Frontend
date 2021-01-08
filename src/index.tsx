@@ -12,10 +12,8 @@ resetContext({
 })
 
 ReactDOM.render(
-	<React.StrictMode>
-		<Provider store={getContext().store}>
-			<App />
-		</Provider>
-	</React.StrictMode>,
+	<Provider store={getContext().store}>
+		<App />
+	</Provider>,
 	document.getElementById('root')
 )

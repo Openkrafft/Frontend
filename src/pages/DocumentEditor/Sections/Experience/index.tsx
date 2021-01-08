@@ -22,7 +22,7 @@ const experience = {
 				endDate: '02/2021'
 			},
 			stillWorking: false,
-			roleDescription: ''
+			roleDescription: '<li></li>'
 		},
 		{
 			roleId: 654654654654,
@@ -34,7 +34,7 @@ const experience = {
 				endDate: '10/2020'
 			},
 			stillWorking: true,
-			roleDescription: ''
+			roleDescription: '<li></li>'
 		}
 	]
 }
