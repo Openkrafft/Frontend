@@ -11,7 +11,8 @@ export const ExperienceContainer = Style.div`
         border: 1px dashed #1890ff;
     }
 `
-export const SectionTitle = Style.div`
+export const SectionTitle = Style.input`
+    width: 100%;
     color: #192a56;
     font-size: 25px;
     margin-top: 0px;
@@ -39,7 +40,8 @@ export const Role = Style.div`
     }
 `
 
-export const RoleTitle = Style.div`
+export const RoleTitle = Style.input`
+    width: 100%;
     font-size: 20px;
     margin-bottom: 0;
     border: 1px solid transparent;

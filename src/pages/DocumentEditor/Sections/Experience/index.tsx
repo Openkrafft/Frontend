@@ -38,8 +38,10 @@ const experience = {
 }
 
 const Experience: React.FC = () => {
-	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
 	const { roles } = experience
+	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
+	const [ title, setTitle ] = useState<string>(experience.sectionTitle)
+
 	return (
 		<ExperienceContainer
 			onMouseOver={() => setEditVisibility(true)}
@@ -52,11 +54,15 @@ const Experience: React.FC = () => {
 					<PlusOutlined />
 				</AddRole>
 			)}
-			<SectionTitle contentEditable>Experience</SectionTitle>
+			<SectionTitle
+				type='text'
+				value={title}
+				onChange={(e) => setTitle(e.target.value)}
+			/>
 			{roles.map((role) => {
 				return (
 					<Role>
-						<RoleTitle contentEditable>{role.title}</RoleTitle>
+						<RoleTitle type='text' />
 						<CompanyName contentEditable>{role.companyName}</CompanyName>
 						<Date>
 							{role.startDate} - {role.stillWorking ? 'Present' : role.endDate}
