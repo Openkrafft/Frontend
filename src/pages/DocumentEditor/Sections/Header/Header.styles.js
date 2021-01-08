@@ -10,7 +10,8 @@ export const HeaderContainer = Style.div`
     }
 `
 
-export const Name = Style.p`
+export const Name = Style.input`
+    width: 100%;
     border: 1px solid transparent;
     margin: 0px;
     font-size: 35px;
@@ -21,7 +22,8 @@ export const Name = Style.p`
     }
 `
 
-export const PositionName = Style.p`
+export const PositionName = Style.input`
+    width: 100%;
     border: 1px solid transparent;
     margin-bottom: 15px;
     margin-top: 0px;
@@ -34,13 +36,19 @@ export const PositionName = Style.p`
     }
 `
 
-export const Summary = Style.p`
-    border: 1px solid transparent;
-    font-size: 14px;
-    outline: none;
-
-    &:hover {
-        border: 1px dashed #1890ff;    
+export const Summary = Style.div`
+    .summary {
+        width: 100%;
+        resize: none;
+        overflow: hidden;
+        padding: 0;
+        border: 1px solid transparent;
+        font-size: 14px;
+        outline: none;
+    
+        &:hover {
+            border: 1px dashed #1890ff;    
+        }   
     }
 `
 export const EditHeader = Style.button`

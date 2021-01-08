@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import TextareaAutosize from 'react-textarea-autosize'
 import { EditOutlined } from '@ant-design/icons'
 import {
 	HeaderContainer,
@@ -17,6 +18,9 @@ const generalInfo = {
 
 const ResumeHeader: React.FC = () => {
 	const [ isVisible, setVisibility ] = useState<boolean>(false)
+	const [ name, setName ] = useState<string>(generalInfo.name)
+	const [ position, setPosition ] = useState<string>(generalInfo.position)
+	const [ summary, setSummary ] = useState<string>(generalInfo.summary)
 	return (
 		<HeaderContainer
 			onMouseOver={() => setVisibility(true)}
@@ -24,10 +28,26 @@ const ResumeHeader: React.FC = () => {
 			<EditHeader style={{ display: isVisible ? 'block' : 'none' }}>
 				<EditOutlined />
 			</EditHeader>
-			<Name contentEditable>{generalInfo.name}</Name>
-			<PositionName contentEditable>{generalInfo.position}</PositionName>
+			<Name
+				type='text'
+				value={name}
+				onChange={(e) => setName(e.target.value)}
+			/>
+			<PositionName
+				type='text'
+				value={position}
+				onChange={(e) => setPosition(e.target.value)}
+			/>
 			{!!generalInfo.summary && (
-				<Summary contentEditable>{generalInfo.summary}</Summary>
+				<Summary>
+					<TextareaAutosize
+						rows={4}
+						style={{ height: 100 }}
+						defaultValue={summary}
+						onChange={(e) => setSummary(e.target.value)}
+						className='summary'
+					/>
+				</Summary>
 			)}
 		</HeaderContainer>
 	)
