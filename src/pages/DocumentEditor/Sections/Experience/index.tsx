@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import ContentEditable from 'react-contenteditable'
 import { EditOutlined, PlusOutlined } from '@ant-design/icons'
+import Role from './Role'
 
 import {
 	ExperienceContainer,
 	SectionTitle,
-	List,
-	Role,
-	RoleTitle,
-	CompanyName,
-	Date,
 	EditExperience,
 	AddRole
 } from './Experience.styles'
@@ -17,29 +14,39 @@ const experience = {
 	sectionTitle: 'Experience',
 	roles: [
 		{
-			title: 'Senior Frontend Developer',
+			roleId: 56546546546,
+			jobTitle: 'Senior Frontend Developer',
 			companyName: 'Apprentus',
-			startDate: '01/2020',
-			endDate: '02/2021',
+			date: {
+				startDate: '01/2020',
+				endDate: '02/2021'
+			},
 			stillWorking: false,
-			description:
-				'qslkdjfhhlkqsjdhflkjqhsdflkjhqsldkjfhfhlqksjdhfhflkqjshdff\nqsmdlkffjqmlskdfjjmqlskdjff\nqsdmfjqsmldkffjmqlskdfjj'
+			roleDescription: ''
 		},
 		{
-			title: 'Senior Frontend Developer',
+			roleId: 654654654654,
+			jobTitle: 'Senior Frontend Developer',
 			companyName: 'Apprentus',
 			startDate: '01/2020',
-			endDate: null,
+			date: {
+				startDate: '01/2020',
+				endDate: '10/2020'
+			},
 			stillWorking: true,
-			description:
-				'qslkdjfhhlkqsjdhflkjqhsdflkjhqsldkjfhfhlqksjdhfhflkqjshdff\nqsmdlkffjqmlskdfjjmqlskdjff\nqsdmfjqsmldkffjmqlskdfjj'
+			roleDescription: ''
 		}
 	]
 }
 
 const Experience: React.FC = () => {
-	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
+	const titleRef = useRef(null)
 	const { roles } = experience
+	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
+	const [ titleHtmlContent, setTitle ] = useState<string>(
+		experience.sectionTitle
+	)
+
 	return (
 		<ExperienceContainer
 			onMouseOver={() => setEditVisibility(true)}
@@ -52,21 +59,15 @@ const Experience: React.FC = () => {
 					<PlusOutlined />
 				</AddRole>
 			)}
-			<SectionTitle contentEditable>Experience</SectionTitle>
-			{roles.map((role) => {
-				return (
-					<Role>
-						<RoleTitle contentEditable>{role.title}</RoleTitle>
-						<CompanyName contentEditable>{role.companyName}</CompanyName>
-						<Date>
-							{role.startDate} - {role.stillWorking ? 'Present' : role.endDate}
-						</Date>
-						<List contentEditable>
-							{role.description.split('\n').map((line) => <li>{line}</li>)}
-						</List>
-					</Role>
-				)
-			})}
+			<SectionTitle>
+				<ContentEditable
+					className='section-title'
+					ref={titleRef}
+					html={titleHtmlContent}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+			</SectionTitle>
+			{roles.map((role) => <Role key={role.roleId} {...role} />)}
 		</ExperienceContainer>
 	)
 }

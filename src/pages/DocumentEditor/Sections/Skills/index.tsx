@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import ContentEditable from 'react-contenteditable'
 import { EditOutlined } from '@ant-design/icons'
 
 import {
@@ -10,12 +11,20 @@ import {
 
 const skills = {
 	sectionTitle: 'Technical Skills',
-	description:
-		'qsdf, qsdf, qsdf, qsdfqsdf, qsdfqsdf\nqsdf, qsdfqsdf\nqsdf\nqsdfqsdf\nqsdf, qsdf, qsdf'
+	skillsList: [ 'html', 'python', 'js' ]
 }
 
 const Skills: React.FC = () => {
+	const listRef = useRef(null)
+	const titletRef = useRef(null)
 	const [ isVisible, setVisibility ] = useState<boolean>(false)
+	const [ titleHtmlContent, setTitleHtmlContent ] = useState<string>(
+		`${skills.sectionTitle}`
+	)
+	const [ listHtmlContent, setListHtmlContent ] = useState<string>(
+		'<li>Hello</li>'
+	)
+
 	return (
 		<SkillsContainer
 			onMouseOver={() => setVisibility(true)}
@@ -23,9 +32,21 @@ const Skills: React.FC = () => {
 			<EditSkills style={{ display: isVisible ? 'block' : 'none' }}>
 				<EditOutlined />
 			</EditSkills>
-			<SectionTitle contentEditable>{skills.sectionTitle}</SectionTitle>
-			<List contentEditable>
-				{skills.description.split('\n').map((skill) => <li>{skill}</li>)}
+			<SectionTitle>
+				<ContentEditable
+					className='skills-title'
+					ref={titletRef}
+					html={titleHtmlContent}
+					onChange={(e) => setTitleHtmlContent(e.target.value)}
+				/>
+			</SectionTitle>
+			<List>
+				<ContentEditable
+					className='skills-list'
+					ref={listRef}
+					html={listHtmlContent}
+					onChange={(e) => setListHtmlContent(e.target.value)}
+				/>
 			</List>
 		</SkillsContainer>
 	)

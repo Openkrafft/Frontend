@@ -11,27 +11,31 @@ export const SkillsContainer = Style.div`
     }
 `
 export const SectionTitle = Style.div`
-    color: #192a56;
-    font-size: 25px;
-    margin-top: 0px;
-    margin-bottom: 10px;
-    border: 1px solid transparent;
-    transition: .1s;
-    outline: none;
-
-    &:hover {
-        border: 1px dashed #1890ff;
+    .skills-title {
+        width: 100%;
+        color: #192a56;
+        font-size: 25px;
+        margin-top: 0px;
+        margin-bottom: 10px;
+        border: 1px solid transparent;
+        transition: .1s;
+        outline: none;
+    
+        &:hover {
+            border: 1px dashed #1890ff;
+        }
     }
 `
 
 export const List = Style.div`
-    font-size: 14px;
-    border: 1px solid transparent;
-    transition: .1s;
-    outline: none;
-
-    &:hover {
-        border: 1px dashed #1890ff;
+    .skills-list {
+        border: 1px solid transparent;
+        transition: .1s;
+        outline: none;
+    
+        &:hover {
+            border: 1px dashed #1890ff;
+        }
     }
 `
 
