@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import ContentEditable from 'react-contenteditable'
+
 import { EditOutlined } from '@ant-design/icons'
 import {
 	HeaderContainer,
@@ -16,7 +18,17 @@ const generalInfo = {
 }
 
 const ResumeHeader: React.FC = () => {
+	const nameRef = useRef(null)
+	const positionRef = useRef(null)
+	const summaryRef = useRef(null)
 	const [ isVisible, setVisibility ] = useState<boolean>(false)
+	const [ nameHtmlContent, setName ] = useState<string>(generalInfo.name)
+	const [ positionHtmlContent, setPosition ] = useState<string>(
+		generalInfo.position
+	)
+	const [ summaryHtmlContent, setSummary ] = useState<string>(
+		generalInfo.summary
+	)
 	return (
 		<HeaderContainer
 			onMouseOver={() => setVisibility(true)}
@@ -24,10 +36,31 @@ const ResumeHeader: React.FC = () => {
 			<EditHeader style={{ display: isVisible ? 'block' : 'none' }}>
 				<EditOutlined />
 			</EditHeader>
-			<Name contentEditable>{generalInfo.name}</Name>
-			<PositionName contentEditable>{generalInfo.position}</PositionName>
+			<Name>
+				<ContentEditable
+					className='name'
+					ref={nameRef}
+					html={nameHtmlContent}
+					onChange={(e) => setName(e.target.value)}
+				/>
+			</Name>
+			<PositionName>
+				<ContentEditable
+					className='position'
+					ref={positionRef}
+					html={positionHtmlContent}
+					onChange={(e) => setPosition(e.target.value)}
+				/>
+			</PositionName>
 			{!!generalInfo.summary && (
-				<Summary contentEditable>{generalInfo.summary}</Summary>
+				<Summary>
+					<ContentEditable
+						className='summary'
+						ref={summaryRef}
+						html={summaryHtmlContent}
+						onChange={(e) => setSummary(e.target.value)}
+					/>
+				</Summary>
 			)}
 		</HeaderContainer>
 	)

@@ -67,7 +67,7 @@ const ContactInfo: React.FC = () => {
 				<EditOutlined />
 			</EditContactInfo>
 			{contactInfo.map((info: any) => (
-				<ContactInformation>
+				<ContactInformation key={info.infoType}>
 					<span>{iconsMap[info.infoType]}</span>
 					<p style={{ fontSize: 12 }}>{info.infoContent}</p>
 				</ContactInformation>

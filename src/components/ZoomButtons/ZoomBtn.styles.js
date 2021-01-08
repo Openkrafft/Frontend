@@ -3,8 +3,8 @@ import { bounceInRight } from 'react-animations'
 
 export const ZoomButtons = Style.div`
     position: fixed;
-    right: 50px;
-    top: 27%;
+    right: 48px;
+    top: 26%;
     height: 85px;
     display: flex;
     flex-direction: column;
