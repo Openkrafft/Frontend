@@ -38,6 +38,7 @@ const ResumeHeader: React.FC = () => {
 			</EditHeader>
 			<Name>
 				<ContentEditable
+					data-placeholder='Name'
 					className='name'
 					ref={nameRef}
 					html={nameHtmlContent}
@@ -46,6 +47,7 @@ const ResumeHeader: React.FC = () => {
 			</Name>
 			<PositionName>
 				<ContentEditable
+					data-placeholder='Title'
 					className='position'
 					ref={positionRef}
 					html={positionHtmlContent}
@@ -55,6 +57,7 @@ const ResumeHeader: React.FC = () => {
 			{!!generalInfo.summary && (
 				<Summary>
 					<ContentEditable
+						data-placeholder='Summary'
 						className='summary'
 						ref={summaryRef}
 						html={summaryHtmlContent}
