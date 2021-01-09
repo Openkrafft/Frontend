@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined, PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 import Role from './Role'
 
 import { ExperienceContainer, SectionTitle, AddRole } from './Experience.styles'
@@ -53,6 +53,7 @@ const Experience: React.FC = () => {
 			)}
 			<SectionTitle>
 				<ContentEditable
+					data-placeholder='Section title'
 					className='section-title'
 					ref={titleRef}
 					html={titleHtmlContent}

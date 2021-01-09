@@ -7,8 +7,6 @@ import {
 	RoleTitle,
 	CompanyName,
 	Date,
-	StartDate,
-	EndDate,
 	JobDescription,
 	EditRole
 } from './Role.styles'
@@ -20,7 +18,6 @@ interface RoleProps {
 		startDate: string
 		endDate: string
 	}
-	stillWorking: boolean
 	roleDescription: string
 }
 
@@ -28,7 +25,6 @@ const Role: React.FC<RoleProps> = ({
 	jobTitle,
 	companyName,
 	date,
-	stillWorking,
 	roleDescription
 }) => {
 	const roleTitleRef = useRef(null)
@@ -46,35 +42,44 @@ const Role: React.FC<RoleProps> = ({
 
 	return (
 		<RoleContainer
+			className='role-container'
 			onMouseOver={() => setEditVisibility(true)}
 			onMouseLeave={() => setEditVisibility(false)}>
 			<EditRole style={{ display: isEditVisible ? 'block' : 'none' }}>
 				<EditOutlined />
 			</EditRole>
-			<RoleTitle
-				placeholder='Role title'
-				type='text'
-				value={title}
-				onChange={(e) => setTitle(e.target.value)}
-			/>
-			<CompanyName
-				placeholder='Company Name'
-				type='text'
-				value={company}
-				onChange={(e) => setCompanyName(e.target.value)}
-			/>
+			<RoleTitle>
+				<ContentEditable
+					data-placeholder='Role title'
+					className='role-title'
+					ref={roleTitleRef}
+					html={title}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+			</RoleTitle>
+			<CompanyName>
+				<ContentEditable
+					data-placeholder='Company name'
+					className='company-name'
+					ref={companyNameRef}
+					html={company}
+					onChange={(e) => setCompanyName(e.target.value)}
+				/>
+			</CompanyName>
 			<Date>
-				<StartDate
-					placeholder='Start date'
-					type='text'
-					value={startDate}
+				<ContentEditable
+					data-placeholder='Start date'
+					className='start-date'
+					ref={startDateRef}
+					html={startDate}
 					onChange={(e) => setStartDate(e.target.value)}
 				/>
 				<span className='date-seperator'> - </span>
-				<EndDate
-					placeholder='End date'
+				<ContentEditable
+					data-placeholder='End date'
+					className='end-date'
 					ref={endDateRef}
-					value={endDate}
+					html={endDate}
 					onChange={(e) => setEndDate(e.target.value)}
 				/>
 			</Date>
