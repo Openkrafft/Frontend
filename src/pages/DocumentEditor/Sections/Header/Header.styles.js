@@ -10,29 +10,33 @@ export const HeaderContainer = Style.div`
     }
 `
 
-export const Name = Style.input`
-    width: 100%;
-    border: 1px solid transparent;
-    margin: 0px;
-    font-size: 35px;
-    outline: none;
-
-    &:hover {
-        border: 1px dashed #1890ff;    
+export const Name = Style.div`
+    .name {
+        width: 100%;
+        border: 1px solid transparent;
+        margin: 0px;
+        font-size: 35px;
+        outline: none;
+    
+        &:hover {
+            border: 1px dashed #1890ff;    
+        }
     }
 `
 
-export const PositionName = Style.input`
-    width: 100%;
-    border: 1px solid transparent;
-    margin-bottom: 15px;
-    margin-top: 0px;
-    font-size: 25px;
-    color: #2d3436;
-    outline: none;
-
-    &:hover {
-        border: 1px dashed #1890ff;    
+export const PositionName = Style.div`
+    .position {
+        width: 100%;
+        border: 1px solid transparent;
+        margin-bottom: 15px;
+        margin-top: 0px;
+        font-size: 25px;
+        color: #2d3436;
+        outline: none;
+    
+        &:hover {
+            border: 1px dashed #1890ff;    
+        }
     }
 `
 

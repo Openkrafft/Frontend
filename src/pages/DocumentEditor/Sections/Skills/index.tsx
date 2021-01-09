@@ -25,6 +25,8 @@ const Skills: React.FC = () => {
 		'<li>Hello</li>'
 	)
 
+	console.log(listHtmlContent)
+
 	return (
 		<SkillsContainer
 			onMouseOver={() => setVisibility(true)}

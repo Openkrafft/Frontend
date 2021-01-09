@@ -61,15 +61,13 @@ const Experience: React.FC = () => {
 			/>
 			{roles.map((role) => {
 				return (
-					<Role>
+					<Role key={role.title}>
 						<RoleTitle type='text' />
 						<CompanyName contentEditable>{role.companyName}</CompanyName>
 						<Date>
 							{role.startDate} - {role.stillWorking ? 'Present' : role.endDate}
 						</Date>
-						<List contentEditable>
-							{role.description.split('\n').map((line) => <li>{line}</li>)}
-						</List>
+						<List contentEditable />
 					</Role>
 				)
 			})}
