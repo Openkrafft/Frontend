@@ -7,6 +7,8 @@ import {
 	RoleTitle,
 	CompanyName,
 	Date,
+	StartDate,
+	EndDate,
 	JobDescription,
 	EditRole
 } from './Role.styles'
@@ -49,40 +51,32 @@ const Role: React.FC<RoleProps> = ({
 			<EditRole style={{ display: isEditVisible ? 'block' : 'none' }}>
 				<EditOutlined />
 			</EditRole>
-			<RoleTitle>
-				<ContentEditable
-					className='role-title'
-					ref={roleTitleRef}
-					html={title}
-					onChange={(e) => setTitle(e.target.value)}
-				/>
-			</RoleTitle>
-			<CompanyName>
-				<ContentEditable
-					className='company-name'
-					ref={companyNameRef}
-					html={company}
-					onChange={(e) => setCompanyName(e.target.value)}
-				/>
-			</CompanyName>
+			<RoleTitle
+				placeholder='Role title'
+				type='text'
+				value={title}
+				onChange={(e) => setTitle(e.target.value)}
+			/>
+			<CompanyName
+				placeholder='Company Name'
+				type='text'
+				value={company}
+				onChange={(e) => setCompanyName(e.target.value)}
+			/>
 			<Date>
-				<ContentEditable
-					className='start-date'
-					ref={startDateRef}
-					html={startDate}
+				<StartDate
+					placeholder='Start date'
+					type='text'
+					value={startDate}
 					onChange={(e) => setStartDate(e.target.value)}
 				/>
 				<span className='date-seperator'> - </span>
-				{stillWorking ? (
-					<span>Present</span>
-				) : (
-					<ContentEditable
-						className='end-date'
-						ref={endDateRef}
-						html={endDate}
-						onChange={(e) => setEndDate(e.target.value)}
-					/>
-				)}
+				<EndDate
+					placeholder='End date'
+					ref={endDateRef}
+					value={endDate}
+					onChange={(e) => setEndDate(e.target.value)}
+				/>
 			</Date>
 			<JobDescription>
 				<ContentEditable

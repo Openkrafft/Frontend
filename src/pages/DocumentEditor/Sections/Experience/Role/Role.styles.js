@@ -11,53 +11,67 @@ export const RoleContainer = Style.div`
     }
 `
 
-export const RoleTitle = Style.div`
-    .role-title {
-        width: 100%;
-        font-size: 20px;
-        margin-bottom: 0;
-        border: 1px solid transparent;
-        transition: .1s;
-        outline: none;
-    
-        &:hover {
-            border: 1px dashed #73bcff;
-        }
+export const RoleTitle = Style.input`
+    width: 100%;
+    font-size: 20px;
+    margin-bottom: 0;
+    border: 1px solid transparent;
+    transition: .1s;
+    outline: none;
+
+    &:hover {
+        border: 1px dashed #73bcff;
     }
 `
 
-export const CompanyName = Style.div`
-    .company-name {
-        font-size: 20px;
-        margin-bottom: 10px;
-        border: 1px solid transparent;
-        transition: .1s;
-        outline: none;
-    
-        &:hover {
-            border: 1px dashed #73bcff;
-        }
+export const CompanyName = Style.input`
+    font-size: 20px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    transition: .1s;
+    outline: none;
+
+    &:hover {
+        border: 1px dashed #73bcff;
     }
 `
 
 export const Date = Style.div`
-    display: flex;
-    .date-seperator {
-        margin: 0 5px
+    color: gray;
+    font-style: italic;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    transition: .1s;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+        border: 1px dashed #73bcff;
     }
-    .start-date,
-    .end-date {
-        color: gray;
-        font-style: italic;
-        margin-bottom: 10px;
-        border: 1px solid transparent;
-        transition: .1s;
-        outline: none;
-        cursor: pointer;
-    
-        &:hover {
-            border: 1px dashed #73bcff;
-        }
+`
+
+export const StartDate = Style.input`
+    width: 80px;
+    border: 1px solid transparent;
+    transition: .1s;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+        border: 1px dashed #73bcff;
+    }
+`
+
+export const EndDate = Style.input`
+    margin-left: 15px;
+    width: 80px;
+    border: 1px solid transparent;
+    transition: .1s;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+        border: 1px dashed #73bcff;
     }
 `
 
