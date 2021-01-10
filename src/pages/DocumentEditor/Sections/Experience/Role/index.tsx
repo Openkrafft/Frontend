@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react'
+import { useActions } from 'kea'
+import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined } from '@ant-design/icons'
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 import {
 	RoleContainer,
@@ -8,25 +10,26 @@ import {
 	CompanyName,
 	Date,
 	JobDescription,
-	EditRole
+	EditRole,
+	DeleteRole
 } from './Role.styles'
 
 interface RoleProps {
+	roleId: number
 	jobTitle: string
 	companyName: string
 	date: {
 		startDate: string
 		endDate: string
 	}
-	stillWorking: boolean
 	roleDescription: string
 }
 
 const Role: React.FC<RoleProps> = ({
+	roleId,
 	jobTitle,
 	companyName,
 	date,
-	stillWorking,
 	roleDescription
 }) => {
 	const roleTitleRef = useRef(null)
@@ -35,61 +38,99 @@ const Role: React.FC<RoleProps> = ({
 	const startDateRef = useRef(null)
 	const endDateRef = useRef(null)
 
-	const [ title, setTitle ] = useState<string>(jobTitle)
-	const [ company, setCompanyName ] = useState<string>(companyName)
-	const [ description, setRoleDescription ] = useState<string>(roleDescription)
-	const [ startDate, setStartDate ] = useState<string>(date.startDate)
-	const [ endDate, setEndDate ] = useState<string>(date.endDate)
+	const { startDate, endDate } = date
+	const { updateRole, deleteRole } = useActions(editorLogic)
 	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
 
 	return (
 		<RoleContainer
+			className='role-container'
 			onMouseOver={() => setEditVisibility(true)}
 			onMouseLeave={() => setEditVisibility(false)}>
 			<EditRole style={{ display: isEditVisible ? 'block' : 'none' }}>
 				<EditOutlined />
 			</EditRole>
+			<DeleteRole
+				style={{ display: isEditVisible ? 'block' : 'none' }}
+				onClick={() => deleteRole(roleId)}>
+				<DeleteOutlined />
+			</DeleteRole>
 			<RoleTitle>
 				<ContentEditable
+					data-placeholder='Role title'
 					className='role-title'
 					ref={roleTitleRef}
-					html={title}
-					onChange={(e) => setTitle(e.target.value)}
+					html={jobTitle}
+					onChange={(e) =>
+						updateRole({
+							id: roleId,
+							jobTitle: e.target.value,
+							companyName,
+							date,
+							roleDescription
+						})}
 				/>
 			</RoleTitle>
 			<CompanyName>
 				<ContentEditable
+					data-placeholder='Company name'
 					className='company-name'
 					ref={companyNameRef}
-					html={company}
-					onChange={(e) => setCompanyName(e.target.value)}
+					html={companyName}
+					onChange={(e) =>
+						updateRole({
+							id: roleId,
+							jobTitle,
+							companyName: e.target.value,
+							date,
+							roleDescription
+						})}
 				/>
 			</CompanyName>
 			<Date>
 				<ContentEditable
+					data-placeholder='Start date'
 					className='start-date'
 					ref={startDateRef}
 					html={startDate}
-					onChange={(e) => setStartDate(e.target.value)}
+					onChange={(e) =>
+						updateRole({
+							id: roleId,
+							jobTitle,
+							companyName,
+							date: { startDate: e.target.value, endDate },
+							roleDescription
+						})}
 				/>
 				<span className='date-seperator'> - </span>
-				{stillWorking ? (
-					<span>Present</span>
-				) : (
-					<ContentEditable
-						className='end-date'
-						ref={endDateRef}
-						html={endDate}
-						onChange={(e) => setEndDate(e.target.value)}
-					/>
-				)}
+				<ContentEditable
+					data-placeholder='End date'
+					className='end-date'
+					ref={endDateRef}
+					html={endDate}
+					onChange={(e) =>
+						updateRole({
+							id: roleId,
+							jobTitle,
+							companyName,
+							date: { startDate, endDate: e.target.value },
+							roleDescription
+						})}
+				/>
 			</Date>
 			<JobDescription>
 				<ContentEditable
 					className='job-description'
 					ref={descriptionRef}
-					html={description}
-					onChange={(e) => setRoleDescription(e.target.value)}
+					html={roleDescription}
+					onChange={(e) =>
+						updateRole({
+							id: roleId,
+							jobTitle,
+							companyName,
+							date,
+							roleDescription: e.target.value
+						})}
 				/>
 			</JobDescription>
 		</RoleContainer>

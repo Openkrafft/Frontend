@@ -42,6 +42,7 @@ const Skills: React.FC = () => {
 			</SectionTitle>
 			<List>
 				<ContentEditable
+					data-placeholder='Section title'
 					className='skills-list'
 					ref={listRef}
 					html={listHtmlContent}

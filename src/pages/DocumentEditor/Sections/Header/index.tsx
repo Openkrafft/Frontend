@@ -1,4 +1,6 @@
 import React, { useState, useRef } from 'react'
+import { useValues, useActions } from 'kea'
+import editorLogic from '../../logic'
 import ContentEditable from 'react-contenteditable'
 
 import { EditOutlined } from '@ant-design/icons'
@@ -10,25 +12,15 @@ import {
 	EditHeader
 } from './Header.styles'
 
-const generalInfo = {
-	name: 'John Doe',
-	position: 'Software Engineer',
-	summary:
-		'Enthusiastic software engineer with 3+ years experience participating inthe complete product development lifecycle of successfully launchedapplications. Proficient in an assortment of technologies, includingJavaScript, TypeScript, React, Node.js, and PostgreSQL.'
-}
-
 const ResumeHeader: React.FC = () => {
 	const nameRef = useRef(null)
 	const positionRef = useRef(null)
 	const summaryRef = useRef(null)
+
+	const { updateHeader } = useActions(editorLogic)
+	const { header: { name, title, summary } } = useValues(editorLogic)
 	const [ isVisible, setVisibility ] = useState<boolean>(false)
-	const [ nameHtmlContent, setName ] = useState<string>(generalInfo.name)
-	const [ positionHtmlContent, setPosition ] = useState<string>(
-		generalInfo.position
-	)
-	const [ summaryHtmlContent, setSummary ] = useState<string>(
-		generalInfo.summary
-	)
+
 	return (
 		<HeaderContainer
 			onMouseOver={() => setVisibility(true)}
@@ -38,27 +30,33 @@ const ResumeHeader: React.FC = () => {
 			</EditHeader>
 			<Name>
 				<ContentEditable
+					data-placeholder='Name'
 					className='name'
 					ref={nameRef}
-					html={nameHtmlContent}
-					onChange={(e) => setName(e.target.value)}
+					html={name}
+					onChange={(e) =>
+						updateHeader({ name: e.target.value, title, summary })}
 				/>
 			</Name>
 			<PositionName>
 				<ContentEditable
+					data-placeholder='Title'
 					className='position'
 					ref={positionRef}
-					html={positionHtmlContent}
-					onChange={(e) => setPosition(e.target.value)}
+					html={title}
+					onChange={(e) =>
+						updateHeader({ name, title: e.target.value, summary })}
 				/>
 			</PositionName>
-			{!!generalInfo.summary && (
+			{!!summary && (
 				<Summary>
 					<ContentEditable
+						data-placeholder='Summary'
 						className='summary'
 						ref={summaryRef}
-						html={summaryHtmlContent}
-						onChange={(e) => setSummary(e.target.value)}
+						html={summary}
+						onChange={(e) =>
+							updateHeader({ name, title, summary: e.target.value })}
 					/>
 				</Summary>
 			)}

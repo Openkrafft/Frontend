@@ -1,6 +1,7 @@
 import Style from 'styled-components'
 
 export const RoleContainer = Style.div`
+    margin-bottom: 15px;
     position: relative;
     border: 1px solid transparent;
     transition: .1s;
@@ -13,7 +14,6 @@ export const RoleContainer = Style.div`
 
 export const RoleTitle = Style.div`
     .role-title {
-        width: 100%;
         font-size: 20px;
         margin-bottom: 0;
         border: 1px solid transparent;
@@ -43,7 +43,7 @@ export const CompanyName = Style.div`
 export const Date = Style.div`
     display: flex;
     .date-seperator {
-        margin: 0 5px
+        margin: 0 10px;
     }
     .start-date,
     .end-date {
@@ -86,4 +86,7 @@ export const EditRole = Style.button`
     color: #fff;
     cursor: pointer;
     transition: .1s;
+`
+export const DeleteRole = Style(EditRole)`
+    top: 40px
 `
