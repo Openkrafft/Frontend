@@ -3,11 +3,13 @@ import { IRole, Experience, Header } from './types'
 
 const editorLogic = kea({
 	actions: {
+		updateSectionTitle: (sectionTitle: string) => ({ sectionTitle }),
 		updateHeader: ({ name, title, summary }: Header) => ({
 			name,
 			title,
 			summary
 		}),
+		updateSkills: (skills: string) => ({ skills }),
 		addRole: (role: IRole) => ({ role }),
 		updateRole: ({
 			id,
@@ -50,6 +52,16 @@ const editorLogic = kea({
 				})
 			}
 		],
+		skills: [
+			'<li></li>',
+			{
+				updateSectionTitle: (
+					state: string,
+					{ sectionTitle }: { sectionTitle: string }
+				) => sectionTitle,
+				updateSkills: (state: string, { skills }: { skills: string }) => skills
+			}
+		],
 		experience: [
 			{
 				sectionTitle: 'Work Experience',
@@ -77,6 +89,10 @@ const editorLogic = kea({
 				]
 			},
 			{
+				updateSectionTitle: (
+					state: Experience,
+					{ sectionTitle }: { sectionTitle: string }
+				) => ({ ...state, sectionTitle }),
 				addRole: (state: Experience, { role }: { role: IRole }) => ({
 					...state,
 					roles: [ ...state.roles, role ]
