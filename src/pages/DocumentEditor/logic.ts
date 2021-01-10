@@ -1,8 +1,13 @@
 import { kea } from 'kea'
-import { IRole, Experience } from './types'
+import { IRole, Experience, Header } from './types'
 
 const editorLogic = kea({
 	actions: {
+		updateHeader: ({ name, title, summary }: Header) => ({
+			name,
+			title,
+			summary
+		}),
 		addRole: (role: IRole) => ({ role }),
 		updateRole: ({
 			id,
@@ -29,6 +34,22 @@ const editorLogic = kea({
 	},
 
 	reducers: {
+		header: [
+			{
+				name: 'John Doe',
+				title: 'Software Engineer',
+				summary:
+					'Enthusiastic software engineer with 3+ years experience participating in the complete product development.'
+			},
+			{
+				updateHeader: (state: Header, { name, title, summary }: Header) => ({
+					...state,
+					name,
+					title,
+					summary
+				})
+			}
+		],
 		experience: [
 			{
 				sectionTitle: 'Work Experience',

@@ -13,3 +13,9 @@ export interface Experience {
 	sectionTitle: string
 	roles: IRole[]
 }
+
+export interface Header {
+	name: string
+	title: string
+	summary: string
+}
