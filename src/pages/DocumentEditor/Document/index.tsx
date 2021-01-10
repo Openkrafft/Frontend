@@ -8,6 +8,8 @@ import Experience from '../Sections/Experience'
 
 import { Document as PageContainer } from './Document.styles'
 
+import './styles.css'
+
 const Document: React.FC = () => {
 	const { zoom } = useValues(globalLogic)
 	return (
