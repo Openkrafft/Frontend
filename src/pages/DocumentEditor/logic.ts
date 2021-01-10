@@ -1,8 +1,16 @@
 import { kea } from 'kea'
-import { IRole, Experience, Header, Contact, ContactType } from './types'
+import {
+	IRole,
+	Experience,
+	Header,
+	Contact,
+	ContactType,
+	Section
+} from './types'
 
 const editorLogic = kea({
 	actions: {
+		addSection: (section: Section) => ({ section }),
 		updateSectionTitle: (sectionTitle: string) => ({ sectionTitle }),
 		updateHeader: ({ name, title, summary }: Header) => ({
 			name,
@@ -42,6 +50,15 @@ const editorLogic = kea({
 	},
 
 	reducers: {
+		sections: [
+			[ 'contactInfo', 'skills' ],
+			{
+				addSection: (state: Section[], { section }: { section: Section }) => [
+					...state,
+					section
+				]
+			}
+		],
 		header: [
 			{
 				name: 'John Doe',

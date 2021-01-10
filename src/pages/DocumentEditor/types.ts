@@ -29,6 +29,16 @@ export type ContactType =
 	| 'SKYPE'
 	| 'TWITTER'
 
+export type Section =
+	| 'header'
+	| 'contactInfo'
+	| 'skills'
+	| 'experience'
+	| 'portfolio'
+	| 'interests'
+	| 'list'
+	| 'text'
+
 export interface Contact {
 	contactType: ContactType
 	contactInfo: string
