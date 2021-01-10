@@ -19,3 +19,17 @@ export interface Header {
 	title: string
 	summary: string
 }
+
+export type ContactType =
+	| 'EMAIL'
+	| 'ADDRESS'
+	| 'LINKEDIN'
+	| 'PHONE'
+	| 'GITHUB'
+	| 'SKYPE'
+	| 'TWITTER'
+
+export interface Contact {
+	contactType: ContactType
+	contactInfo: string
+}

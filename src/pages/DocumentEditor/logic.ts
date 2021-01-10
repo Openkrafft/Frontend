@@ -1,5 +1,5 @@
 import { kea } from 'kea'
-import { IRole, Experience, Header } from './types'
+import { IRole, Experience, Header, Contact, ContactType } from './types'
 
 const editorLogic = kea({
 	actions: {
@@ -8,6 +8,11 @@ const editorLogic = kea({
 			name,
 			title,
 			summary
+		}),
+		addContact: (contact: Contact) => ({ contact }),
+		updateContact: (contactInfo: string, contactType: ContactType) => ({
+			contactInfo,
+			contactType
 		}),
 		updateSkills: (skills: string) => ({ skills }),
 		addRole: (role: IRole) => ({ role }),
@@ -50,6 +55,52 @@ const editorLogic = kea({
 					title,
 					summary
 				})
+			}
+		],
+		contacts: [
+			[
+				{
+					contactType: 'EMAIL',
+					contactInfo: 'username@gmail.com'
+				},
+				{
+					contactType: 'PHONE',
+					contactInfo: '+21624654377'
+				},
+				{
+					contactType: 'ADDRESS',
+					contactInfo: 'berlin, germany'
+				},
+				{
+					contactType: 'LINKEDIN',
+					contactInfo: 'www.linkedin.com/username'
+				},
+				{
+					contactType: 'GITHUB',
+					contactInfo: 'username'
+				},
+				{
+					contactType: 'SKYPE',
+					contactInfo: 'user.name'
+				}
+			],
+			{
+				addContact: (state: Contact[], contact: Contact) => [
+					...state,
+					contact
+				],
+				updateContact: (
+					state: Contact[],
+					{
+						contactInfo,
+						contactType
+					}: { contactInfo: string; contactType: ContactType }
+				) => {
+					return state.map(
+						(contact) =>
+							contact.contactType === contactType ? contactInfo : contact
+					)
+				}
 			}
 		],
 		skills: [
