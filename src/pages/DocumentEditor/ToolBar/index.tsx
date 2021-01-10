@@ -1,5 +1,8 @@
 import React from 'react'
+import { useValues, useActions } from 'kea'
+import editorLogic from '../logic'
 import { Menu, Dropdown, Tooltip } from 'antd'
+import { v4 as uuidv4 } from 'uuid'
 
 import {
 	AppstoreOutlined,
@@ -12,11 +15,30 @@ import {
 import { ToolBarContainer, ToolButton } from './ToolBar.styles.js'
 
 const ToolBar: React.FC = () => {
+	const { addSection } = useActions(editorLogic)
+	const { sections: currentSections } = useValues(editorLogic)
+	const documentSections: any = {
+		contactInfo: 'Add Contact Info',
+		skills: 'Add Skills',
+		experience: 'Add Experience',
+		portfolio: 'Add Portfolio'
+	}
+	const sectionsToDisplay = Object.keys(documentSections).filter(
+		(section: string) => !currentSections.includes(section)
+	)
 	const menu = (
 		<Menu>
-			<Menu.Item key='1'>1st menu item</Menu.Item>
-			<Menu.Item key='2'>2nd menu item</Menu.Item>
-			<Menu.Item key='3'>3rd menu item</Menu.Item>
+			<Menu.Item onClick={() => addSection('list')} key={1}>
+				Add List
+			</Menu.Item>
+			<Menu.Item onClick={() => addSection('text')} key={2}>
+				Add Text
+			</Menu.Item>
+			{sectionsToDisplay.map((section: string) => (
+				<Menu.Item onClick={() => addSection(section)} key={uuidv4()}>
+					{documentSections[section]}
+				</Menu.Item>
+			))}
 		</Menu>
 	)
 	return (
