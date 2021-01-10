@@ -16,6 +16,7 @@ const editorLogic = kea({
 		}),
 		updateSkills: (skills: string) => ({ skills }),
 		addRole: (role: IRole) => ({ role }),
+		deleteRole: (roleId: number) => ({ roleId }),
 		updateRole: ({
 			id,
 			jobTitle,
@@ -148,6 +149,15 @@ const editorLogic = kea({
 					...state,
 					roles: [ ...state.roles, role ]
 				}),
+				deleteRole: (state: Experience, { roleId }: { roleId: number }) => {
+					const updatedRoles = state.roles.filter(
+						(role) => role.roleId !== roleId
+					)
+					return {
+						...state,
+						roles: updatedRoles
+					}
+				},
 				updateRole: (
 					state: Experience,
 					{

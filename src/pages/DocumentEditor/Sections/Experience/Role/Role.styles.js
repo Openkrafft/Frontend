@@ -87,3 +87,6 @@ export const EditRole = Style.button`
     cursor: pointer;
     transition: .1s;
 `
+export const DeleteRole = Style(EditRole)`
+    top: 40px
+`

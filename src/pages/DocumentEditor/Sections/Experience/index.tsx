@@ -33,13 +33,11 @@ const Experience: React.FC = () => {
 		<ExperienceContainer
 			onMouseOver={() => setEditVisibility(true)}
 			onMouseLeave={() => setEditVisibility(false)}>
-			{roles.length > 0 && (
-				<AddRole
-					style={{ display: isEditVisible ? 'block' : 'none' }}
-					onClick={() => addRole(newRole)}>
-					<PlusOutlined />
-				</AddRole>
-			)}
+			<AddRole
+				style={{ display: isEditVisible ? 'block' : 'none' }}
+				onClick={() => addRole(newRole)}>
+				<PlusOutlined />
+			</AddRole>
 			<SectionTitle>
 				<ContentEditable
 					data-placeholder='Section title'

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { useActions } from 'kea'
 import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined } from '@ant-design/icons'
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 import {
 	RoleContainer,
@@ -10,7 +10,8 @@ import {
 	CompanyName,
 	Date,
 	JobDescription,
-	EditRole
+	EditRole,
+	DeleteRole
 } from './Role.styles'
 
 interface RoleProps {
@@ -37,13 +38,8 @@ const Role: React.FC<RoleProps> = ({
 	const startDateRef = useRef(null)
 	const endDateRef = useRef(null)
 
-	//const [ title, setTitle ] = useState<string>(jobTitle)
-	//const [ company, setCompanyName ] = useState<string>(companyName)
-	//const [ description, setRoleDescription ] = useState<string>(roleDescription)
-	//const [ startDate, setStartDate ] = useState<string>(date.startDate)
-	//const [ endDate, setEndDate ] = useState<string>(date.endDate)
 	const { startDate, endDate } = date
-	const { updateRole } = useActions(editorLogic)
+	const { updateRole, deleteRole } = useActions(editorLogic)
 	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
 
 	return (
@@ -54,6 +50,11 @@ const Role: React.FC<RoleProps> = ({
 			<EditRole style={{ display: isEditVisible ? 'block' : 'none' }}>
 				<EditOutlined />
 			</EditRole>
+			<DeleteRole
+				style={{ display: isEditVisible ? 'block' : 'none' }}
+				onClick={() => deleteRole(roleId)}>
+				<DeleteOutlined />
+			</DeleteRole>
 			<RoleTitle>
 				<ContentEditable
 					data-placeholder='Role title'
