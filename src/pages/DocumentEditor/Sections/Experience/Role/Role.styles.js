@@ -1,6 +1,7 @@
 import Style from 'styled-components'
 
 export const RoleContainer = Style.div`
+    margin-bottom: 15px;
     position: relative;
     border: 1px solid transparent;
     transition: .1s;
