@@ -6,6 +6,7 @@ import Header from '../Sections/Header'
 import ContactInfo from '../Sections/ContactInfo'
 import Skills from '../Sections/Skills'
 import Experience from '../Sections/Experience'
+import List from '../Sections/List'
 
 import { Document as PageContainer } from './Document.styles'
 
@@ -33,7 +34,6 @@ const Document: React.FC = () => {
 }
 
 const Portfolio = () => <div>Portfolio</div>
-const List = () => <div>list</div>
 const Text = () => <div>text</div>
 
 export default Document
