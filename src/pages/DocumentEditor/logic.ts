@@ -22,7 +22,7 @@ const editorLogic = kea({
 			contactInfo,
 			contactType
 		}),
-		updateSkills: (skills: string) => ({ skills }),
+		updateSkills: (skillsList: string) => ({ skillsList }),
 		addRole: (role: IRole) => ({ role }),
 		deleteRole: (roleId: number) => ({ roleId }),
 		updateRole: ({
@@ -122,13 +122,19 @@ const editorLogic = kea({
 			}
 		],
 		skills: [
-			'<li></li>',
+			{
+				sectionTitle: 'Skills',
+				skillsList: '<li></li>'
+			},
 			{
 				updateSectionTitle: (
-					state: string,
+					state: { sectionTitle: string; content: string },
 					{ sectionTitle }: { sectionTitle: string }
-				) => sectionTitle,
-				updateSkills: (state: string, { skills }: { skills: string }) => skills
+				) => ({ ...state, sectionTitle }),
+				updateSkills: (
+					state: { sectionTitle: string; skillsList: string },
+					{ skillsList }: { skillsList: string }
+				) => ({ ...state, skillsList })
 			}
 		],
 		experience: [
