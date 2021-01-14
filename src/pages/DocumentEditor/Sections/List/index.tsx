@@ -8,14 +8,15 @@ import { ListContent } from './List.styles'
 
 const List: React.FC = () => {
 	const listRef = useRef(null)
-	const { updateList, updateListTitle } = useActions(editorLogic)
+	const { updateList, updateListTitle, deleteSection } = useActions(editorLogic)
 	const { list: { listTitle, list } } = useValues(editorLogic)
 
 	return (
 		<Section
 			showSectionTitle
 			sectionTitle={listTitle}
-			onChange={(e) => updateListTitle(e.target.value)}>
+			onChange={(e) => updateListTitle(e.target.value)}
+			onDeleteClick={() => deleteSection('list')}>
 			<ListContent>
 				<ContentEditable
 					className='list-content'

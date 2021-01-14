@@ -28,10 +28,12 @@ const iconsMap: any = {
 
 const ContactInfo: React.FC = () => {
 	const { contacts } = useValues(editorLogic)
-	const { addContact, updateContact } = useActions(editorLogic)
-	const [ isVisible, setVisibility ] = useState<boolean>(false)
+	const { addContact, updateContact, deleteSection } = useActions(editorLogic)
 	return (
-		<Section showSectionTitle={false} showAddButton>
+		<Section
+			showSectionTitle={false}
+			showAddButton
+			onDeleteClick={() => deleteSection('contactInfo')}>
 			<ContactContainer>
 				{contacts.map((contact: Contact) => (
 					<ContactInformation key={contact.contactType}>

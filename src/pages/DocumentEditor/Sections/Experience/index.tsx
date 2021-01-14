@@ -7,7 +7,9 @@ import Role from './Role'
 
 const Experience: React.FC = () => {
 	const { experience: { roles, experienceTitle } } = useValues(editorLogic)
-	const { addRole, updateExperienceTitle } = useActions(editorLogic)
+	const { addRole, updateExperienceTitle, deleteSection } = useActions(
+		editorLogic
+	)
 
 	const newRole = {
 		roleId: Math.floor(Math.random() * 1e10),
@@ -26,7 +28,8 @@ const Experience: React.FC = () => {
 			showAddButton
 			sectionTitle={experienceTitle}
 			onChange={(e) => updateExperienceTitle(e.target.value)}
-			onAddClick={() => addRole(newRole)}>
+			onAddClick={() => addRole(newRole)}
+			onDeleteClick={() => deleteSection('experience')}>
 			{roles.map((role: IRole) => <Role key={role.roleId} {...role} />)}
 		</Section>
 	)

@@ -62,7 +62,9 @@ const editorLogic = kea({
 				addSection: (state: Section[], { section }: { section: Section }) => [
 					...state,
 					section
-				]
+				],
+				deleteSection: (state: Section[], { section }: { section: Section }) =>
+					state.filter((currentSection) => currentSection !== section)
 			}
 		],
 		header: [
