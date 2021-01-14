@@ -1,51 +1,31 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { useValues, useActions } from 'kea'
+import editorLogic from '../../logic'
+import Section from '../SectionWrapper'
 
-import {
-	TextContainer,
-	SectionTitle,
-	EditSection,
-	TextContent,
-	DeleteSection
-} from './Text.styles'
+import { TextContent } from './Text.styles'
 
 const Text: React.FC = () => {
-	const titleRef = useRef(null)
 	const listRef = useRef(null)
-	const [ title, setTitle ] = useState('List')
-	const [ text, setText ] = useState('')
-	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
+	const { textSection: { textTitle, text } } = useValues(editorLogic)
+	const { updateTextTitle, updateText } = useActions(editorLogic)
 
 	return (
-		<TextContainer
-			onMouseOver={() => setEditVisibility(true)}
-			onMouseLeave={() => setEditVisibility(false)}>
-			<EditSection style={{ display: isEditVisible ? 'block' : 'none' }}>
-				<EditOutlined />
-			</EditSection>
-			<DeleteSection style={{ display: isEditVisible ? 'block' : 'none' }}>
-				<DeleteOutlined />
-			</DeleteSection>
-			<SectionTitle>
-				<ContentEditable
-					data-placeholder='Section title'
-					className='section-title'
-					ref={titleRef}
-					html={title}
-					onChange={(e) => setTitle(e.target.value)}
-				/>
-			</SectionTitle>
+		<Section
+			showSectionTitle
+			sectionTitle={textTitle}
+			onChange={(e) => updateTextTitle(e.target.value)}>
 			<TextContent>
 				<ContentEditable
 					data-placeholder='Add your text here'
 					className='text-content'
 					ref={listRef}
 					html={text}
-					onChange={(e) => setText(e.target.value)}
+					onChange={(e) => updateText(e.target.value)}
 				/>
 			</TextContent>
-		</TextContainer>
+		</Section>
 	)
 }
 

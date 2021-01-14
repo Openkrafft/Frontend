@@ -1,55 +1,31 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined } from '@ant-design/icons'
+import { useValues, useActions } from 'kea'
+import editorLogic from '../../logic'
+import Section from '../SectionWrapper'
 
-import {
-	SkillsContainer,
-	SectionTitle,
-	List,
-	EditSkills
-} from './Skills.styles'
-
-const skills = {
-	sectionTitle: 'Technical Skills',
-	skillsList: [ 'html', 'python', 'js' ]
-}
+import { List } from './Skills.styles'
 
 const Skills: React.FC = () => {
 	const listRef = useRef(null)
-	const titletRef = useRef(null)
-	const [ isVisible, setVisibility ] = useState<boolean>(false)
-	const [ titleHtmlContent, setTitleHtmlContent ] = useState<string>(
-		`${skills.sectionTitle}`
-	)
-	const [ listHtmlContent, setListHtmlContent ] = useState<string>(
-		'<li>Hello</li>'
-	)
+	const { updateSkills, updateSkillsTitle } = useActions(editorLogic)
+	const { skills: { skillsTitle, skillsList } } = useValues(editorLogic)
 
 	return (
-		<SkillsContainer
-			onMouseOver={() => setVisibility(true)}
-			onMouseLeave={() => setVisibility(false)}>
-			<EditSkills style={{ display: isVisible ? 'block' : 'none' }}>
-				<EditOutlined />
-			</EditSkills>
-			<SectionTitle>
-				<ContentEditable
-					className='skills-title'
-					ref={titletRef}
-					html={titleHtmlContent}
-					onChange={(e) => setTitleHtmlContent(e.target.value)}
-				/>
-			</SectionTitle>
+		<Section
+			showSectionTitle
+			sectionTitle={skillsTitle}
+			onChange={(e) => updateSkillsTitle(e.target.value)}>
 			<List>
 				<ContentEditable
 					data-placeholder='Section title'
 					className='skills-list'
 					ref={listRef}
-					html={listHtmlContent}
-					onChange={(e) => setListHtmlContent(e.target.value)}
+					html={skillsList}
+					onChange={(e) => updateSkills(e.target.value)}
 				/>
 			</List>
-		</SkillsContainer>
+		</Section>
 	)
 }
 

@@ -1,7 +1,6 @@
 import Style from 'styled-components'
 
 export const ContactContainer = Style.div`
-    margin-top: 20px;
     margin-bottom: 0px;
     padding: 13px 5px 0px 5px;
     display: flex;
