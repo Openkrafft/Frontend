@@ -11,7 +11,7 @@ import {
 const editorLogic = kea({
 	actions: {
 		addSection: (section: Section) => ({ section }),
-		updateSectionTitle: (sectionTitle: string) => ({ sectionTitle }),
+		deleteSection: (section: Section) => ({ section }),
 		updateHeader: ({ name, title, summary }: Header) => ({
 			name,
 			title,
@@ -22,7 +22,13 @@ const editorLogic = kea({
 			contactInfo,
 			contactType
 		}),
-		updateSkills: (skills: string) => ({ skills }),
+		updateSkills: (skillsList: string) => ({ skillsList }),
+		updateSkillsTitle: (skillsTitle: string) => ({ skillsTitle }),
+		updateList: (list: string) => ({ list }),
+		updateListTitle: (listTitle: string) => ({ listTitle }),
+		updateTextTitle: (textTitle: string) => ({ textTitle }),
+		updateText: (text: string) => ({ text }),
+		updateExperienceTitle: (experienceTitle: string) => ({ experienceTitle }),
 		addRole: (role: IRole) => ({ role }),
 		deleteRole: (roleId: number) => ({ roleId }),
 		updateRole: ({
@@ -51,7 +57,7 @@ const editorLogic = kea({
 
 	reducers: {
 		sections: [
-			[ 'contactInfo', 'skills' ],
+			[ 'contactInfo', 'skills', 'list' ],
 			{
 				addSection: (state: Section[], { section }: { section: Section }) => [
 					...state,
@@ -122,18 +128,24 @@ const editorLogic = kea({
 			}
 		],
 		skills: [
-			'<li></li>',
 			{
-				updateSectionTitle: (
-					state: string,
-					{ sectionTitle }: { sectionTitle: string }
-				) => sectionTitle,
-				updateSkills: (state: string, { skills }: { skills: string }) => skills
+				skillsTitle: 'Skills',
+				skillsList: '<li></li>'
+			},
+			{
+				updateSkillsTitle: (
+					state: { skillsTitle: string; content: string },
+					{ skillsTitle }: { skillsTitle: string }
+				) => ({ ...state, skillsTitle }),
+				updateSkills: (
+					state: { skillsTitle: string; skillsList: string },
+					{ skillsList }: { skillsList: string }
+				) => ({ ...state, skillsList })
 			}
 		],
 		experience: [
 			{
-				sectionTitle: 'Work Experience',
+				experienceTitle: 'Work Experience',
 				roles: [
 					{
 						roleId: 654654654,
@@ -158,10 +170,10 @@ const editorLogic = kea({
 				]
 			},
 			{
-				updateSectionTitle: (
+				updateExperienceTitle: (
 					state: Experience,
-					{ sectionTitle }: { sectionTitle: string }
-				) => ({ ...state, sectionTitle }),
+					{ experienceTitle }: { experienceTitle: string }
+				) => ({ ...state, experienceTitle }),
 				addRole: (state: Experience, { role }: { role: IRole }) => ({
 					...state,
 					roles: [ ...state.roles, role ]
@@ -207,6 +219,38 @@ const editorLogic = kea({
 						roles: updatedRoles
 					}
 				}
+			}
+		],
+		list: [
+			{
+				listTitle: 'List',
+				list: '<li></li>'
+			},
+			{
+				updateListTitle: (
+					state: { listTitle: string; list: string },
+					{ listTitle }: { listTitle: string }
+				) => ({ ...state, listTitle }),
+				updateList: (
+					state: { listTitle: string; list: string },
+					{ list }: { list: string }
+				) => ({ ...state, list })
+			}
+		],
+		textSection: [
+			{
+				textTitle: 'Text',
+				text: ''
+			},
+			{
+				updateTextTitle: (
+					state: { textTitle: string; text: string },
+					{ textTitle }: { textTitle: string }
+				) => ({ ...state, textTitle }),
+				updateText: (
+					state: { textTitle: string; text: string },
+					{ text }: { text: string }
+				) => ({ ...state, text })
 			}
 		]
 	}

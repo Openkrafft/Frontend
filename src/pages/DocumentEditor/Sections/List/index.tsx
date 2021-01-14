@@ -1,50 +1,30 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { useValues, useActions } from 'kea'
+import editorLogic from '../../logic'
+import Section from '../SectionWrapper'
 
-import {
-	ListContainer,
-	SectionTitle,
-	EditSection,
-	ListContent,
-	DeleteSection
-} from './List.styles'
+import { ListContent } from './List.styles'
 
 const List: React.FC = () => {
-	const titleRef = useRef(null)
 	const listRef = useRef(null)
-	const [ title, setTitle ] = useState('List')
-	const [ list, setList ] = useState('<li></li>')
-	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
+	const { updateList, updateListTitle } = useActions(editorLogic)
+	const { list: { listTitle, list } } = useValues(editorLogic)
 
 	return (
-		<ListContainer
-			onMouseOver={() => setEditVisibility(true)}
-			onMouseLeave={() => setEditVisibility(false)}>
-			<EditSection style={{ display: isEditVisible ? 'block' : 'none' }}>
-				<EditOutlined />
-			</EditSection>
-			<DeleteSection style={{ display: isEditVisible ? 'block' : 'none' }}>
-				<DeleteOutlined />
-			</DeleteSection>
-			<SectionTitle>
-				<ContentEditable
-					data-placeholder='Section title'
-					className='section-title'
-					ref={titleRef}
-					html={title}
-					onChange={(e) => setTitle(e.target.value)}
-				/>
-			</SectionTitle>
+		<Section
+			showSectionTitle
+			sectionTitle={listTitle}
+			onChange={(e) => updateListTitle(e.target.value)}>
 			<ListContent>
 				<ContentEditable
 					className='list-content'
 					ref={listRef}
 					html={list}
-					onChange={(e) => setList(e.target.value)}
+					onChange={(e) => updateList(e.target.value)}
 				/>
 			</ListContent>
-		</ListContainer>
+		</Section>
 	)
 }
 
