@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React from 'react'
 import { useValues, useActions } from 'kea'
 import editorLogic from '../../logic'
 import Section from '../SectionWrapper'
