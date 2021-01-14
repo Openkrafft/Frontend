@@ -24,6 +24,7 @@ interface SectionProps {
 	onAddClick?: (e: React.MouseEvent) => void
 	onEditClick?: (e: React.MouseEvent) => void
 	onDeleteClick?: (e: React.MouseEvent) => void
+	onChange?: (e: any) => void
 }
 
 const Section: React.FC<SectionProps> = ({
@@ -35,10 +36,10 @@ const Section: React.FC<SectionProps> = ({
 	sectionTitle = '',
 	onAddClick,
 	onEditClick,
-	onDeleteClick
+	onDeleteClick,
+	onChange
 }) => {
 	const titleRef = useRef(null)
-	const { updateSectionTitle } = useActions(editorLogic)
 	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
 
 	return (
@@ -70,7 +71,7 @@ const Section: React.FC<SectionProps> = ({
 						className='section-title'
 						ref={titleRef}
 						html={sectionTitle}
-						onChange={(e) => updateSectionTitle(e.target.value)}
+						onChange={onChange!}
 					/>
 				</SectionTitle>
 			)}

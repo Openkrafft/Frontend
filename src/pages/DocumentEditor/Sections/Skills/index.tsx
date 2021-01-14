@@ -8,11 +8,14 @@ import { List } from './Skills.styles'
 
 const Skills: React.FC = () => {
 	const listRef = useRef(null)
-	const { updateSkills } = useActions(editorLogic)
-	const { skills: { sectionTitle, skillsList } } = useValues(editorLogic)
+	const { updateSkills, updateSkillsTitle } = useActions(editorLogic)
+	const { skills: { skillsTitle, skillsList } } = useValues(editorLogic)
 
 	return (
-		<Section showSectionTitle sectionTitle={sectionTitle}>
+		<Section
+			showSectionTitle
+			sectionTitle={skillsTitle}
+			onChange={(e) => updateSkillsTitle(e.target.value)}>
 			<List>
 				<ContentEditable
 					data-placeholder='Section title'

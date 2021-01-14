@@ -12,7 +12,6 @@ const editorLogic = kea({
 	actions: {
 		addSection: (section: Section) => ({ section }),
 		deleteSection: (section: Section) => ({ section }),
-		updateSectionTitle: (sectionTitle: string) => ({ sectionTitle }),
 		updateHeader: ({ name, title, summary }: Header) => ({
 			name,
 			title,
@@ -24,6 +23,9 @@ const editorLogic = kea({
 			contactType
 		}),
 		updateSkills: (skillsList: string) => ({ skillsList }),
+		updateSkillsTitle: (skillsTitle: string) => ({ skillsTitle }),
+		updateList: (list: string) => ({ list }),
+		updateListTitle: (listTitle: string) => ({ listTitle }),
 		addRole: (role: IRole) => ({ role }),
 		deleteRole: (roleId: number) => ({ roleId }),
 		updateRole: ({
@@ -52,7 +54,7 @@ const editorLogic = kea({
 
 	reducers: {
 		sections: [
-			[ 'contactInfo', 'skills' ],
+			[ 'contactInfo', 'skills', 'list' ],
 			{
 				addSection: (state: Section[], { section }: { section: Section }) => [
 					...state,
@@ -124,16 +126,16 @@ const editorLogic = kea({
 		],
 		skills: [
 			{
-				sectionTitle: 'Skills',
+				skillsTitle: 'Skills',
 				skillsList: '<li></li>'
 			},
 			{
-				updateSectionTitle: (
-					state: { sectionTitle: string; content: string },
-					{ sectionTitle }: { sectionTitle: string }
-				) => ({ ...state, sectionTitle }),
+				updateSkillsTitle: (
+					state: { skillsTitle: string; content: string },
+					{ skillsTitle }: { skillsTitle: string }
+				) => ({ ...state, skillsTitle }),
 				updateSkills: (
-					state: { sectionTitle: string; skillsList: string },
+					state: { skillsTitle: string; skillsList: string },
 					{ skillsList }: { skillsList: string }
 				) => ({ ...state, skillsList })
 			}
@@ -214,6 +216,22 @@ const editorLogic = kea({
 						roles: updatedRoles
 					}
 				}
+			}
+		],
+		list: [
+			{
+				listTitle: 'List',
+				list: '<li></li>'
+			},
+			{
+				updateListTitle: (
+					state: { listTitle: string; content: string },
+					{ listTitle }: { listTitle: string }
+				) => ({ ...state, listTitle }),
+				updateList: (
+					state: { listTitle: string; list: string },
+					{ list }: { list: string }
+				) => ({ ...state, list })
 			}
 		]
 	}

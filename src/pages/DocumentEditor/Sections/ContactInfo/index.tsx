@@ -14,11 +14,7 @@ import {
 	EditOutlined
 } from '@ant-design/icons'
 
-import {
-	ContactContainer,
-	ContactInformation,
-	EditContactInfo
-} from './ContactInfo.styles'
+import { ContactContainer, ContactInformation } from './ContactInfo.styles'
 
 const iconsMap: any = {
 	EMAIL: <MailOutlined style={{ fontSize: 17, marginRight: 8 }} />,
