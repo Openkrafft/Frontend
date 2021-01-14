@@ -86,6 +86,10 @@ export const EditRole = Style.button`
     color: #fff;
     cursor: pointer;
     transition: .1s;
+
+    &:hover {
+        background: #166cbb
+    }
 `
 export const DeleteRole = Style(EditRole)`
     top: 40px

@@ -60,11 +60,15 @@ export const EditHeader = Style.button`
     outline: none;
     display: none;
     position: absolute;
-    right: -35px;
+    right: 0;
     background: #1890ff;
     padding: 8px 10px;
-    top: 0px;
+    top: -38px;
     color: #fff;
     cursor: pointer;
     transition: .1s;
+
+    &:hover {
+        background: #166cbb
+    }
 `
