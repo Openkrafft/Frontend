@@ -39,6 +39,7 @@ export const AddSection = Style(EditSection)``
 
 export const SectionTitle = Style.div`
     .section-title {
+        margin-bottom: 15px;
         width: 100%;
         color: #192a56;
         font-size: 25px;

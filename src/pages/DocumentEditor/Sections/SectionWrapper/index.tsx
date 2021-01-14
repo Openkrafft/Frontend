@@ -16,8 +16,8 @@ import {
 
 interface SectionProps {
 	children: React.ReactNode
-	showSectionTitle: boolean
-	sectionTitle: string
+	showSectionTitle?: boolean
+	sectionTitle?: string
 	showAddButton?: boolean
 	showEditButton?: boolean
 	showRemoveButton?: boolean
@@ -32,7 +32,7 @@ const Section: React.FC<SectionProps> = ({
 	showEditButton = true,
 	showRemoveButton = true,
 	showSectionTitle = true,
-	sectionTitle,
+	sectionTitle = '',
 	onAddClick,
 	onEditClick,
 	onDeleteClick

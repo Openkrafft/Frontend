@@ -11,6 +11,7 @@ import {
 const editorLogic = kea({
 	actions: {
 		addSection: (section: Section) => ({ section }),
+		deleteSection: (section: Section) => ({ section }),
 		updateSectionTitle: (sectionTitle: string) => ({ sectionTitle }),
 		updateHeader: ({ name, title, summary }: Header) => ({
 			name,
