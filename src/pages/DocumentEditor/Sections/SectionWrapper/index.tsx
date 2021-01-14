@@ -1,6 +1,4 @@
 import React, { useRef, useState } from 'react'
-import { useActions } from 'kea'
-import editorLogic from '../../logic'
 import ContentEditable from 'react-contenteditable'
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
