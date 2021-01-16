@@ -5,7 +5,8 @@ import {
 	Header,
 	Contact,
 	ContactType,
-	Section
+	Section,
+	School
 } from './types'
 
 const editorLogic = kea({
@@ -28,8 +29,33 @@ const editorLogic = kea({
 		updateListTitle: (listTitle: string) => ({ listTitle }),
 		updateTextTitle: (textTitle: string) => ({ textTitle }),
 		updateText: (text: string) => ({ text }),
+		updateEducationTitle: (educationTitle: string) => ({ educationTitle }),
+		addSchool: (school: School) => ({ school }),
+		deleteSchool: (id: School) => ({ id }),
 		updateExperienceTitle: (experienceTitle: string) => ({ experienceTitle }),
 		addRole: (role: IRole) => ({ role }),
+		updateSchool: ({
+			id,
+			schoolName,
+			degree,
+			date,
+			description
+		}: {
+			id: number
+			schoolName: string
+			degree: string
+			date: {
+				startDate: string
+				endDate: string
+			}
+			description: string
+		}) => ({
+			id,
+			schoolName,
+			degree,
+			date,
+			description
+		}),
 		deleteRole: (roleId: number) => ({ roleId }),
 		updateRole: ({
 			id,
@@ -57,7 +83,7 @@ const editorLogic = kea({
 
 	reducers: {
 		sections: [
-			[ 'contactInfo', 'skills', 'list' ],
+			[ 'contactInfo', 'skills', 'list', 'education' ],
 			{
 				addSection: (state: Section[], { section }: { section: Section }) => [
 					...state,
@@ -143,6 +169,83 @@ const editorLogic = kea({
 					state: { skillsTitle: string; skillsList: string },
 					{ skillsList }: { skillsList: string }
 				) => ({ ...state, skillsList })
+			}
+		],
+		education: [
+			{
+				educationTitle: 'Education',
+				schools: [
+					{
+						id: 6546857654654,
+						schoolName: 'Harvard',
+						degree: 'Bachelore degree in compouter science',
+						date: {
+							startDate: '01/2020',
+							endDate: '02/2020'
+						},
+						description: '<li></li>'
+					}
+				]
+			},
+			{
+				updateEducationTitle: (
+					state: { educationTitle: string; schools: any },
+					{ educationTitle }: { educationTitle: string }
+				) => ({ ...state, educationTitle }),
+				addSchool: (
+					state: { educationTitle: string; schools: any },
+					{ school }: { school: any }
+				) => {
+					const updatedSchools = [ ...state.schools, school ]
+					return {
+						...state,
+						schools: updatedSchools
+					}
+				},
+				deleteSchool: (
+					state: { educationTitle: string; schools: School[] },
+					{ id }: { id: number }
+				) => {
+					const updatedSchools = state.schools.filter(
+						(school) => school.id !== id
+					)
+					return {
+						...state,
+						schools: updatedSchools
+					}
+				},
+				updateSchool: (
+					state: { educationTitle: string; schools: School[] },
+					{
+						id,
+						schoolName,
+						degree,
+						date,
+						description
+					}: {
+						id: number
+						schoolName: string
+						degree: string
+						date: {
+							startDate: string
+							endDate: string
+						}
+						description: string
+					}
+				) => {
+					const { schools } = state
+					const updatedSchools = schools.map(
+						(school) =>
+							school.id === id
+								? { ...school, schoolName, degree, date, description }
+								: school
+					)
+
+					return {
+						...state,
+						schools: updatedSchools
+					}
+				}
 			}
 		],
 		experience: [

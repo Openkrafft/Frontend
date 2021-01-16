@@ -38,8 +38,20 @@ export type Section =
 	| 'interests'
 	| 'list'
 	| 'text'
+	| 'education'
 
 export interface Contact {
 	contactType: ContactType
 	contactInfo: string
+}
+
+export interface School {
+	id: number
+	schoolName: string
+	degree: string
+	date: {
+		startDate: string
+		endDate: string
+	}
+	description: string
 }
