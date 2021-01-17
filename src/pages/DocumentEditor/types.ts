@@ -34,7 +34,7 @@ export type Section =
 	| 'contactInfo'
 	| 'skills'
 	| 'experience'
-	| 'portfolio'
+	| 'projects'
 	| 'interests'
 	| 'list'
 	| 'text'
@@ -54,4 +54,11 @@ export interface School {
 		endDate: string
 	}
 	description: string
+}
+
+export interface Project {
+	id: number
+	projectName: string
+	link?: string
+	projectDescription: string
 }

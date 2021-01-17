@@ -22,7 +22,8 @@ const ToolBar: React.FC = () => {
 		skills: 'Add Skills',
 		experience: 'Add Experience',
 		portfolio: 'Add Portfolio',
-		education: 'Add Education'
+		education: 'Add Education',
+		projects: 'Add Projects'
 	}
 	const sectionsToDisplay = Object.keys(documentSections).filter(
 		(section: string) => !currentSections.includes(section)

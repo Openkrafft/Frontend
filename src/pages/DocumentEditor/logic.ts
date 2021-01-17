@@ -6,7 +6,8 @@ import {
 	Contact,
 	ContactType,
 	Section,
-	School
+	School,
+	Project
 } from './types'
 
 const editorLogic = kea({
@@ -29,6 +30,16 @@ const editorLogic = kea({
 		updateListTitle: (listTitle: string) => ({ listTitle }),
 		updateTextTitle: (textTitle: string) => ({ textTitle }),
 		updateText: (text: string) => ({ text }),
+		updateProjectsTitle: (projectsTitle: string) => ({ projectsTitle }),
+		addProject: (project: Project) => ({ project }),
+		deleteProject: (projectId: number) => ({ projectId }),
+
+		updateProject: ({ id, projectName, link, projectDescription }: Project) => ({
+			id,
+			projectName,
+			link,
+			projectDescription
+		}),
 		updateEducationTitle: (educationTitle: string) => ({ educationTitle }),
 		addSchool: (school: School) => ({ school }),
 		deleteSchool: (id: School) => ({ id }),
@@ -137,10 +148,7 @@ const editorLogic = kea({
 				}
 			],
 			{
-				addContact: (state: Contact[], contact: Contact) => [
-					...state,
-					contact
-				],
+				addContact: (state: Contact[], contact: Contact) => [ ...state, contact ],
 				updateContact: (
 					state: Contact[],
 					{
@@ -149,8 +157,7 @@ const editorLogic = kea({
 					}: { contactInfo: string; contactType: ContactType }
 				) => {
 					return state.map(
-						(contact) =>
-							contact.contactType === contactType ? contactInfo : contact
+						(contact) => (contact.contactType === contactType ? contactInfo : contact)
 					)
 				}
 			}
@@ -171,6 +178,69 @@ const editorLogic = kea({
 				) => ({ ...state, skillsList })
 			}
 		],
+		projects: [
+			{
+				projectsTitle: 'Projects',
+				projects: [
+					{
+						id: 654687654654,
+						projectName: 'MyApp',
+						link: 'www.github.com/myapp-repo',
+						projectDescription: ''
+					}
+				]
+			},
+			{
+				updateProjectsTitle: (
+					state: { projectsTitle: string; projects: Project[] },
+					{ projectsTitle }: { projectsTitle: string }
+				) => ({ ...state, projectsTitle }),
+				addProject: (
+					state: { projectsTitle: string; projects: Project[] },
+					{ project }: { project: Project[] }
+				) => {
+					const updatedProjects = [ ...state.projects, project ]
+					return {
+						...state,
+						projects: updatedProjects
+					}
+				},
+				deleteProject: (
+					state: { projectsTitle: string; projects: Project[] },
+					{ projectId }: { projectId: number }
+				) => {
+					const updatedProjects = state.projects.filter(
+						(project) => project.id !== projectId
+					)
+					return {
+						...state,
+						projects: updatedProjects
+					}
+				},
+				updateProject: (
+					state: { projectTitle: string; projects: Project[] },
+					{ id, projectName, link, projectDescription }: Project
+				) => {
+					const { projects } = state
+					const updatedProjects = projects.map(
+						(project: Project) =>
+							project.id === id
+								? {
+										...project,
+										projectName,
+										link,
+										projectDescription
+									}
+								: project
+					)
+
+					return {
+						...state,
+						projects: updatedProjects
+					}
+				}
+			}
+		],
 		education: [
 			{
 				educationTitle: 'Education',
@@ -189,11 +259,11 @@ const editorLogic = kea({
 			},
 			{
 				updateEducationTitle: (
-					state: { educationTitle: string; schools: any },
+					state: { educationTitle: string; schools: School[] },
 					{ educationTitle }: { educationTitle: string }
 				) => ({ ...state, educationTitle }),
 				addSchool: (
-					state: { educationTitle: string; schools: any },
+					state: { educationTitle: string; schools: School[] },
 					{ school }: { school: any }
 				) => {
 					const updatedSchools = [ ...state.schools, school ]
@@ -206,9 +276,7 @@ const editorLogic = kea({
 					state: { educationTitle: string; schools: School[] },
 					{ id }: { id: number }
 				) => {
-					const updatedSchools = state.schools.filter(
-						(school) => school.id !== id
-					)
+					const updatedSchools = state.schools.filter((school) => school.id !== id)
 					return {
 						...state,
 						schools: updatedSchools
@@ -284,9 +352,7 @@ const editorLogic = kea({
 					roles: [ ...state.roles, role ]
 				}),
 				deleteRole: (state: Experience, { roleId }: { roleId: number }) => {
-					const updatedRoles = state.roles.filter(
-						(role) => role.roleId !== roleId
-					)
+					const updatedRoles = state.roles.filter((role) => role.roleId !== roleId)
 					return {
 						...state,
 						roles: updatedRoles
