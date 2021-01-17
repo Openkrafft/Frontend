@@ -9,6 +9,7 @@ import Experience from '../Sections/Experience'
 import List from '../Sections/List'
 import Text from '../Sections/Text'
 import Education from '../Sections/Education'
+import Projects from '../Sections/Projects'
 
 import { Document as PageContainer } from './Document.styles'
 
@@ -24,7 +25,8 @@ const Document: React.FC = () => {
 		portfolio: <Portfolio />,
 		list: <List />,
 		text: <Text />,
-		education: <Education />
+		education: <Education />,
+		projects: <Projects />
 	}
 	return (
 		<PageContainer id='resume-content' style={{ zoom: `${zoom}%` }}>
