@@ -62,3 +62,7 @@ export interface Project {
 	link?: string
 	projectDescription: string
 }
+
+export type DocumentSections = {
+	(sectionName: Section): string
+}

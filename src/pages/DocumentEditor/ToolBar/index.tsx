@@ -1,6 +1,7 @@
 import React from 'react'
 import { useValues, useActions } from 'kea'
 import editorLogic from '../logic'
+import globalLogic from '../../../logic'
 import { Menu, Dropdown, Tooltip } from 'antd'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -16,6 +17,7 @@ import { ToolBarContainer, ToolButton } from './ToolBar.styles.js'
 
 const ToolBar: React.FC = () => {
 	const { addSection } = useActions(editorLogic)
+	const { toggleDrawer } = useActions(globalLogic)
 	const { sections: currentSections } = useValues(editorLogic)
 	const documentSections: any = {
 		contactInfo: 'Add Contact Info',
@@ -56,7 +58,8 @@ const ToolBar: React.FC = () => {
 				</ToolButton>
 			</Tooltip>
 			<Tooltip placement='right' title={'Edit Content'}>
-				<ToolButton>
+				<ToolButton
+					onClick={() => toggleDrawer({ isVisible: true, section: 'ALL' })}>
 					<FormOutlined />
 				</ToolButton>
 			</Tooltip>

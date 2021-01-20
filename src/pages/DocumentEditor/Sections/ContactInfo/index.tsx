@@ -15,6 +15,7 @@ import {
 } from '@ant-design/icons'
 
 import { ContactContainer, ContactInformation } from './ContactInfo.styles'
+import globalLogic from 'src/logic'
 
 const iconsMap: any = {
 	EMAIL: <MailOutlined style={{ fontSize: 17, marginRight: 8 }} />,
@@ -28,12 +29,16 @@ const iconsMap: any = {
 
 const ContactInfo: React.FC = () => {
 	const { contacts } = useValues(editorLogic)
+	const { toggleDrawer } = useActions(globalLogic)
 	const { addContact, updateContact, deleteSection } = useActions(editorLogic)
 	return (
 		<Section
 			showSectionTitle={false}
 			showAddButton
-			onDeleteClick={() => deleteSection('contactInfo')}>
+			showEditButton
+			onDeleteClick={() => deleteSection('contactInfo')}
+			onEditClick={() =>
+				toggleDrawer({ isVisible: true, section: 'contactInfo' })}>
 			<ContactContainer>
 				{contacts.map((contact: Contact) => (
 					<ContactInformation key={contact.contactType}>

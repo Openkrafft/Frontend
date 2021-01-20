@@ -23,6 +23,7 @@ const Projects: React.FC = () => {
 			showSectionTitle
 			showAddButton
 			sectionTitle={projectsTitle}
+			onChange={(e) => updateProjectsTitle(e.target.value)}
 			onDeleteClick={() => deleteSection('projects')}
 			onAddClick={() => addProject(newProject)}>
 			{projects.map((project: ProjectType) => (
