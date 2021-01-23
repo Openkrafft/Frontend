@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import _ from 'lodash'
 import { useValues, useActions } from 'kea'
 import editorLogic from '../../logic'
-import { Select, Row, Col, Input, Button, Form } from 'antd'
+import { Select, Row, Col, Input, Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { Contact } from '../../types'
 import {
