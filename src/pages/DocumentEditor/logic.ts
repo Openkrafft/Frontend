@@ -19,7 +19,14 @@ const editorLogic = kea({
 			title,
 			summary
 		}),
-		addContact: (contact: Contact) => ({ contact }),
+		addContact: ({
+			contactType,
+			contactInfo
+		}: {
+			contactType: string
+			contactInfo: string
+		}) => ({ contactType, contactInfo }),
+		deleteContact: (contactType: ContactType) => ({ contactType }),
 		updateContact: (contactInfo: string, contactType: ContactType) => ({
 			contactInfo,
 			contactType
@@ -148,7 +155,15 @@ const editorLogic = kea({
 				}
 			],
 			{
-				addContact: (state: Contact[], contact: Contact) => [ ...state, contact ],
+				addContact: (
+					state: Contact[],
+					{ contactType, contactInfo }: { contactType: string; contactInfo: string }
+				) => [ ...state, { contactType, contactInfo } ],
+				deleteContact: (
+					state: Contact[],
+					{ contactType }: { contactType: ContactType }
+				) =>
+					state.filter((contact: Contact) => contact.contactType !== contactType),
 				updateContact: (
 					state: Contact[],
 					{

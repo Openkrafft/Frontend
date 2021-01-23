@@ -57,7 +57,7 @@ const SectionEditor: React.FC = () => {
 			placement='right'
 			onClose={() => toggleDrawer({ isVisible: false, section: sectionName })}
 			visible={isVisible}
-			width={500}>
+			width={520}>
 			{section === 'ALL' ? renderEditAll : sectionEditors[section]}
 		</Drawer>
 	)
