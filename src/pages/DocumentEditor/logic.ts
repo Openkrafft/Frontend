@@ -10,6 +10,8 @@ import {
 	Project
 } from './types'
 
+import { extractTextFromHTML } from '../../utils'
+
 const editorLogic = kea({
 	actions: {
 		addSection: (section: Section) => ({ section }),
@@ -32,6 +34,8 @@ const editorLogic = kea({
 			contactType
 		}),
 		updateSkills: (skillsList: string) => ({ skillsList }),
+		addSkills: (skill: string) => ({ skill }),
+		removeSkills: (skill: string) => ({ skill }),
 		updateSkillsTitle: (skillsTitle: string) => ({ skillsTitle }),
 		updateList: (list: string) => ({ list }),
 		updateListTitle: (listTitle: string) => ({ listTitle }),
@@ -190,7 +194,35 @@ const editorLogic = kea({
 				updateSkills: (
 					state: { skillsTitle: string; skillsList: string },
 					{ skillsList }: { skillsList: string }
-				) => ({ ...state, skillsList })
+				) => ({ ...state, skillsList }),
+				addSkills: (
+					state: { skillsTitle: string; skillsList: string },
+					{ skill }: { skill: string }
+				) => {
+					let skills = extractTextFromHTML(state.skillsList)
+
+					if (!skills.length) {
+						return {
+							...state,
+							skillsList: `<li>${skill}</li>`
+						}
+					} else {
+						return {
+							...state,
+							skillsList: `<li>${skills.join('</li><li>')}</li><li>${skill}</li>`
+						}
+					}
+				},
+				removeSkills: (
+					state: { skillsTitle: string; skillsList: string },
+					{ skill }: { skill: string }
+				) => {
+					const skills = extractTextFromHTML(state.skillsList.replace(skill, ''))
+					return {
+						...state,
+						skillsList: `<li>${skills.join('</li><li>')}</li>`
+					}
+				}
 			}
 		],
 		projects: [
