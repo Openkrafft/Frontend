@@ -17,17 +17,25 @@ const SkillsEditor: React.FC = () => {
 				<Col>
 					<Input
 						placeholder='Add new skill'
-						style={{ width: 300, marginBottom: 10 }}
+						style={{ width: 350, marginBottom: 10 }}
 						value={skill}
 						onChange={(e) => setSkill(e.target.value)}
+						onPressEnter={() => {
+							if (skill) {
+								addSkills(skill)
+								setSkill('')
+							}
+						}}
 					/>
 				</Col>
 				<Col style={{ paddingLeft: 0 }}>
 					<Button
 						icon={<PlusOutlined />}
 						onClick={() => {
-							addSkills(skill)
-							setSkill('')
+							if (skill) {
+								addSkills(skill)
+								setSkill('')
+							}
 						}}>
 						Add
 					</Button>
