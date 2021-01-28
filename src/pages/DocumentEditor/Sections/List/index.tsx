@@ -13,6 +13,7 @@ const List: React.FC = () => {
 
 	return (
 		<Section
+			showEditButton={false}
 			showSectionTitle
 			sectionTitle={listTitle}
 			onChange={(e) => updateListTitle(e.target.value)}

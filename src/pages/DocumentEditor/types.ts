@@ -66,3 +66,12 @@ export interface Project {
 export type DocumentSections = {
 	(sectionName: Section): string
 }
+
+export interface SkillSection {
+	skillsTitle: string
+	skillsList: string
+}
+
+export interface SkillsSections {
+	[id: string]: SkillSection
+}

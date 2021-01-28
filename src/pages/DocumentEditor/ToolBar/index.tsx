@@ -16,27 +16,47 @@ import {
 import { ToolBarContainer, ToolButton } from './ToolBar.styles.js'
 
 const ToolBar: React.FC = () => {
-	const { addSection } = useActions(editorLogic)
+	const { addSection, addSkillsSection } = useActions(editorLogic)
 	const { toggleDrawer } = useActions(globalLogic)
 	const { sections: currentSections } = useValues(editorLogic)
 	const documentSections: any = {
 		contactInfo: 'Add Contact Info',
-		skills: 'Add Skills',
 		experience: 'Add Experience',
-		portfolio: 'Add Portfolio',
 		education: 'Add Education',
 		projects: 'Add Projects'
 	}
 	const sectionsToDisplay = Object.keys(documentSections).filter(
 		(section: string) => !currentSections.includes(section)
 	)
+
 	const menu = (
 		<Menu>
-			<Menu.Item onClick={() => addSection('list')} key={1}>
-				Add List
+			<Menu.Item
+				onClick={() => {
+					const id = uuidv4()
+					addSection(`list-${id}`)
+					addSkillsSection(`list-${id}`)
+				}}
+				key={1}>
+				Add List Section
 			</Menu.Item>
-			<Menu.Item onClick={() => addSection('text')} key={2}>
-				Add Text
+			<Menu.Item
+				onClick={() => {
+					const id = uuidv4()
+					addSection(`text-${id}`)
+					addSkillsSection(`text-${id}`)
+				}}
+				key={2}>
+				Add Text Section
+			</Menu.Item>
+			<Menu.Item
+				onClick={() => {
+					const id = uuidv4()
+					addSection(`skills-${id}`)
+					addSkillsSection(`skills-${id}`)
+				}}
+				key={3}>
+				Add Skills Section
 			</Menu.Item>
 			{sectionsToDisplay.map((section: string) => (
 				<Menu.Item onClick={() => addSection(section)} key={uuidv4()}>

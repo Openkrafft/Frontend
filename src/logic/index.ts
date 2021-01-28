@@ -7,11 +7,13 @@ const globalLogic = kea({
 		zoomOut: (zoomValue: number) => ({ zoomValue }),
 		toggleDrawer: ({
 			isVisible,
-			section
+			section,
+			sectionId = ''
 		}: {
 			isVisible: boolean
 			section: Section | 'ALL'
-		}) => ({ isVisible, section })
+			sectionId: string
+		}) => ({ isVisible, section, sectionId })
 	},
 	reducers: {
 		zoom: [
@@ -26,16 +28,22 @@ const globalLogic = kea({
 		drawer: [
 			{
 				isVisible: false,
-				section: 'ALL'
+				section: 'ALL',
+				sectionId: ''
 			},
 			{
 				toggleDrawer: (
 					state: {
 						isVisible: boolean
 						section: Section | 'ALL'
+						sectionId: ''
 					},
-					{ isVisible, section }: { isVisible: boolean; section: Section | 'ALL' }
-				) => ({ isVisible, section })
+					{
+						isVisible,
+						section,
+						sectionId
+					}: { isVisible: boolean; section: Section | 'ALL'; sectionId: string }
+				) => ({ isVisible, section, sectionId })
 			}
 		]
 	}

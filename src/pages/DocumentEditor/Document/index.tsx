@@ -17,10 +17,9 @@ import './styles.css'
 
 const Document: React.FC = () => {
 	const { zoom } = useValues(globalLogic)
-	const { sections: currentSections } = useValues(editorLogic)
+	const { sections: currentSections, skills } = useValues(editorLogic)
 	const sections: any = {
 		contactInfo: <ContactInfo />,
-		skills: <Skills />,
 		experience: <Experience />,
 		portfolio: <Portfolio />,
 		list: <List />,
@@ -28,11 +27,18 @@ const Document: React.FC = () => {
 		education: <Education />,
 		projects: <Projects />
 	}
+
 	return (
 		<PageContainer id='resume-content' style={{ zoom: `${zoom}%` }}>
 			<Header />
 			{currentSections.map((section: string) => (
-				<div key={section}>{sections[section]}</div>
+				<div key={section}>
+					{/skills/.test(section) ? (
+						<Skills id={section} skills={skills[section]} />
+					) : (
+						sections[section]
+					)}
+				</div>
 			))}
 		</PageContainer>
 	)

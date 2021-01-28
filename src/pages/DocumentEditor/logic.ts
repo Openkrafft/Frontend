@@ -7,9 +7,10 @@ import {
 	ContactType,
 	Section,
 	School,
-	Project
+	Project,
+	SkillsSections
 } from './types'
-
+import _ from 'lodash'
 import { extractTextFromHTML } from '../../utils'
 
 const editorLogic = kea({
@@ -33,10 +34,18 @@ const editorLogic = kea({
 			contactInfo,
 			contactType
 		}),
-		updateSkills: (skillsList: string) => ({ skillsList }),
-		addSkills: (skill: string) => ({ skill }),
-		removeSkills: (skill: string) => ({ skill }),
-		updateSkillsTitle: (skillsTitle: string) => ({ skillsTitle }),
+		updateSkills: (skillsList: string, sectionId: number) => ({
+			skillsList,
+			sectionId
+		}),
+		addSkillsSection: (sectionId: string) => ({ sectionId }),
+		removeSkillsSection: (sectionId: string) => ({ sectionId }),
+		addSkills: (skill: string, sectionId: number) => ({ skill, sectionId }),
+		removeSkills: (skill: string, sectionId: number) => ({ skill, sectionId }),
+		updateSkillsTitle: (skillsTitle: string, sectionId: number) => ({
+			skillsTitle,
+			sectionId
+		}),
 		updateList: (list: string) => ({ list }),
 		updateListTitle: (listTitle: string) => ({ listTitle }),
 		updateTextTitle: (textTitle: string) => ({ textTitle }),
@@ -105,7 +114,7 @@ const editorLogic = kea({
 
 	reducers: {
 		sections: [
-			[ 'contactInfo', 'skills', 'list', 'education' ],
+			[ 'contactInfo', 'education' ],
 			{
 				addSection: (state: Section[], { section }: { section: Section }) => [
 					...state,
@@ -182,45 +191,66 @@ const editorLogic = kea({
 			}
 		],
 		skills: [
+			{},
 			{
-				skillsTitle: 'Skills',
-				skillsList: '<li></li>'
-			},
-			{
-				updateSkillsTitle: (
-					state: { skillsTitle: string; content: string },
-					{ skillsTitle }: { skillsTitle: string }
-				) => ({ ...state, skillsTitle }),
-				updateSkills: (
-					state: { skillsTitle: string; skillsList: string },
-					{ skillsList }: { skillsList: string }
-				) => ({ ...state, skillsList }),
-				addSkills: (
-					state: { skillsTitle: string; skillsList: string },
-					{ skill }: { skill: string }
+				addSkillsSection: (
+					state: SkillsSections,
+					{ sectionId }: { sectionId: string }
+				) => ({
+					...state,
+					[sectionId]: { skillsTitle: 'skills', skillsList: '<li></li>' }
+				}),
+				removeSkillsSection: (
+					state: SkillsSections,
+					{ sectionId }: { sectionId: string }
 				) => {
-					let skills = extractTextFromHTML(state.skillsList)
+					let updatedState = _.omit(state, sectionId)
+					return updatedState
+				},
+				updateSkillsTitle: (
+					state: SkillsSections,
+					{ skillsTitle, sectionId }: { skillsTitle: string; sectionId: number }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], skillsTitle } }),
+				updateSkills: (
+					state: SkillsSections,
+					{ skillsList, sectionId }: { skillsList: string; sectionId: number }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], skillsList } }),
+				addSkills: (
+					state: SkillsSections,
+					{ skill, sectionId }: { skill: string; sectionId: number }
+				) => {
+					let currentSkillsSection = state[sectionId]
+					let skills = extractTextFromHTML(currentSkillsSection.skillsList)
 
 					if (!skills.length) {
 						return {
 							...state,
-							skillsList: `<li>${skill}</li>`
+							[sectionId]: { ...state[sectionId], skillsList: `<li>${skill}</li>` }
 						}
 					} else {
 						return {
 							...state,
-							skillsList: `<li>${skills.join('</li><li>')}</li><li>${skill}</li>`
+							[sectionId]: {
+								...state[sectionId],
+								skillsList: `<li>${skills.join('</li><li>')}</li><li>${skill}</li>`
+							}
 						}
 					}
 				},
 				removeSkills: (
-					state: { skillsTitle: string; skillsList: string },
-					{ skill }: { skill: string }
+					state: SkillsSections,
+					{ skill, sectionId }: { skill: string; sectionId: number }
 				) => {
-					const skills = extractTextFromHTML(state.skillsList.replace(skill, ''))
+					let currentSkillsSection = state[sectionId]
+					const skills = extractTextFromHTML(
+						currentSkillsSection.skillsList.replace(skill, '')
+					)
 					return {
 						...state,
-						skillsList: `<li>${skills.join('</li><li>')}</li>`
+						[sectionId]: {
+							...state[sectionId],
+							skillsList: `<li>${skills.join('</li><li>')}</li>`
+						}
 					}
 				}
 			}
