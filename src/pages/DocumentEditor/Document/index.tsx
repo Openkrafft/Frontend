@@ -22,7 +22,6 @@ const Document: React.FC = () => {
 		contactInfo: <ContactInfo />,
 		experience: <Experience />,
 		portfolio: <Portfolio />,
-		list: <List />,
 		text: <Text />,
 		education: <Education />,
 		projects: <Projects />
@@ -35,6 +34,8 @@ const Document: React.FC = () => {
 				<div key={section}>
 					{/skills/.test(section) ? (
 						<Skills id={section} skills={skills[section]} />
+					) : /list/.test(section) ? (
+						<List />
 					) : (
 						sections[section]
 					)}

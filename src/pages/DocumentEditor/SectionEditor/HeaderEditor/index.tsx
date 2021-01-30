@@ -9,7 +9,6 @@ const summaryPlaceholder =
 const HeaderEditor: React.FC = () => {
 	const { updateHeader } = useActions(editorLogic)
 	const { header: { name, title, summary } } = useValues(editorLogic)
-	console.log(name)
 	return (
 		<Form layout='vertical' hideRequiredMark>
 			<Row gutter={16} style={{ marginLeft: 0 }}>

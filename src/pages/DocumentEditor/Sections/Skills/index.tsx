@@ -35,8 +35,7 @@ const Skills: React.FC<SkillsProps> = ({
 				deleteSection(id)
 				removeSkillsSection(id)
 			}}
-			onEditClick={() =>
-				toggleDrawer({ isVisible: true, section: 'skills', sectionId: id })}>
+			onEditClick={() => toggleDrawer({ isVisible: true, section: id })}>
 			<List>
 				<ContentEditable
 					data-placeholder='Section title'

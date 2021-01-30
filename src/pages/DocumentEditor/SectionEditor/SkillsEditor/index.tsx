@@ -4,13 +4,15 @@ import editorLogic from '../../logic'
 import { Form, Row, Input, Button, Col } from 'antd'
 import { extractTextFromHTML } from 'src/utils'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
-import globalLogic from 'src/logic'
 
-const SkillsEditor: React.FC = () => {
-	const { drawer: { sectionId } } = useValues(globalLogic)
+type SkillsEditorProps = {
+	id?: string
+}
+
+const SkillsEditor: React.FC<SkillsEditorProps> = ({ id }) => {
 	const { skills } = useValues(editorLogic)
 	const { addSkills, removeSkills } = useActions(editorLogic)
-	const skillsList = extractTextFromHTML(skills[sectionId].skillsList)
+	const skillsList = extractTextFromHTML(skills[id!].skillsList)
 	const [ skill, setSkill ] = useState('')
 
 	return (
@@ -24,7 +26,7 @@ const SkillsEditor: React.FC = () => {
 						onChange={(e) => setSkill(e.target.value)}
 						onPressEnter={() => {
 							if (skill) {
-								addSkills(skill, sectionId)
+								addSkills(skill, id)
 								setSkill('')
 							}
 						}}
@@ -35,7 +37,7 @@ const SkillsEditor: React.FC = () => {
 						icon={<PlusOutlined />}
 						onClick={() => {
 							if (skill) {
-								addSkills(skill, sectionId)
+								addSkills(skill, id)
 								setSkill('')
 							}
 						}}>
@@ -47,6 +49,7 @@ const SkillsEditor: React.FC = () => {
 				{skillsList.length ? (
 					skillsList.map((skill: string, index: number) => (
 						<div
+							key={`skill#${index}`}
 							style={{
 								display: 'flex',
 								justifyContent: 'space-between',
@@ -59,7 +62,7 @@ const SkillsEditor: React.FC = () => {
 							</li>
 							<DeleteOutlined
 								style={{ cursor: 'pointer' }}
-								onClick={() => removeSkills(skill, sectionId)}
+								onClick={() => removeSkills(skill, id)}
 							/>
 						</div>
 					))
