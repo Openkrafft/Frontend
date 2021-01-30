@@ -31,7 +31,7 @@ const Document: React.FC = () => {
 		<PageContainer id='resume-content' style={{ zoom: `${zoom}%` }}>
 			<Header />
 			{currentSections.map((section: string) => (
-				<div key={section}>
+				<div key={section} style={{ marginBottom: 10 }}>
 					{/skills/.test(section) ? (
 						<Skills id={section} skills={skills[section]} />
 					) : /list/.test(section) ? (
