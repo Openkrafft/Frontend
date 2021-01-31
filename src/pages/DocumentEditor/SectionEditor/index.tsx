@@ -46,6 +46,8 @@ const SectionEditor: React.FC = () => {
 						<h1>Edit {sectionName}</h1>
 						{/skills/.test(section) ? (
 							<SkillsEditor id={section} />
+						) : /list/.test(section) ? (
+							<ListEditor id={section} />
 						) : (
 							sectionEditors[section]
 						)}
@@ -66,6 +68,8 @@ const SectionEditor: React.FC = () => {
 				renderEditAll
 			) : /skills/.test(section) ? (
 				<SkillsEditor id={section} />
+			) : /list/.test(section) ? (
+				<ListEditor id={section} />
 			) : (
 				sectionEditors[section]
 			)}

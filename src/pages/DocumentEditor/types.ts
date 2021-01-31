@@ -72,6 +72,15 @@ export interface SkillSection {
 	skillsList: string
 }
 
+export interface ListSection {
+	listTitle: string
+	listContent: string
+}
+
+export interface ListSections {
+	[id: string]: ListSection
+}
+
 export interface SkillsSections {
 	[id: string]: SkillSection
 }

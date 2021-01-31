@@ -8,7 +8,9 @@ import {
 	Section,
 	School,
 	Project,
-	SkillsSections
+	SkillsSections,
+	ListSections,
+	ListSection
 } from './types'
 import _ from 'lodash'
 import { extractTextFromHTML } from '../../utils'
@@ -34,20 +36,36 @@ const editorLogic = kea({
 			contactInfo,
 			contactType
 		}),
-		updateSkills: (skillsList: string, sectionId: number) => ({
+		updateSkills: (skillsList: string, sectionId: string) => ({
 			skillsList,
 			sectionId
 		}),
 		addSkillsSection: (sectionId: string) => ({ sectionId }),
 		removeSkillsSection: (sectionId: string) => ({ sectionId }),
-		addSkills: (skill: string, sectionId: number) => ({ skill, sectionId }),
-		removeSkills: (skill: string, sectionId: number) => ({ skill, sectionId }),
-		updateSkillsTitle: (skillsTitle: string, sectionId: number) => ({
+		addSkills: (skill: string, sectionId: string) => ({ skill, sectionId }),
+		removeSkills: (skill: string, sectionId: string) => ({ skill, sectionId }),
+		updateSkillsTitle: (skillsTitle: string, sectionId: string) => ({
 			skillsTitle,
 			sectionId
 		}),
-		updateList: (list: string) => ({ list }),
-		updateListTitle: (listTitle: string) => ({ listTitle }),
+		addListSection: (sectionId: string) => ({ sectionId }),
+		removeListSection: (sectionId: string) => ({ sectionId }),
+		addListContent: (listContent: string, sectionId: string) => ({
+			listContent,
+			sectionId
+		}),
+		removeListContent: (listContent: string, sectionId: string) => ({
+			listContent,
+			sectionId
+		}),
+		updateList: (listContent: string, sectionId: string) => ({
+			listContent,
+			sectionId
+		}),
+		updateListTitle: (listTitle: string, sectionId: string) => ({
+			listTitle,
+			sectionId
+		}),
 		updateTextTitle: (textTitle: string) => ({ textTitle }),
 		updateText: (text: string) => ({ text }),
 		updateProjectsTitle: (projectsTitle: string) => ({ projectsTitle }),
@@ -187,6 +205,78 @@ const editorLogic = kea({
 					return state.map(
 						(contact) => (contact.contactType === contactType ? contactInfo : contact)
 					)
+				}
+			}
+		],
+		list: [
+			{},
+			{
+				addListSection: (
+					state: ListSections,
+					{ sectionId }: { sectionId: string }
+				) => ({
+					...state,
+					[sectionId]: { listTitle: 'list', listContent: '<li></li>' }
+				}),
+				removeListSection: (
+					state: ListSections,
+					{ sectionId }: { sectionId: string }
+				) => {
+					let updatedState = _.omit(state, sectionId)
+					return updatedState
+				},
+				updateListTitle: (
+					state: ListSections,
+					{ listTitle, sectionId }: { listTitle: string; sectionId: string }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], listTitle } }),
+				updateList: (
+					state: ListSections,
+					{ listContent, sectionId }: { listContent: string; sectionId: string }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], listContent } }),
+				addListContent: (
+					state: ListSections,
+					{ listContent, sectionId }: { listContent: string; sectionId: string }
+				) => {
+					let currentListSection = state[sectionId]
+					let currentListContent = extractTextFromHTML(
+						currentListSection.listContent
+					)
+
+					if (!currentListContent.length) {
+						return {
+							...state,
+							[sectionId]: {
+								...state[sectionId],
+								listContent: `<li>${listContent}</li>`
+							}
+						}
+					} else {
+						return {
+							...state,
+							[sectionId]: {
+								...state[sectionId],
+								listContent: `<li>${currentListContent.join(
+									'</li><li>'
+								)}</li><li>${listContent}</li>`
+							}
+						}
+					}
+				},
+				removeListContent: (
+					state: ListSections,
+					{ listContent, sectionId }: { listContent: string; sectionId: number }
+				) => {
+					let currentListSection = state[sectionId]
+					const currentListContent = extractTextFromHTML(
+						currentListSection.listContent.replace(listContent, '')
+					)
+					return {
+						...state,
+						[sectionId]: {
+							...state[sectionId],
+							listContent: `<li>${currentListContent.join('</li><li>')}</li>`
+						}
+					}
 				}
 			}
 		],
@@ -467,22 +557,6 @@ const editorLogic = kea({
 						roles: updatedRoles
 					}
 				}
-			}
-		],
-		list: [
-			{
-				listTitle: 'List',
-				list: '<li></li>'
-			},
-			{
-				updateListTitle: (
-					state: { listTitle: string; list: string },
-					{ listTitle }: { listTitle: string }
-				) => ({ ...state, listTitle }),
-				updateList: (
-					state: { listTitle: string; list: string },
-					{ list }: { list: string }
-				) => ({ ...state, list })
 			}
 		],
 		textSection: [

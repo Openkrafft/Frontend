@@ -16,7 +16,9 @@ import {
 import { ToolBarContainer, ToolButton } from './ToolBar.styles.js'
 
 const ToolBar: React.FC = () => {
-	const { addSection, addSkillsSection } = useActions(editorLogic)
+	const { addSection, addSkillsSection, addListSection } = useActions(
+		editorLogic
+	)
 	const { toggleDrawer } = useActions(globalLogic)
 	const { sections: currentSections } = useValues(editorLogic)
 	const documentSections: any = {
@@ -35,7 +37,7 @@ const ToolBar: React.FC = () => {
 				onClick={() => {
 					const id = uuidv4()
 					addSection(`list-${id}`)
-					addSkillsSection(`list-${id}`)
+					addListSection(`list-${id}`)
 				}}
 				key={1}>
 				Add List Section

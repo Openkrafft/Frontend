@@ -17,7 +17,7 @@ import './styles.css'
 
 const Document: React.FC = () => {
 	const { zoom } = useValues(globalLogic)
-	const { sections: currentSections, skills } = useValues(editorLogic)
+	const { skills, list, sections: currentSections } = useValues(editorLogic)
 	const sections: any = {
 		contactInfo: <ContactInfo />,
 		experience: <Experience />,
@@ -35,7 +35,7 @@ const Document: React.FC = () => {
 					{/skills/.test(section) ? (
 						<Skills id={section} skills={skills[section]} />
 					) : /list/.test(section) ? (
-						<List />
+						<List id={section} list={list[section]} />
 					) : (
 						sections[section]
 					)}
