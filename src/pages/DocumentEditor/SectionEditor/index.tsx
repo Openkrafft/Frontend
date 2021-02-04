@@ -23,15 +23,17 @@ const SectionEditor: React.FC = () => {
 	const { drawer: { isVisible, section } } = useValues(globalLogic)
 	const allSections = [ 'header', ...sections ]
 	const sectionName =
-		section === 'ALL' ? 'Edit document' : capitalizeFirstLetter(section)
+		section === 'ALL'
+			? 'Edit document'
+			: 'Edit ' + /(skills|list|text)/.test(section)
+				? capitalizeFirstLetter(extractTextFromUUID(section))
+				: section.charAt(0).toUpperCase() + section.slice(1)
 
 	const sectionEditors: any = {
 		header: <HeaderEditor />,
 		contactInfo: <ContactInfoEditor />,
 		experience: <ExperienceEditor />,
 		projects: <ProjectEditor />,
-		text: <TextEditor />,
-		list: <ListEditor />,
 		education: <EducationEditor />
 	}
 
@@ -48,6 +50,8 @@ const SectionEditor: React.FC = () => {
 							<SkillsEditor id={section} />
 						) : /list/.test(section) ? (
 							<ListEditor id={section} />
+						) : /text/.test(section) ? (
+							<TextEditor id={section} />
 						) : (
 							sectionEditors[section]
 						)}
@@ -70,6 +74,8 @@ const SectionEditor: React.FC = () => {
 				<SkillsEditor id={section} />
 			) : /list/.test(section) ? (
 				<ListEditor id={section} />
+			) : /text/.test(section) ? (
+				<TextEditor id={section} />
 			) : (
 				sectionEditors[section]
 			)}

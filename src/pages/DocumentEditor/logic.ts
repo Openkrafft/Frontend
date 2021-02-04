@@ -10,7 +10,7 @@ import {
 	Project,
 	SkillsSections,
 	ListSections,
-	ListSection
+	TextSections
 } from './types'
 import _ from 'lodash'
 import { extractTextFromHTML } from '../../utils'
@@ -66,8 +66,16 @@ const editorLogic = kea({
 			listTitle,
 			sectionId
 		}),
-		updateTextTitle: (textTitle: string) => ({ textTitle }),
-		updateText: (text: string) => ({ text }),
+		addTextSection: (sectionId: string) => ({ sectionId }),
+		removeTextSection: (sectionId: string) => ({ sectionId }),
+		updateTextTitle: (textTitle: string, sectionId: string) => ({
+			textTitle,
+			sectionId
+		}),
+		updateTextContent: (textContent: string, sectionId: string) => ({
+			textContent,
+			sectionId
+		}),
 		updateProjectsTitle: (projectsTitle: string) => ({ projectsTitle }),
 		addProject: (project: Project) => ({ project }),
 		deleteProject: (projectId: number) => ({ projectId }),
@@ -278,6 +286,33 @@ const editorLogic = kea({
 						}
 					}
 				}
+			}
+		],
+		textSection: [
+			{},
+			{
+				addTextSection: (
+					state: TextSections,
+					{ sectionId }: { sectionId: string }
+				) => ({
+					...state,
+					[sectionId]: { textTitle: 'Text Section', textContent: '' }
+				}),
+				removeTextSection: (
+					state: TextSections,
+					{ sectionId }: { sectionId: string }
+				) => {
+					let updatedState = _.omit(state, sectionId)
+					return updatedState
+				},
+				updateTextTitle: (
+					state: TextSections,
+					{ textTitle, sectionId }: { textTitle: string; sectionId: number }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], textTitle } }),
+				updateTextContent: (
+					state: TextSections,
+					{ textContent, sectionId }: { textContent: string; sectionId: number }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], textContent } })
 			}
 		],
 		skills: [
@@ -557,22 +592,6 @@ const editorLogic = kea({
 						roles: updatedRoles
 					}
 				}
-			}
-		],
-		textSection: [
-			{
-				textTitle: 'Text',
-				text: ''
-			},
-			{
-				updateTextTitle: (
-					state: { textTitle: string; text: string },
-					{ textTitle }: { textTitle: string }
-				) => ({ ...state, textTitle }),
-				updateText: (
-					state: { textTitle: string; text: string },
-					{ text }: { text: string }
-				) => ({ ...state, text })
 			}
 		]
 	}
