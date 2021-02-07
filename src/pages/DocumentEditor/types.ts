@@ -46,7 +46,7 @@ export interface Contact {
 }
 
 export interface School {
-	id: number
+	id: string
 	schoolName: string
 	degree: string
 	date: {
@@ -54,6 +54,13 @@ export interface School {
 		endDate: string
 	}
 	description: string
+}
+
+export interface EducationSection {
+	educationTitle: string
+	schools: {
+		[id: string]: School
+	}
 }
 
 export interface Project {

@@ -16,7 +16,7 @@ import {
 } from './School.styles'
 
 interface SchoolProps {
-	id: number
+	id: string
 	schoolName: string
 	degree: string
 	date: {

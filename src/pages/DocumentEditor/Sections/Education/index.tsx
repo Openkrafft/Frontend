@@ -3,6 +3,7 @@ import { useValues, useActions } from 'kea'
 import editorLogic from '../../logic'
 import Section from '../SectionWrapper'
 import School from './School'
+import { v4 as uuidv4 } from 'uuid'
 import { School as SchoolType } from '../../types'
 
 const Education: React.FC = () => {
@@ -11,7 +12,7 @@ const Education: React.FC = () => {
 		editorLogic
 	)
 	const newSchool: SchoolType = {
-		id: Math.floor(Math.random() * 1e8),
+		id: `school-${uuidv4()}`,
 		schoolName: '',
 		degree: '',
 		date: {
@@ -20,6 +21,7 @@ const Education: React.FC = () => {
 		},
 		description: '<li></li>'
 	}
+
 	return (
 		<Section
 			showSectionTitle
@@ -28,7 +30,7 @@ const Education: React.FC = () => {
 			onChange={(e) => updateEducationTitle(e.target.value)}
 			onDeleteClick={() => deleteSection('education')}
 			onAddClick={() => addSchool(newSchool)}>
-			{schools.map((school: SchoolType) => (
+			{Object.values(schools).map((school: any) => (
 				<School key={school.id} {...school} />
 			))}
 		</Section>
