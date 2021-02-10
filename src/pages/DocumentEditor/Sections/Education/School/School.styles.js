@@ -88,7 +88,7 @@ export const Description = Style.div`
     }
 `
 
-export const EditSchool = Style.button`
+export const DeleteSchool = Style.button`
     border: none;
     outline: none;
     display: none;
@@ -104,7 +104,4 @@ export const EditSchool = Style.button`
     &:hover {
         background: #166cbb
     }
-`
-export const DeleteSchool = Style(EditSchool)`
-    top: 40px
 `

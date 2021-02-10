@@ -5,8 +5,10 @@ import Section from '../SectionWrapper'
 import School from './School'
 import { v4 as uuidv4 } from 'uuid'
 import { School as SchoolType } from '../../types'
+import globalLogic from 'src/logic'
 
 const Education: React.FC = () => {
+	const { toggleDrawer } = useActions(globalLogic)
 	const { education: { educationTitle, schools } } = useValues(editorLogic)
 	const { addSchool, updateEducationTitle, deleteSection } = useActions(
 		editorLogic
@@ -29,7 +31,8 @@ const Education: React.FC = () => {
 			sectionTitle={educationTitle}
 			onChange={(e) => updateEducationTitle(e.target.value)}
 			onDeleteClick={() => deleteSection('education')}
-			onAddClick={() => addSchool(newSchool)}>
+			onAddClick={() => addSchool(newSchool)}
+			onEditClick={() => toggleDrawer({ isVisible: true, section: 'education' })}>
 			{Object.values(schools).map((school: any) => (
 				<School key={school.id} {...school} />
 			))}

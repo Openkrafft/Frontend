@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { useActions } from 'kea'
 import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined } from '@ant-design/icons'
 
 import {
 	SchoolContainer,
@@ -11,7 +11,6 @@ import {
 	Degree,
 	Date,
 	Description,
-	EditSchool,
 	DeleteSchool
 } from './School.styles'
 
@@ -47,9 +46,6 @@ const School: React.FC<SchoolProps> = ({
 		<SchoolContainer
 			onMouseOver={() => setEditVisibility(true)}
 			onMouseLeave={() => setEditVisibility(false)}>
-			<EditSchool style={{ display: isEditVisible ? 'block' : 'none' }}>
-				<EditOutlined />
-			</EditSchool>
 			<DeleteSchool
 				style={{ display: isEditVisible ? 'block' : 'none' }}
 				onClick={() => deleteSchool(id)}>

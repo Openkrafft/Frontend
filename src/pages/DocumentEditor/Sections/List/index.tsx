@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { useValues, useActions } from 'kea'
+import { useActions } from 'kea'
 import editorLogic from '../../logic'
 import globalLogic from 'src/logic'
 import Section from '../SectionWrapper'
