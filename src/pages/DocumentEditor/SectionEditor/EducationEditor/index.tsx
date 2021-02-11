@@ -2,18 +2,17 @@ import React from 'react'
 import { useActions, useValues } from 'kea'
 import editorLogic from '../../logic'
 import School from './SchoolEditor'
-import { Button, Input, Row } from 'antd'
+import { Row } from 'antd'
+import { School as SchoolType } from '../../types'
 
 const EducationEditor: React.FC = () => {
 	const { education: { schools } } = useValues(editorLogic)
-	const { addSchool } = useActions(editorLogic)
 
 	return (
 		<Row>
-			{Object.values(schools).map((school) => <School />)}
-			<Button type='dashed' block>
-				Add School
-			</Button>
+			{Object.values(schools).map((school: any) => (
+				<School key={school.id} {...school} />
+			))}
 		</Row>
 	)
 }

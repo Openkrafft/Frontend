@@ -1,5 +1,5 @@
 import React from 'react'
-import { Drawer } from 'antd'
+import { Button, Drawer } from 'antd'
 import { useValues, useActions } from 'kea'
 import globalLogic from '../../../logic'
 import editorLogic from '../logic'
@@ -13,14 +13,16 @@ import ProjectEditor from './ProjectsEditor'
 import TextEditor from './TextEditor'
 import ListEditor from './ListEditor'
 import EducationEditor from './EducationEditor'
-
+import { v4 as uuidv4 } from 'uuid'
+import { School as SchoolType } from '../types'
 import './styles.css'
 import { capitalizeFirstLetter, extractTextFromUUID } from 'src/utils'
 
 const SectionEditor: React.FC = () => {
 	const { toggleDrawer } = useActions(globalLogic)
-	const { sections } = useValues(editorLogic)
 	const { drawer: { isVisible, section } } = useValues(globalLogic)
+	const { sections } = useValues(editorLogic)
+	const { addSchool } = useActions(editorLogic)
 	const allSections = [ 'header', ...sections ]
 	const sectionName =
 		section === 'ALL'
@@ -67,6 +69,26 @@ const SectionEditor: React.FC = () => {
 			placement='right'
 			onClose={() => toggleDrawer({ isVisible: false, section: sectionName })}
 			visible={isVisible}
+			footer={
+				(section === 'education' || section === 'experience') && (
+					<Button
+						type='primary'
+						block
+						onClick={() =>
+							addSchool({
+								id: `school-${uuidv4()}`,
+								schoolName: '',
+								degree: '',
+								date: {
+									startDate: '',
+									endDate: ''
+								},
+								description: ''
+							})}>
+						Add {section === 'education' ? 'School' : 'Job'}
+					</Button>
+				)
+			}
 			width={520}>
 			{section === 'ALL' ? (
 				renderEditAll

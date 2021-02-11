@@ -456,7 +456,7 @@ const editorLogic = kea({
 							startDate: 'Start date',
 							endDate: 'End date'
 						},
-						description: '<li></li>'
+						description: ''
 					}
 				}
 			},
@@ -474,7 +474,7 @@ const editorLogic = kea({
 				},
 				deleteSchool: (
 					state: EducationSection,
-					{ sectionId }: { sectionId: number }
+					{ sectionId }: { sectionId: string }
 				) => {
 					const updatedSchools = _.omit(state.schools, sectionId)
 					return {

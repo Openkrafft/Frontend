@@ -118,6 +118,7 @@ const School: React.FC<SchoolProps> = ({
 			</Degree>
 			<Description>
 				<ContentEditable
+					data-placeholder='Add description'
 					className='description'
 					ref={descriptionRef}
 					html={description}
