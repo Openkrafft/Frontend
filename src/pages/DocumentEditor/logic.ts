@@ -97,7 +97,8 @@ const editorLogic = kea({
 			schoolName,
 			degree,
 			date,
-			description
+			description,
+			hideDescription
 		}: {
 			id: string
 			schoolName: string
@@ -107,12 +108,14 @@ const editorLogic = kea({
 				endDate: string
 			}
 			description: string
+			hideDescription: boolean
 		}) => ({
 			id,
 			schoolName,
 			degree,
 			date,
-			description
+			description,
+			hideDescription
 		}),
 		deleteRole: (roleId: number) => ({ roleId }),
 		updateRole: ({
@@ -456,7 +459,8 @@ const editorLogic = kea({
 							startDate: 'Start date',
 							endDate: 'End date'
 						},
-						description: ''
+						description: '',
+						hideDescription: false
 					}
 				}
 			},
@@ -489,7 +493,8 @@ const editorLogic = kea({
 						schoolName,
 						degree,
 						date,
-						description
+						description,
+						hideDescription
 					}: {
 						id: string
 						schoolName: string
@@ -499,6 +504,7 @@ const editorLogic = kea({
 							endDate: string
 						}
 						description: string
+						hideDescription: boolean
 					}
 				) => {
 					const { schools } = state
@@ -507,7 +513,8 @@ const editorLogic = kea({
 						schoolName,
 						degree,
 						date,
-						description
+						description,
+						hideDescription
 					}
 
 					return {

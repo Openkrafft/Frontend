@@ -13,7 +13,6 @@ const Education: React.FC = () => {
 	const { addSchool, updateEducationTitle, deleteSection } = useActions(
 		editorLogic
 	)
-	console.log(schools)
 	const newSchool: SchoolType = {
 		id: `school-${uuidv4()}`,
 		schoolName: '',
@@ -22,7 +21,8 @@ const Education: React.FC = () => {
 			startDate: '',
 			endDate: ''
 		},
-		description: ''
+		description: '',
+		hideDescription: false
 	}
 
 	return (

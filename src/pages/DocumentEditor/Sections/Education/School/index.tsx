@@ -23,6 +23,7 @@ interface SchoolProps {
 		endDate: string
 	}
 	description: string
+	hideDescription: boolean
 }
 
 const School: React.FC<SchoolProps> = ({
@@ -30,7 +31,8 @@ const School: React.FC<SchoolProps> = ({
 	schoolName,
 	degree,
 	date,
-	description
+	description,
+	hideDescription
 }) => {
 	const schoolTitleRef = useRef(null)
 	const degreeRef = useRef(null)
@@ -116,22 +118,24 @@ const School: React.FC<SchoolProps> = ({
 						})}
 				/>
 			</Degree>
-			<Description>
-				<ContentEditable
-					data-placeholder='Add description'
-					className='description'
-					ref={descriptionRef}
-					html={description}
-					onChange={(e) =>
-						updateSchool({
-							id,
-							schoolName,
-							degree,
-							date,
-							description: e.target.value
-						})}
-				/>
-			</Description>
+			{!hideDescription && (
+				<Description>
+					<ContentEditable
+						data-placeholder='Add description'
+						className='description'
+						ref={descriptionRef}
+						html={description}
+						onChange={(e) =>
+							updateSchool({
+								id,
+								schoolName,
+								degree,
+								date,
+								description: e.target.value
+							})}
+					/>
+				</Description>
+			)}
 		</SchoolContainer>
 	)
 }

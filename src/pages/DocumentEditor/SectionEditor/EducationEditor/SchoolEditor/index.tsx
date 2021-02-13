@@ -12,6 +12,7 @@ interface SchoolEditorProps {
 		endDate: string
 	}
 	description: string
+	hideDescription: boolean
 }
 
 const School: React.FC<SchoolEditorProps> = ({
@@ -19,7 +20,8 @@ const School: React.FC<SchoolEditorProps> = ({
 	schoolName,
 	degree,
 	date: { startDate, endDate },
-	description
+	description,
+	hideDescription
 }) => {
 	const { updateSchool, deleteSchool } = useActions(editorLogic)
 
@@ -39,7 +41,8 @@ const School: React.FC<SchoolEditorProps> = ({
 							startDate,
 							endDate
 						},
-						description
+						description,
+						hideDescription
 					})}
 				style={{ marginBottom: 10 }}
 			/>
@@ -55,7 +58,8 @@ const School: React.FC<SchoolEditorProps> = ({
 								startDate: dateString,
 								endDate
 							},
-							description
+							description,
+							hideDescription
 						})}
 					style={{ width: 474, marginBottom: 10 }}
 				/>
@@ -70,7 +74,8 @@ const School: React.FC<SchoolEditorProps> = ({
 								startDate,
 								endDate: dateString
 							},
-							description
+							description,
+							hideDescription
 						})}
 					style={{ width: 474, marginBottom: 10 }}
 				/>
@@ -89,11 +94,12 @@ const School: React.FC<SchoolEditorProps> = ({
 							startDate,
 							endDate
 						},
-						description
+						description,
+						hideDescription
 					})}
 				style={{ marginBottom: 10 }}
 			/>
-			<span style={{ marginBottom: 6 }}>Description:</span>
+			<span style={{ marginBottom: 6, display: 'block' }}>Description:</span>
 			<Input.TextArea
 				name='description'
 				value={description}
@@ -106,12 +112,34 @@ const School: React.FC<SchoolEditorProps> = ({
 							startDate,
 							endDate
 						},
-						description: e.target.value
+						description: e.target.value,
+						hideDescription
 					})}
 				style={{ marginBottom: 10 }}
 				rows={4}
+				disabled={hideDescription}
 			/>
-			<Button type='dashed' danger block onClick={() => deleteSchool(id)}>
+			<Checkbox
+				onChange={(e) =>
+					updateSchool({
+						id,
+						schoolName,
+						degree,
+						date: {
+							startDate,
+							endDate
+						},
+						description,
+						hideDescription: e.target.checked
+					})}>
+				Hide Description Field
+			</Checkbox>
+			<Button
+				type='dashed'
+				danger
+				block
+				onClick={() => deleteSchool(id)}
+				style={{ marginTop: 20 }}>
 				Delete School
 			</Button>
 		</Row>

@@ -83,7 +83,8 @@ const SectionEditor: React.FC = () => {
 									startDate: '',
 									endDate: ''
 								},
-								description: ''
+								description: '',
+								hideDescription: false
 							})}>
 						Add {section === 'education' ? 'School' : 'Job'}
 					</Button>

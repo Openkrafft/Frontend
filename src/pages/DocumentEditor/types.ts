@@ -54,6 +54,7 @@ export interface School {
 		endDate: string
 	}
 	description: string
+	hideDescription: boolean
 }
 
 export interface EducationSection {
