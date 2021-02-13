@@ -4,6 +4,7 @@ import editorLogic from '../../logic'
 import Section from '../SectionWrapper'
 import { IRole } from '../../types'
 import Role from './Role'
+import { v4 as uuidv4 } from 'uuid'
 
 const Experience: React.FC = () => {
 	const { experience: { roles, experienceTitle } } = useValues(editorLogic)
@@ -12,7 +13,7 @@ const Experience: React.FC = () => {
 	)
 
 	const newRole = {
-		roleId: Math.floor(Math.random() * 1e10),
+		id: `role-${uuidv4()}`,
 		jobTitle: '',
 		companyName: '',
 		date: {
@@ -30,7 +31,7 @@ const Experience: React.FC = () => {
 			onChange={(e) => updateExperienceTitle(e.target.value)}
 			onAddClick={() => addRole(newRole)}
 			onDeleteClick={() => deleteSection('experience')}>
-			{roles.map((role: IRole) => <Role key={role.roleId} {...role} />)}
+			{Object.values(roles).map((role: any) => <Role key={role.id} {...role} />)}
 		</Section>
 	)
 }

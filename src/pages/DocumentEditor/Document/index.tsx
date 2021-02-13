@@ -23,7 +23,6 @@ const Document: React.FC = () => {
 	const sections: any = {
 		contactInfo: <ContactInfo />,
 		experience: <Experience />,
-		portfolio: <Portfolio />,
 		education: <Education />,
 		projects: <Projects />
 	}
@@ -47,7 +46,5 @@ const Document: React.FC = () => {
 		</PageContainer>
 	)
 }
-
-const Portfolio = () => <div>Portfolio</div>
 
 export default Document

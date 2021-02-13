@@ -15,7 +15,7 @@ import {
 } from './Role.styles'
 
 interface RoleProps {
-	roleId: number
+	id: number
 	jobTitle: string
 	companyName: string
 	date: {
@@ -26,7 +26,7 @@ interface RoleProps {
 }
 
 const Role: React.FC<RoleProps> = ({
-	roleId,
+	id,
 	jobTitle,
 	companyName,
 	date,
@@ -52,7 +52,7 @@ const Role: React.FC<RoleProps> = ({
 			</EditRole>
 			<DeleteRole
 				style={{ display: isEditVisible ? 'block' : 'none' }}
-				onClick={() => deleteRole(roleId)}>
+				onClick={() => deleteRole(id)}>
 				<DeleteOutlined />
 			</DeleteRole>
 			<RoleTitle>
@@ -63,7 +63,7 @@ const Role: React.FC<RoleProps> = ({
 					html={jobTitle}
 					onChange={(e) =>
 						updateRole({
-							id: roleId,
+							id,
 							jobTitle: e.target.value,
 							companyName,
 							date,
@@ -79,7 +79,7 @@ const Role: React.FC<RoleProps> = ({
 					html={companyName}
 					onChange={(e) =>
 						updateRole({
-							id: roleId,
+							id,
 							jobTitle,
 							companyName: e.target.value,
 							date,
@@ -95,7 +95,7 @@ const Role: React.FC<RoleProps> = ({
 					html={startDate}
 					onChange={(e) =>
 						updateRole({
-							id: roleId,
+							id,
 							jobTitle,
 							companyName,
 							date: { startDate: e.target.value, endDate },
@@ -110,7 +110,7 @@ const Role: React.FC<RoleProps> = ({
 					html={endDate}
 					onChange={(e) =>
 						updateRole({
-							id: roleId,
+							id,
 							jobTitle,
 							companyName,
 							date: { startDate, endDate: e.target.value },
@@ -125,7 +125,7 @@ const Role: React.FC<RoleProps> = ({
 					html={roleDescription}
 					onChange={(e) =>
 						updateRole({
-							id: roleId,
+							id,
 							jobTitle,
 							companyName,
 							date,

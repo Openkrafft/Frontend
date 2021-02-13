@@ -117,7 +117,7 @@ const editorLogic = kea({
 			description,
 			hideDescription
 		}),
-		deleteRole: (roleId: number) => ({ roleId }),
+		deleteRole: (id: string) => ({ id }),
 		updateRole: ({
 			id,
 			jobTitle,
@@ -532,7 +532,7 @@ const editorLogic = kea({
 				experienceTitle: 'Work Experience',
 				roles: {
 					'role-4cfff7f8-2ef9-4987-b964-f47fda09d017': {
-						roleId: 654654654,
+						id: 'role-4cfff7f8-2ef9-4987-b964-f47fda09d017',
 						jobTitle: 'Pilot',
 						companyName: 'Qatar Airways',
 						date: {
@@ -549,17 +549,19 @@ const editorLogic = kea({
 					{ experienceTitle }: { experienceTitle: string }
 				) => ({ ...state, experienceTitle }),
 				addRole: (state: Experience, { role }: { role: IRole }) => {
-					const updatedRoles = { ...state.roles, [role.roleId]: role }
+					const updatedRoles = { ...state.roles, [role.id]: role }
+					console.log('______________________', updatedRoles)
 					return {
 						...state,
 						roles: updatedRoles
 					}
 				},
-				deleteRole: (state: Experience, { roleId }: { roleId: number }) => {
-					const updatedRoles = _.omit(state.roles, roleId)
+				deleteRole: (state: Experience, { id }: { id: string }) => {
+					const updatedRoles = _.omit(state.roles, id)
+					console.log('_______', updatedRoles)
 					return {
 						...state,
-						schools: updatedRoles
+						roles: updatedRoles
 					}
 				},
 				updateRole: (
@@ -571,7 +573,7 @@ const editorLogic = kea({
 						date,
 						roleDescription
 					}: {
-						id: number
+						id: string
 						jobTitle: string
 						companyName: string
 						date: {

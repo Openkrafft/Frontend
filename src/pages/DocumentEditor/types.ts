@@ -1,5 +1,5 @@
 export interface IRole {
-	roleId: number
+	id: number
 	jobTitle: string
 	companyName: string
 	date: {
