@@ -530,8 +530,8 @@ const editorLogic = kea({
 		experience: [
 			{
 				experienceTitle: 'Work Experience',
-				roles: [
-					{
+				roles: {
+					'role-4cfff7f8-2ef9-4987-b964-f47fda09d017': {
 						roleId: 654654654,
 						jobTitle: 'Pilot',
 						companyName: 'Qatar Airways',
@@ -540,33 +540,26 @@ const editorLogic = kea({
 							endDate: '02/2020'
 						},
 						roleDescription: '<li></li>'
-					},
-					{
-						roleId: 5611546584,
-						jobTitle: 'Lead Engineer',
-						companyName: 'Nissan',
-						date: {
-							startDate: '01/2015',
-							endDate: 'Present'
-						},
-						roleDescription: '<li></li>'
 					}
-				]
+				}
 			},
 			{
 				updateExperienceTitle: (
 					state: Experience,
 					{ experienceTitle }: { experienceTitle: string }
 				) => ({ ...state, experienceTitle }),
-				addRole: (state: Experience, { role }: { role: IRole }) => ({
-					...state,
-					roles: [ ...state.roles, role ]
-				}),
-				deleteRole: (state: Experience, { roleId }: { roleId: number }) => {
-					const updatedRoles = state.roles.filter((role) => role.roleId !== roleId)
+				addRole: (state: Experience, { role }: { role: IRole }) => {
+					const updatedRoles = { ...state.roles, [role.roleId]: role }
 					return {
 						...state,
 						roles: updatedRoles
+					}
+				},
+				deleteRole: (state: Experience, { roleId }: { roleId: number }) => {
+					const updatedRoles = _.omit(state.roles, roleId)
+					return {
+						...state,
+						schools: updatedRoles
 					}
 				},
 				updateRole: (
@@ -589,16 +582,20 @@ const editorLogic = kea({
 					}
 				) => {
 					const { roles } = state
-					const updatedRoles = roles.map(
-						(role: IRole) =>
-							role.roleId === id
-								? { ...role, jobTitle, companyName, date, roleDescription }
-								: role
-					)
+					const updatedRoles = {
+						...roles[id],
+						jobTitle,
+						companyName,
+						date,
+						roleDescription
+					}
 
 					return {
 						...state,
-						roles: updatedRoles
+						roles: {
+							...roles,
+							[id]: updatedRoles
+						}
 					}
 				}
 			}

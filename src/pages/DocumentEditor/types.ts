@@ -11,7 +11,9 @@ export interface IRole {
 
 export interface Experience {
 	sectionTitle: string
-	roles: IRole[]
+	roles: {
+		[id: string]: IRole
+	}
 }
 
 export interface Header {
