@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Input, Row, DatePicker, Space, Button, Checkbox } from 'antd'
 import { useActions } from 'kea'
 import editorLogic from 'src/pages/DocumentEditor/logic'
+import ContentEditable from 'react-contenteditable'
 
 interface RoleEditorProps {
 	id: string
@@ -23,6 +24,7 @@ const Role: React.FC<RoleEditorProps> = ({
 	stillWorking,
 	roleDescription
 }) => {
+	const descriptionRef = useRef(null)
 	const { updateRole, deleteRole } = useActions(editorLogic)
 
 	return (
@@ -117,8 +119,7 @@ const Role: React.FC<RoleEditorProps> = ({
 				style={{ marginBottom: 10 }}
 			/>
 			<span style={{ marginBottom: 6, display: 'block' }}>Description:</span>
-			<Input.TextArea
-				contentEditable={true}
+			{/* <Input.TextArea
 				name='description'
 				value={roleDescription}
 				onChange={(e) =>
@@ -135,6 +136,24 @@ const Role: React.FC<RoleEditorProps> = ({
 					})}
 				style={{ marginBottom: 10 }}
 				rows={4}
+			/> */}
+			<ContentEditable
+				style={{ minHeight: 150, listStyleType: 'disc' }}
+				className='job-description ant-input'
+				ref={descriptionRef}
+				html={roleDescription}
+				onChange={(e) =>
+					updateRole({
+						id,
+						jobTitle,
+						companyName,
+						date: {
+							startDate,
+							endDate
+						},
+						stillWorking,
+						roleDescription: e.target.value
+					})}
 			/>
 			<Button
 				type='dashed'

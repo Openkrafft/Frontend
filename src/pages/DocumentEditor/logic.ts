@@ -539,8 +539,8 @@ const editorLogic = kea({
 						jobTitle: 'Pilot',
 						companyName: 'Qatar Airways',
 						date: {
-							startDate: '01/2018',
-							endDate: '02/2020'
+							startDate: 'Start date',
+							endDate: 'End date'
 						},
 						stillWorking: false,
 						roleDescription: '<li></li>'

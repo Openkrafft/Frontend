@@ -55,7 +55,7 @@ const Role: React.FC<RoleProps> = ({
 			</DeleteRole>
 			<RoleTitle>
 				<ContentEditable
-					data-placeholder='Role title'
+					data-placeholder='Position'
 					className='role-title'
 					ref={roleTitleRef}
 					html={jobTitle}
@@ -118,6 +118,7 @@ const Role: React.FC<RoleProps> = ({
 			</Date>
 			<JobDescription>
 				<ContentEditable
+					data-placeholder='Description'
 					className='job-description'
 					ref={descriptionRef}
 					html={roleDescription}
