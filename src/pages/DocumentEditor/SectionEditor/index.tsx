@@ -14,7 +14,6 @@ import TextEditor from './TextEditor'
 import ListEditor from './ListEditor'
 import EducationEditor from './EducationEditor'
 import { v4 as uuidv4 } from 'uuid'
-import { School as SchoolType } from '../types'
 import './styles.css'
 import { capitalizeFirstLetter, extractTextFromUUID } from 'src/utils'
 
@@ -22,7 +21,7 @@ const SectionEditor: React.FC = () => {
 	const { toggleDrawer } = useActions(globalLogic)
 	const { drawer: { isVisible, section } } = useValues(globalLogic)
 	const { sections } = useValues(editorLogic)
-	const { addSchool } = useActions(editorLogic)
+	const { addSchool, addRole } = useActions(editorLogic)
 	const allSections = [ 'header', ...sections ]
 	const sectionName =
 		section === 'ALL'
@@ -70,7 +69,7 @@ const SectionEditor: React.FC = () => {
 			onClose={() => toggleDrawer({ isVisible: false, section: sectionName })}
 			visible={isVisible}
 			footer={
-				(section === 'education' || section === 'experience') && (
+				section === 'education' ? (
 					<Button
 						type='primary'
 						block
@@ -86,9 +85,26 @@ const SectionEditor: React.FC = () => {
 								description: '',
 								hideDescription: false
 							})}>
-						Add {section === 'education' ? 'School' : 'Job'}
+						Add School
 					</Button>
-				)
+				) : section === 'experience' ? (
+					<Button
+						type='primary'
+						block
+						onClick={() =>
+							addRole({
+								id: `role-${uuidv4()}`,
+								jobTitle: '',
+								companyName: '',
+								date: {
+									startDate: '',
+									endDate: ''
+								},
+								roleDescription: '<li></li>'
+							})}>
+						Add Role
+					</Button>
+				) : null
 			}
 			width={520}>
 			{section === 'ALL' ? (
