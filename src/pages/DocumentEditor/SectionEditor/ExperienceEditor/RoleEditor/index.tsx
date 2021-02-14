@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Row, DatePicker, Space, Button } from 'antd'
+import { Input, Row, DatePicker, Space, Button, Checkbox } from 'antd'
 import { useActions } from 'kea'
 import editorLogic from 'src/pages/DocumentEditor/logic'
 
@@ -11,6 +11,7 @@ interface RoleEditorProps {
 		startDate: string
 		endDate: string
 	}
+	stillWorking: boolean
 	roleDescription: string
 }
 
@@ -19,6 +20,7 @@ const Role: React.FC<RoleEditorProps> = ({
 	jobTitle,
 	companyName,
 	date: { startDate, endDate },
+	stillWorking,
 	roleDescription
 }) => {
 	const { updateRole, deleteRole } = useActions(editorLogic)
@@ -39,6 +41,7 @@ const Role: React.FC<RoleEditorProps> = ({
 							startDate,
 							endDate
 						},
+						stillWorking,
 						roleDescription
 					})}
 				style={{ marginBottom: 10 }}
@@ -55,6 +58,7 @@ const Role: React.FC<RoleEditorProps> = ({
 								startDate: dateString,
 								endDate
 							},
+							stillWorking,
 							roleDescription
 						})}
 					style={{ width: 540, marginBottom: 10 }}
@@ -70,10 +74,28 @@ const Role: React.FC<RoleEditorProps> = ({
 								startDate,
 								endDate: dateString
 							},
+							stillWorking,
 							roleDescription
 						})}
+					disabled={stillWorking}
 					style={{ width: 540, marginBottom: 10 }}
 				/>
+				<Checkbox
+					style={{ marginBottom: 15 }}
+					onChange={(e) =>
+						updateRole({
+							id,
+							jobTitle,
+							companyName,
+							date: {
+								startDate,
+								endDate
+							},
+							stillWorking: e.target.checked,
+							roleDescription
+						})}>
+					Still working here
+				</Checkbox>
 			</Space>
 			<span style={{ marginBottom: 6 }}>Company Name:</span>
 			<Input
@@ -89,12 +111,14 @@ const Role: React.FC<RoleEditorProps> = ({
 							startDate,
 							endDate
 						},
+						stillWorking,
 						roleDescription
 					})}
 				style={{ marginBottom: 10 }}
 			/>
 			<span style={{ marginBottom: 6, display: 'block' }}>Description:</span>
 			<Input.TextArea
+				contentEditable={true}
 				name='description'
 				value={roleDescription}
 				onChange={(e) =>
@@ -106,6 +130,7 @@ const Role: React.FC<RoleEditorProps> = ({
 							startDate,
 							endDate
 						},
+						stillWorking,
 						roleDescription: e.target.value
 					})}
 				style={{ marginBottom: 10 }}

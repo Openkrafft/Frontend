@@ -123,6 +123,7 @@ const editorLogic = kea({
 			jobTitle,
 			companyName,
 			date,
+			stillWorking,
 			roleDescription
 		}: {
 			id: number
@@ -132,12 +133,14 @@ const editorLogic = kea({
 				startDate: string
 				endDate: string
 			}
+			stillWorking: boolean
 			roleDescription: string
 		}) => ({
 			id,
 			jobTitle,
 			companyName,
 			date,
+			stillWorking,
 			roleDescription
 		})
 	},
@@ -539,6 +542,7 @@ const editorLogic = kea({
 							startDate: '01/2018',
 							endDate: '02/2020'
 						},
+						stillWorking: false,
 						roleDescription: '<li></li>'
 					}
 				}
@@ -550,7 +554,6 @@ const editorLogic = kea({
 				) => ({ ...state, experienceTitle }),
 				addRole: (state: Experience, { role }: { role: IRole }) => {
 					const updatedRoles = { ...state.roles, [role.id]: role }
-					console.log('______________________', updatedRoles)
 					return {
 						...state,
 						roles: updatedRoles
@@ -558,7 +561,6 @@ const editorLogic = kea({
 				},
 				deleteRole: (state: Experience, { id }: { id: string }) => {
 					const updatedRoles = _.omit(state.roles, id)
-					console.log('_______', updatedRoles)
 					return {
 						...state,
 						roles: updatedRoles
@@ -571,6 +573,7 @@ const editorLogic = kea({
 						jobTitle,
 						companyName,
 						date,
+						stillWorking,
 						roleDescription
 					}: {
 						id: string
@@ -580,6 +583,7 @@ const editorLogic = kea({
 							startDate: string
 							endDate: string
 						}
+						stillWorking: boolean
 						roleDescription: string
 					}
 				) => {
@@ -589,6 +593,7 @@ const editorLogic = kea({
 						jobTitle,
 						companyName,
 						date,
+						stillWorking,
 						roleDescription
 					}
 

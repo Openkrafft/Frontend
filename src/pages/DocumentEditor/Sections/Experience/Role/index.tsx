@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { useActions } from 'kea'
 import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined } from '@ant-design/icons'
 
 import {
 	RoleContainer,
@@ -10,7 +10,6 @@ import {
 	CompanyName,
 	Date,
 	JobDescription,
-	EditRole,
 	DeleteRole
 } from './Role.styles'
 
@@ -22,6 +21,7 @@ interface RoleProps {
 		startDate: string
 		endDate: string
 	}
+	stillWorking: boolean
 	roleDescription: string
 }
 
@@ -30,6 +30,7 @@ const Role: React.FC<RoleProps> = ({
 	jobTitle,
 	companyName,
 	date,
+	stillWorking,
 	roleDescription
 }) => {
 	const roleTitleRef = useRef(null)
@@ -47,9 +48,6 @@ const Role: React.FC<RoleProps> = ({
 			className='role-container'
 			onMouseOver={() => setEditVisibility(true)}
 			onMouseLeave={() => setEditVisibility(false)}>
-			<EditRole style={{ display: isEditVisible ? 'block' : 'none' }}>
-				<EditOutlined />
-			</EditRole>
 			<DeleteRole
 				style={{ display: isEditVisible ? 'block' : 'none' }}
 				onClick={() => deleteRole(id)}>
@@ -107,7 +105,7 @@ const Role: React.FC<RoleProps> = ({
 					data-placeholder='End date'
 					className='end-date'
 					ref={endDateRef}
-					html={endDate}
+					html={stillWorking ? 'Present' : endDate}
 					onChange={(e) =>
 						updateRole({
 							id,

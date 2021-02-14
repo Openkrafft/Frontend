@@ -100,6 +100,7 @@ const SectionEditor: React.FC = () => {
 									startDate: '',
 									endDate: ''
 								},
+								stillWorking: false,
 								roleDescription: '<li></li>'
 							})}>
 						Add Role

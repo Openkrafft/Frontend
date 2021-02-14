@@ -6,6 +6,7 @@ export interface IRole {
 		startDate: string
 		endDate: string
 	}
+	stillWorking: boolean
 	roleDescription: string
 }
 

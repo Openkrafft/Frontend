@@ -27,6 +27,7 @@ const ExperienceEditor: React.FC = () => {
 								startDate: '',
 								endDate: ''
 							},
+							stillWorking: false,
 							roleDescription: '<li></li>'
 						})}
 					style={{ marginTop: 20 }}>
