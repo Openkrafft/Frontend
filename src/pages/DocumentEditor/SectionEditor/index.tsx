@@ -106,7 +106,7 @@ const SectionEditor: React.FC = () => {
 					</Button>
 				) : null
 			}
-			width={520}>
+			width={600}>
 			{section === 'ALL' ? (
 				renderEditAll
 			) : /skills/.test(section) ? (

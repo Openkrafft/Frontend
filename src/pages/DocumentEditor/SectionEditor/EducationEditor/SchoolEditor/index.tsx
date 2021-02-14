@@ -61,7 +61,7 @@ const School: React.FC<SchoolEditorProps> = ({
 							description,
 							hideDescription
 						})}
-					style={{ width: 474, marginBottom: 10 }}
+					style={{ width: 540, marginBottom: 10 }}
 				/>
 				<span>End Date:</span>
 				<DatePicker
@@ -77,7 +77,7 @@ const School: React.FC<SchoolEditorProps> = ({
 							description,
 							hideDescription
 						})}
-					style={{ width: 474, marginBottom: 10 }}
+					style={{ width: 540, marginBottom: 10 }}
 				/>
 			</Space>
 			<span style={{ marginBottom: 6 }}>Degree:</span>

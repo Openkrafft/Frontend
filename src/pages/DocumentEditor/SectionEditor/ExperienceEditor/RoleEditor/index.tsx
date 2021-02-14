@@ -57,7 +57,7 @@ const Role: React.FC<RoleEditorProps> = ({
 							},
 							roleDescription
 						})}
-					style={{ width: 474, marginBottom: 10 }}
+					style={{ width: 540, marginBottom: 10 }}
 				/>
 				<span>End Date:</span>
 				<DatePicker
@@ -72,7 +72,7 @@ const Role: React.FC<RoleEditorProps> = ({
 							},
 							roleDescription
 						})}
-					style={{ width: 474, marginBottom: 10 }}
+					style={{ width: 540, marginBottom: 10 }}
 				/>
 			</Space>
 			<span style={{ marginBottom: 6 }}>Company Name:</span>

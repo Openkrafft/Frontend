@@ -69,7 +69,7 @@ const ContactInfoEditor: React.FC = () => {
 				</Col>
 				<Col>
 					<Input
-						style={{ width: 200, margin: '0 10px 0 3px' }}
+						style={{ width: 294, margin: '0 10px 0 3px' }}
 						disabled={!contactList.length}
 						value={contactDetail}
 						onChange={(e) => setContentDetail(e.target.value)}

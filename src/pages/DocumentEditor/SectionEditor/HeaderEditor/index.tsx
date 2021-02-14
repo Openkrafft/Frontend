@@ -15,7 +15,7 @@ const HeaderEditor: React.FC = () => {
 				<Form.Item name='name' label='Name' initialValue={name}>
 					<Input
 						placeholder='Write your name'
-						style={{ width: 450 }}
+						style={{ width: 540 }}
 						value={name}
 						onChange={(e) => updateHeader({ name: e.target.value, title, summary })}
 					/>
@@ -25,7 +25,7 @@ const HeaderEditor: React.FC = () => {
 				<Form.Item name='title' label='Title' initialValue={title}>
 					<Input
 						placeholder='Example: Senior Accounting Manager'
-						style={{ width: 450 }}
+						style={{ width: 540 }}
 						value={title}
 						onChange={(e) => updateHeader({ name, title: e.target.value, summary })}
 					/>
@@ -36,7 +36,7 @@ const HeaderEditor: React.FC = () => {
 					<Input.TextArea
 						rows={9}
 						placeholder={summaryPlaceholder}
-						style={{ width: 450 }}
+						style={{ width: 540 }}
 						value={summary}
 						onChange={(e) => updateHeader({ name, title, summary: e.target.value })}
 					/>
