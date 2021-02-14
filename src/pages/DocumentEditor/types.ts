@@ -74,6 +74,13 @@ export interface Project {
 	projectDescription: string
 }
 
+export interface Projects {
+	projectsTitle: string
+	projects: {
+		[id: string]: Project
+	}
+}
+
 export type DocumentSections = {
 	(sectionName: Section): string
 }

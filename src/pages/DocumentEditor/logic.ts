@@ -11,7 +11,8 @@ import {
 	SkillsSections,
 	ListSections,
 	TextSections,
-	EducationSection
+	EducationSection,
+	Projects
 } from './types'
 import _ from 'lodash'
 import { extractTextFromHTML } from '../../utils'
@@ -390,62 +391,52 @@ const editorLogic = kea({
 		projects: [
 			{
 				projectsTitle: 'Projects',
-				projects: [
-					{
-						id: 654687654654,
+				projects: {
+					'project-60c6098f-0cd8-4f79-a57b-03bb7c8a1c28': {
+						id: 'project-60c6098f-0cd8-4f79-a57b-03bb7c8a1c28',
 						projectName: 'MyApp',
 						link: 'www.github.com/myapp-repo',
 						projectDescription: ''
 					}
-				]
+				}
 			},
 			{
 				updateProjectsTitle: (
-					state: { projectsTitle: string; projects: Project[] },
+					state: Projects,
 					{ projectsTitle }: { projectsTitle: string }
 				) => ({ ...state, projectsTitle }),
-				addProject: (
-					state: { projectsTitle: string; projects: Project[] },
-					{ project }: { project: Project[] }
-				) => {
-					const updatedProjects = [ ...state.projects, project ]
+				addProject: (state: Projects, { project }: { project: Project }) => {
+					const updatedProjects = { ...state.projects, [project.id]: project }
 					return {
 						...state,
 						projects: updatedProjects
 					}
 				},
-				deleteProject: (
-					state: { projectsTitle: string; projects: Project[] },
-					{ projectId }: { projectId: number }
-				) => {
-					const updatedProjects = state.projects.filter(
-						(project) => project.id !== projectId
-					)
+				deleteProject: (state: Projects, { id }: { id: string }) => {
+					const updatedProjects = _.omit(state.projects, id)
 					return {
 						...state,
 						projects: updatedProjects
 					}
 				},
 				updateProject: (
-					state: { projectTitle: string; projects: Project[] },
+					state: Projects,
 					{ id, projectName, link, projectDescription }: Project
 				) => {
 					const { projects } = state
-					const updatedProjects = projects.map(
-						(project: Project) =>
-							project.id === id
-								? {
-										...project,
-										projectName,
-										link,
-										projectDescription
-									}
-								: project
-					)
+					const updatedProjects = {
+						...projects[id],
+						projectName,
+						link,
+						projectDescription
+					}
 
 					return {
 						...state,
-						projects: updatedProjects
+						projects: {
+							...projects,
+							[id]: updatedProjects
+						}
 					}
 				}
 			}
