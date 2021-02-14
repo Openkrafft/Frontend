@@ -33,7 +33,7 @@ const EducationEditor: React.FC = () => {
 							hideDescription: false
 						})}
 					style={{ marginTop: 20 }}>
-					Add Role
+					Add School
 				</Button>
 			)}
 		</Row>
