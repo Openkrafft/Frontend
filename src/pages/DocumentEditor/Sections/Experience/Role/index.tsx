@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { useActions } from 'kea'
 import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined } from '@ant-design/icons'
 
 import {
 	RoleContainer,
@@ -10,26 +10,27 @@ import {
 	CompanyName,
 	Date,
 	JobDescription,
-	EditRole,
 	DeleteRole
 } from './Role.styles'
 
 interface RoleProps {
-	roleId: number
+	id: number
 	jobTitle: string
 	companyName: string
 	date: {
 		startDate: string
 		endDate: string
 	}
+	stillWorking: boolean
 	roleDescription: string
 }
 
 const Role: React.FC<RoleProps> = ({
-	roleId,
+	id,
 	jobTitle,
 	companyName,
 	date,
+	stillWorking,
 	roleDescription
 }) => {
 	const roleTitleRef = useRef(null)
@@ -47,23 +48,20 @@ const Role: React.FC<RoleProps> = ({
 			className='role-container'
 			onMouseOver={() => setEditVisibility(true)}
 			onMouseLeave={() => setEditVisibility(false)}>
-			<EditRole style={{ display: isEditVisible ? 'block' : 'none' }}>
-				<EditOutlined />
-			</EditRole>
 			<DeleteRole
 				style={{ display: isEditVisible ? 'block' : 'none' }}
-				onClick={() => deleteRole(roleId)}>
+				onClick={() => deleteRole(id)}>
 				<DeleteOutlined />
 			</DeleteRole>
 			<RoleTitle>
 				<ContentEditable
-					data-placeholder='Role title'
+					data-placeholder='Position'
 					className='role-title'
 					ref={roleTitleRef}
 					html={jobTitle}
 					onChange={(e) =>
 						updateRole({
-							id: roleId,
+							id,
 							jobTitle: e.target.value,
 							companyName,
 							date,
@@ -79,7 +77,7 @@ const Role: React.FC<RoleProps> = ({
 					html={companyName}
 					onChange={(e) =>
 						updateRole({
-							id: roleId,
+							id,
 							jobTitle,
 							companyName: e.target.value,
 							date,
@@ -95,7 +93,7 @@ const Role: React.FC<RoleProps> = ({
 					html={startDate}
 					onChange={(e) =>
 						updateRole({
-							id: roleId,
+							id,
 							jobTitle,
 							companyName,
 							date: { startDate: e.target.value, endDate },
@@ -107,10 +105,10 @@ const Role: React.FC<RoleProps> = ({
 					data-placeholder='End date'
 					className='end-date'
 					ref={endDateRef}
-					html={endDate}
+					html={stillWorking ? 'Present' : endDate}
 					onChange={(e) =>
 						updateRole({
-							id: roleId,
+							id,
 							jobTitle,
 							companyName,
 							date: { startDate, endDate: e.target.value },
@@ -120,12 +118,13 @@ const Role: React.FC<RoleProps> = ({
 			</Date>
 			<JobDescription>
 				<ContentEditable
+					data-placeholder='Description'
 					className='job-description'
 					ref={descriptionRef}
 					html={roleDescription}
 					onChange={(e) =>
 						updateRole({
-							id: roleId,
+							id,
 							jobTitle,
 							companyName,
 							date,

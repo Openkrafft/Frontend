@@ -74,7 +74,7 @@ export const JobDescription = Style.div`
     }
 `
 
-export const EditRole = Style.button`
+export const DeleteRole = Style.button`
     border: none;
     outline: none;
     display: none;
@@ -90,7 +90,4 @@ export const EditRole = Style.button`
     &:hover {
         background: #166cbb
     }
-`
-export const DeleteRole = Style(EditRole)`
-    top: 40px
 `

@@ -1,17 +1,20 @@
 export interface IRole {
-	roleId: number
+	id: number
 	jobTitle: string
 	companyName: string
 	date: {
 		startDate: string
 		endDate: string
 	}
+	stillWorking: boolean
 	roleDescription: string
 }
 
 export interface Experience {
 	sectionTitle: string
-	roles: IRole[]
+	roles: {
+		[id: string]: IRole
+	}
 }
 
 export interface Header {
@@ -46,7 +49,7 @@ export interface Contact {
 }
 
 export interface School {
-	id: number
+	id: string
 	schoolName: string
 	degree: string
 	date: {
@@ -54,11 +57,57 @@ export interface School {
 		endDate: string
 	}
 	description: string
+	hideDescription: boolean
+}
+
+export interface EducationSection {
+	educationTitle: string
+	schools: {
+		[id: string]: School
+	}
 }
 
 export interface Project {
-	id: number
+	id: string
 	projectName: string
 	link?: string
 	projectDescription: string
+}
+
+export interface Projects {
+	projectsTitle: string
+	projects: {
+		[id: string]: Project
+	}
+}
+
+export type DocumentSections = {
+	(sectionName: Section): string
+}
+
+export interface SkillSection {
+	skillsTitle: string
+	skillsList: string
+}
+
+export interface ListSection {
+	listTitle: string
+	listContent: string
+}
+
+export interface ListSections {
+	[id: string]: ListSection
+}
+
+export interface SkillsSections {
+	[id: string]: SkillSection
+}
+
+export interface TextSection {
+	textTitle: string
+	textContent: string
+}
+
+export interface TextSections {
+	[id: string]: TextSection
 }

@@ -2,28 +2,41 @@ import React, { useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { useValues, useActions } from 'kea'
 import editorLogic from '../../logic'
+import globalLogic from 'src/logic'
 import Section from '../SectionWrapper'
 
 import { TextContent } from './Text.styles'
+import { TextSection } from '../../types'
 
-const Text: React.FC = () => {
+interface TextSectionProps {
+	id: string
+	textSection: TextSection
+}
+
+const Text: React.FC<TextSectionProps> = ({
+	id,
+	textSection: { textTitle, textContent }
+}) => {
 	const listRef = useRef(null)
-	const { textSection: { textTitle, text } } = useValues(editorLogic)
-	const { updateTextTitle, updateText, deleteSection } = useActions(editorLogic)
+	const { toggleDrawer } = useActions(globalLogic)
+	const { removeTextSection, updateTextTitle, updateTextContent } = useActions(
+		editorLogic
+	)
 
 	return (
 		<Section
 			showSectionTitle
 			sectionTitle={textTitle}
-			onChange={(e) => updateTextTitle(e.target.value)}
-			onDeleteClick={() => deleteSection('text')}>
+			onChange={(e) => updateTextTitle(e.target.value, id)}
+			onDeleteClick={() => removeTextSection(id)}
+			onEditClick={() => toggleDrawer({ isVisible: true, section: id })}>
 			<TextContent>
 				<ContentEditable
-					data-placeholder='Add your text here'
+					data-placeholder='Add text here'
 					className='text-content'
 					ref={listRef}
-					html={text}
-					onChange={(e) => updateText(e.target.value)}
+					html={textContent}
+					onChange={(e) => updateTextContent(e.target.value, id)}
 				/>
 			</TextContent>
 		</Section>
