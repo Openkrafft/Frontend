@@ -1,9 +1,9 @@
 import React from 'react'
 import { useValues, useActions } from 'kea'
 import editorLogic from '../../logic'
-import Project from './ProjectEditor'
+import Project from './ProjectEditor/index'
 import { Row, Button } from 'antd'
-import globalLogic from 'src/logic'
+import globalLogic from '../../../../logic'
 import { v4 as uuidv4 } from 'uuid'
 
 const ProjectEditor: React.FC = () => {

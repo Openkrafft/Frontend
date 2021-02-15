@@ -1,9 +1,9 @@
 import React from 'react'
 import { useValues, useActions } from 'kea'
 import editorLogic from '../../logic'
-import School from './SchoolEditor'
+import School from './SchoolEditor/index'
 import { Row, Button } from 'antd'
-import globalLogic from 'src/logic'
+import globalLogic from '../../../../logic/index'
 import { v4 as uuidv4 } from 'uuid'
 
 const EducationEditor: React.FC = () => {

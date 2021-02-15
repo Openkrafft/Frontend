@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useValues, useActions } from 'kea'
 import editorLogic from '../../logic'
 import { Form, Row, Input, Button, Col } from 'antd'
-import { extractTextFromHTML } from 'src/utils'
+import { extractTextFromHTML } from '../../../../utils'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 
 type SkillsEditorProps = {

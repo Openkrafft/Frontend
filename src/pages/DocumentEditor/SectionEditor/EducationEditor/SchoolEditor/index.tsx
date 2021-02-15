@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Input, Row, DatePicker, Space, Checkbox, Button } from 'antd'
 import { useActions } from 'kea'
-import editorLogic from 'src/pages/DocumentEditor/logic'
+import editorLogic from '../../../logic'
 
 interface SchoolEditorProps {
 	id: string
