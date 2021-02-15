@@ -20,7 +20,7 @@ const ListEditor: React.FC<ListEditorProps> = ({ id }) => {
 			<Row gutter={16} style={{ paddingLeft: 0 }}>
 				<Col>
 					<Input
-						style={{ width: 350, marginBottom: 10 }}
+						style={{ width: 450, marginBottom: 10 }}
 						value={listContent}
 						onChange={(e) => setListContent(e.target.value)}
 						onPressEnter={() => {

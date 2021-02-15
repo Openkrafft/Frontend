@@ -21,7 +21,7 @@ const SkillsEditor: React.FC<SkillsEditorProps> = ({ id }) => {
 				<Col>
 					<Input
 						placeholder='Add new skill'
-						style={{ width: 350, marginBottom: 10 }}
+						style={{ width: 450, marginBottom: 10 }}
 						value={skill}
 						onChange={(e) => setSkill(e.target.value)}
 						onPressEnter={() => {

@@ -19,7 +19,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ id }) => {
 				<Form.Item name='text-title' label='Section Title' initialValue={title}>
 					<Input
 						placeholder='Write section title'
-						style={{ width: 450 }}
+						style={{ width: 540 }}
 						value={title}
 						onChange={(e) => updateTextTitle(e.target.value, id)}
 					/>
@@ -33,7 +33,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ id }) => {
 					<Input.TextArea
 						rows={9}
 						placeholder='Add text here'
-						style={{ width: 450 }}
+						style={{ width: 540 }}
 						value={textContent}
 						onChange={(e) => updateTextContent(e.target.value, id)}
 					/>
