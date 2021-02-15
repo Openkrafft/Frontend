@@ -80,8 +80,7 @@ const editorLogic = kea({
 		}),
 		updateProjectsTitle: (projectsTitle: string) => ({ projectsTitle }),
 		addProject: (project: Project) => ({ project }),
-		deleteProject: (projectId: number) => ({ projectId }),
-
+		deleteProject: (id: string) => ({ id }),
 		updateProject: ({ id, projectName, link, projectDescription }: Project) => ({
 			id,
 			projectName,

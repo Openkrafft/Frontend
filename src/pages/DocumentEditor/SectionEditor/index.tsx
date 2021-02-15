@@ -21,7 +21,7 @@ const SectionEditor: React.FC = () => {
 	const { toggleDrawer } = useActions(globalLogic)
 	const { drawer: { isVisible, section } } = useValues(globalLogic)
 	const { sections } = useValues(editorLogic)
-	const { addSchool, addRole } = useActions(editorLogic)
+	const { addSchool, addRole, addProject } = useActions(editorLogic)
 	const allSections = [ 'header', ...sections ]
 	const sectionName =
 		section === 'ALL'
@@ -104,6 +104,19 @@ const SectionEditor: React.FC = () => {
 								roleDescription: '<li></li>'
 							})}>
 						Add Role
+					</Button>
+				) : section === 'projects' ? (
+					<Button
+						type='primary'
+						block
+						onClick={() =>
+							addProject({
+								id: `project-${uuidv4()}`,
+								projectName: '',
+								link: '',
+								projectDescription: ''
+							})}>
+						Add Project
 					</Button>
 				) : null
 			}

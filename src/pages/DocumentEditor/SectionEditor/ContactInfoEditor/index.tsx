@@ -49,7 +49,7 @@ const ContactInfoEditor: React.FC = () => {
 	}
 
 	return (
-		<React.Fragment>
+		<div style={{ marginBottom: 60 }}>
 			<Row>
 				<Col>
 					<Select
@@ -110,7 +110,7 @@ const ContactInfoEditor: React.FC = () => {
 					)
 				})}
 			</div>
-		</React.Fragment>
+		</div>
 	)
 }
 

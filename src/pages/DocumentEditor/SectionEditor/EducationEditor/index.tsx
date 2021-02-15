@@ -12,7 +12,7 @@ const EducationEditor: React.FC = () => {
 	const { drawer: { section } } = useValues(globalLogic)
 
 	return (
-		<Row>
+		<Row style={{ marginBottom: 60 }}>
 			{Object.values(schools).map((school: any) => (
 				<School key={school.id} {...school} />
 			))}

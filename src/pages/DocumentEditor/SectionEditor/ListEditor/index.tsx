@@ -16,7 +16,7 @@ const ListEditor: React.FC<ListEditorProps> = ({ id }) => {
 	const [ listContent, setListContent ] = useState('')
 
 	return (
-		<Form layout='vertical' hideRequiredMark>
+		<Form layout='vertical' hideRequiredMark style={{ marginBottom: 50 }}>
 			<Row gutter={16} style={{ paddingLeft: 0 }}>
 				<Col>
 					<Input

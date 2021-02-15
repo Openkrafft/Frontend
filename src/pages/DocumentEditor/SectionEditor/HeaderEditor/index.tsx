@@ -10,7 +10,7 @@ const HeaderEditor: React.FC = () => {
 	const { updateHeader } = useActions(editorLogic)
 	const { header: { name, title, summary } } = useValues(editorLogic)
 	return (
-		<Form layout='vertical' hideRequiredMark>
+		<Form layout='vertical' hideRequiredMark style={{ marginBottom: 30 }}>
 			<Row gutter={16} style={{ marginLeft: 0 }}>
 				<Form.Item name='name' label='Name' initialValue={name}>
 					<Input

@@ -16,7 +16,7 @@ const SkillsEditor: React.FC<SkillsEditorProps> = ({ id }) => {
 	const [ skill, setSkill ] = useState('')
 
 	return (
-		<Form layout='vertical' hideRequiredMark>
+		<Form layout='vertical' hideRequiredMark style={{ marginBottom: 60 }}>
 			<Row gutter={16} style={{ paddingLeft: 0 }}>
 				<Col>
 					<Input

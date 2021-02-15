@@ -14,7 +14,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ id }) => {
 	const textContent = textSection[id!].textContent
 
 	return (
-		<Form layout='vertical'>
+		<Form layout='vertical' style={{ marginBottom: 40 }}>
 			<Row gutter={16} style={{ marginLeft: 0 }}>
 				<Form.Item name='text-title' label='Section Title' initialValue={title}>
 					<Input
