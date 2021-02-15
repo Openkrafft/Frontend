@@ -5,27 +5,44 @@ import editorLogic from '../../logic'
 import Section from '../SectionWrapper'
 
 import { List } from './Skills.styles'
+import globalLogic from 'src/logic'
+import { SkillSection } from '../../types'
 
-const Skills: React.FC = () => {
+interface SkillsProps {
+	skills: SkillSection
+	id: string
+}
+
+const Skills: React.FC<SkillsProps> = ({
+	id,
+	skills: { skillsTitle, skillsList }
+}) => {
 	const listRef = useRef(null)
-	const { updateSkills, updateSkillsTitle, deleteSection } = useActions(
-		editorLogic
-	)
-	const { skills: { skillsTitle, skillsList } } = useValues(editorLogic)
+	const {
+		updateSkills,
+		updateSkillsTitle,
+		deleteSection,
+		removeSkillsSection
+	} = useActions(editorLogic)
+	const { toggleDrawer } = useActions(globalLogic)
 
 	return (
 		<Section
 			showSectionTitle
 			sectionTitle={skillsTitle}
-			onChange={(e) => updateSkillsTitle(e.target.value)}
-			onDeleteClick={() => deleteSection('skills')}>
+			onChange={(e) => updateSkillsTitle(e.target.value, id)}
+			onDeleteClick={() => {
+				deleteSection(id)
+				removeSkillsSection(id)
+			}}
+			onEditClick={() => toggleDrawer({ isVisible: true, section: id })}>
 			<List>
 				<ContentEditable
 					data-placeholder='Section title'
 					className='skills-list'
 					ref={listRef}
 					html={skillsList}
-					onChange={(e) => updateSkills(e.target.value)}
+					onChange={(e) => updateSkills(e.target.value, id)}
 				/>
 			</List>
 		</Section>

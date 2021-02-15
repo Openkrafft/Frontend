@@ -7,8 +7,15 @@ import {
 	ContactType,
 	Section,
 	School,
-	Project
+	Project,
+	SkillsSections,
+	ListSections,
+	TextSections,
+	EducationSection,
+	Projects
 } from './types'
+import _ from 'lodash'
+import { extractTextFromHTML } from '../../utils'
 
 const editorLogic = kea({
 	actions: {
@@ -19,21 +26,61 @@ const editorLogic = kea({
 			title,
 			summary
 		}),
-		addContact: (contact: Contact) => ({ contact }),
+		addContact: ({
+			contactType,
+			contactInfo
+		}: {
+			contactType: string
+			contactInfo: string
+		}) => ({ contactType, contactInfo }),
+		deleteContact: (contactType: ContactType) => ({ contactType }),
 		updateContact: (contactInfo: string, contactType: ContactType) => ({
 			contactInfo,
 			contactType
 		}),
-		updateSkills: (skillsList: string) => ({ skillsList }),
-		updateSkillsTitle: (skillsTitle: string) => ({ skillsTitle }),
-		updateList: (list: string) => ({ list }),
-		updateListTitle: (listTitle: string) => ({ listTitle }),
-		updateTextTitle: (textTitle: string) => ({ textTitle }),
-		updateText: (text: string) => ({ text }),
+		updateSkills: (skillsList: string, sectionId: string) => ({
+			skillsList,
+			sectionId
+		}),
+		addSkillsSection: (sectionId: string) => ({ sectionId }),
+		removeSkillsSection: (sectionId: string) => ({ sectionId }),
+		addSkills: (skill: string, sectionId: string) => ({ skill, sectionId }),
+		removeSkills: (skill: string, sectionId: string) => ({ skill, sectionId }),
+		updateSkillsTitle: (skillsTitle: string, sectionId: string) => ({
+			skillsTitle,
+			sectionId
+		}),
+		addListSection: (sectionId: string) => ({ sectionId }),
+		removeListSection: (sectionId: string) => ({ sectionId }),
+		addListContent: (listContent: string, sectionId: string) => ({
+			listContent,
+			sectionId
+		}),
+		removeListContent: (listContent: string, sectionId: string) => ({
+			listContent,
+			sectionId
+		}),
+		updateList: (listContent: string, sectionId: string) => ({
+			listContent,
+			sectionId
+		}),
+		updateListTitle: (listTitle: string, sectionId: string) => ({
+			listTitle,
+			sectionId
+		}),
+		addTextSection: (sectionId: string) => ({ sectionId }),
+		removeTextSection: (sectionId: string) => ({ sectionId }),
+		updateTextTitle: (textTitle: string, sectionId: string) => ({
+			textTitle,
+			sectionId
+		}),
+		updateTextContent: (textContent: string, sectionId: string) => ({
+			textContent,
+			sectionId
+		}),
 		updateProjectsTitle: (projectsTitle: string) => ({ projectsTitle }),
 		addProject: (project: Project) => ({ project }),
-		deleteProject: (projectId: number) => ({ projectId }),
-
+		deleteProject: (id: string) => ({ id }),
 		updateProject: ({ id, projectName, link, projectDescription }: Project) => ({
 			id,
 			projectName,
@@ -42,7 +89,7 @@ const editorLogic = kea({
 		}),
 		updateEducationTitle: (educationTitle: string) => ({ educationTitle }),
 		addSchool: (school: School) => ({ school }),
-		deleteSchool: (id: School) => ({ id }),
+		deleteSchool: (sectionId: School) => ({ sectionId }),
 		updateExperienceTitle: (experienceTitle: string) => ({ experienceTitle }),
 		addRole: (role: IRole) => ({ role }),
 		updateSchool: ({
@@ -50,9 +97,10 @@ const editorLogic = kea({
 			schoolName,
 			degree,
 			date,
-			description
+			description,
+			hideDescription
 		}: {
-			id: number
+			id: string
 			schoolName: string
 			degree: string
 			date: {
@@ -60,19 +108,22 @@ const editorLogic = kea({
 				endDate: string
 			}
 			description: string
+			hideDescription: boolean
 		}) => ({
 			id,
 			schoolName,
 			degree,
 			date,
-			description
+			description,
+			hideDescription
 		}),
-		deleteRole: (roleId: number) => ({ roleId }),
+		deleteRole: (id: string) => ({ id }),
 		updateRole: ({
 			id,
 			jobTitle,
 			companyName,
 			date,
+			stillWorking,
 			roleDescription
 		}: {
 			id: number
@@ -82,19 +133,21 @@ const editorLogic = kea({
 				startDate: string
 				endDate: string
 			}
+			stillWorking: boolean
 			roleDescription: string
 		}) => ({
 			id,
 			jobTitle,
 			companyName,
 			date,
+			stillWorking,
 			roleDescription
 		})
 	},
 
 	reducers: {
 		sections: [
-			[ 'contactInfo', 'skills', 'list', 'education' ],
+			[ 'contactInfo' ],
 			{
 				addSection: (state: Section[], { section }: { section: Section }) => [
 					...state,
@@ -148,7 +201,15 @@ const editorLogic = kea({
 				}
 			],
 			{
-				addContact: (state: Contact[], contact: Contact) => [ ...state, contact ],
+				addContact: (
+					state: Contact[],
+					{ contactType, contactInfo }: { contactType: string; contactInfo: string }
+				) => [ ...state, { contactType, contactInfo } ],
+				deleteContact: (
+					state: Contact[],
+					{ contactType }: { contactType: ContactType }
+				) =>
+					state.filter((contact: Contact) => contact.contactType !== contactType),
 				updateContact: (
 					state: Contact[],
 					{
@@ -162,81 +223,219 @@ const editorLogic = kea({
 				}
 			}
 		],
+		list: [
+			{},
+			{
+				addListSection: (
+					state: ListSections,
+					{ sectionId }: { sectionId: string }
+				) => ({
+					...state,
+					[sectionId]: { listTitle: 'list', listContent: '<li></li>' }
+				}),
+				removeListSection: (
+					state: ListSections,
+					{ sectionId }: { sectionId: string }
+				) => {
+					let updatedState = _.omit(state, sectionId)
+					return updatedState
+				},
+				updateListTitle: (
+					state: ListSections,
+					{ listTitle, sectionId }: { listTitle: string; sectionId: string }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], listTitle } }),
+				updateList: (
+					state: ListSections,
+					{ listContent, sectionId }: { listContent: string; sectionId: string }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], listContent } }),
+				addListContent: (
+					state: ListSections,
+					{ listContent, sectionId }: { listContent: string; sectionId: string }
+				) => {
+					let currentListSection = state[sectionId]
+					let currentListContent = extractTextFromHTML(
+						currentListSection.listContent
+					)
+
+					if (!currentListContent.length) {
+						return {
+							...state,
+							[sectionId]: {
+								...state[sectionId],
+								listContent: `<li>${listContent}</li>`
+							}
+						}
+					} else {
+						return {
+							...state,
+							[sectionId]: {
+								...state[sectionId],
+								listContent: `<li>${currentListContent.join(
+									'</li><li>'
+								)}</li><li>${listContent}</li>`
+							}
+						}
+					}
+				},
+				removeListContent: (
+					state: ListSections,
+					{ listContent, sectionId }: { listContent: string; sectionId: number }
+				) => {
+					let currentListSection = state[sectionId]
+					const currentListContent = extractTextFromHTML(
+						currentListSection.listContent.replace(listContent, '')
+					)
+					return {
+						...state,
+						[sectionId]: {
+							...state[sectionId],
+							listContent: `<li>${currentListContent.join('</li><li>')}</li>`
+						}
+					}
+				}
+			}
+		],
+		textSection: [
+			{},
+			{
+				addTextSection: (
+					state: TextSections,
+					{ sectionId }: { sectionId: string }
+				) => ({
+					...state,
+					[sectionId]: { textTitle: 'Text Section', textContent: '' }
+				}),
+				removeTextSection: (
+					state: TextSections,
+					{ sectionId }: { sectionId: string }
+				) => {
+					let updatedState = _.omit(state, sectionId)
+					return updatedState
+				},
+				updateTextTitle: (
+					state: TextSections,
+					{ textTitle, sectionId }: { textTitle: string; sectionId: number }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], textTitle } }),
+				updateTextContent: (
+					state: TextSections,
+					{ textContent, sectionId }: { textContent: string; sectionId: number }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], textContent } })
+			}
+		],
 		skills: [
+			{},
 			{
-				skillsTitle: 'Skills',
-				skillsList: '<li></li>'
-			},
-			{
+				addSkillsSection: (
+					state: SkillsSections,
+					{ sectionId }: { sectionId: string }
+				) => ({
+					...state,
+					[sectionId]: { skillsTitle: 'skills', skillsList: '<li></li>' }
+				}),
+				removeSkillsSection: (
+					state: SkillsSections,
+					{ sectionId }: { sectionId: string }
+				) => {
+					let updatedState = _.omit(state, sectionId)
+					return updatedState
+				},
 				updateSkillsTitle: (
-					state: { skillsTitle: string; content: string },
-					{ skillsTitle }: { skillsTitle: string }
-				) => ({ ...state, skillsTitle }),
+					state: SkillsSections,
+					{ skillsTitle, sectionId }: { skillsTitle: string; sectionId: number }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], skillsTitle } }),
 				updateSkills: (
-					state: { skillsTitle: string; skillsList: string },
-					{ skillsList }: { skillsList: string }
-				) => ({ ...state, skillsList })
+					state: SkillsSections,
+					{ skillsList, sectionId }: { skillsList: string; sectionId: number }
+				) => ({ ...state, [sectionId]: { ...state[sectionId], skillsList } }),
+				addSkills: (
+					state: SkillsSections,
+					{ skill, sectionId }: { skill: string; sectionId: number }
+				) => {
+					let currentSkillsSection = state[sectionId]
+					let skills = extractTextFromHTML(currentSkillsSection.skillsList)
+
+					if (!skills.length) {
+						return {
+							...state,
+							[sectionId]: { ...state[sectionId], skillsList: `<li>${skill}</li>` }
+						}
+					} else {
+						return {
+							...state,
+							[sectionId]: {
+								...state[sectionId],
+								skillsList: `<li>${skills.join('</li><li>')}</li><li>${skill}</li>`
+							}
+						}
+					}
+				},
+				removeSkills: (
+					state: SkillsSections,
+					{ skill, sectionId }: { skill: string; sectionId: number }
+				) => {
+					let currentSkillsSection = state[sectionId]
+					const skills = extractTextFromHTML(
+						currentSkillsSection.skillsList.replace(skill, '')
+					)
+					return {
+						...state,
+						[sectionId]: {
+							...state[sectionId],
+							skillsList: `<li>${skills.join('</li><li>')}</li>`
+						}
+					}
+				}
 			}
 		],
 		projects: [
 			{
 				projectsTitle: 'Projects',
-				projects: [
-					{
-						id: 654687654654,
+				projects: {
+					'project-60c6098f-0cd8-4f79-a57b-03bb7c8a1c28': {
+						id: 'project-60c6098f-0cd8-4f79-a57b-03bb7c8a1c28',
 						projectName: 'MyApp',
 						link: 'www.github.com/myapp-repo',
 						projectDescription: ''
 					}
-				]
+				}
 			},
 			{
 				updateProjectsTitle: (
-					state: { projectsTitle: string; projects: Project[] },
+					state: Projects,
 					{ projectsTitle }: { projectsTitle: string }
 				) => ({ ...state, projectsTitle }),
-				addProject: (
-					state: { projectsTitle: string; projects: Project[] },
-					{ project }: { project: Project[] }
-				) => {
-					const updatedProjects = [ ...state.projects, project ]
+				addProject: (state: Projects, { project }: { project: Project }) => {
+					const updatedProjects = { ...state.projects, [project.id]: project }
 					return {
 						...state,
 						projects: updatedProjects
 					}
 				},
-				deleteProject: (
-					state: { projectsTitle: string; projects: Project[] },
-					{ projectId }: { projectId: number }
-				) => {
-					const updatedProjects = state.projects.filter(
-						(project) => project.id !== projectId
-					)
+				deleteProject: (state: Projects, { id }: { id: string }) => {
+					const updatedProjects = _.omit(state.projects, id)
 					return {
 						...state,
 						projects: updatedProjects
 					}
 				},
 				updateProject: (
-					state: { projectTitle: string; projects: Project[] },
+					state: Projects,
 					{ id, projectName, link, projectDescription }: Project
 				) => {
 					const { projects } = state
-					const updatedProjects = projects.map(
-						(project: Project) =>
-							project.id === id
-								? {
-										...project,
-										projectName,
-										link,
-										projectDescription
-									}
-								: project
-					)
+					const updatedProjects = {
+						...projects[id],
+						projectName,
+						link,
+						projectDescription
+					}
 
 					return {
 						...state,
-						projects: updatedProjects
+						projects: {
+							...projects,
+							[id]: updatedProjects
+						}
 					}
 				}
 			}
@@ -244,54 +443,53 @@ const editorLogic = kea({
 		education: [
 			{
 				educationTitle: 'Education',
-				schools: [
-					{
-						id: 6546857654654,
-						schoolName: 'Harvard',
-						degree: 'Bachelore degree in compouter science',
+				schools: {
+					'school-619550f3-53a1-439c-929b-cc7131787c6a': {
+						id: 'school-619550f3-53a1-439c-929b-cc7131787c6a',
+						schoolName: '',
+						degree: '',
 						date: {
-							startDate: '01/2020',
-							endDate: '02/2020'
+							startDate: 'Start date',
+							endDate: 'End date'
 						},
-						description: '<li></li>'
+						description: '',
+						hideDescription: false
 					}
-				]
+				}
 			},
 			{
 				updateEducationTitle: (
-					state: { educationTitle: string; schools: School[] },
+					state: EducationSection,
 					{ educationTitle }: { educationTitle: string }
 				) => ({ ...state, educationTitle }),
-				addSchool: (
-					state: { educationTitle: string; schools: School[] },
-					{ school }: { school: any }
-				) => {
-					const updatedSchools = [ ...state.schools, school ]
+				addSchool: (state: EducationSection, { school }: { school: School }) => {
+					const updatedSchools = { ...state.schools, [school.id]: school }
 					return {
 						...state,
 						schools: updatedSchools
 					}
 				},
 				deleteSchool: (
-					state: { educationTitle: string; schools: School[] },
-					{ id }: { id: number }
+					state: EducationSection,
+					{ sectionId }: { sectionId: string }
 				) => {
-					const updatedSchools = state.schools.filter((school) => school.id !== id)
+					const updatedSchools = _.omit(state.schools, sectionId)
 					return {
 						...state,
 						schools: updatedSchools
 					}
 				},
 				updateSchool: (
-					state: { educationTitle: string; schools: School[] },
+					state: EducationSection,
 					{
 						id,
 						schoolName,
 						degree,
 						date,
-						description
+						description,
+						hideDescription
 					}: {
-						id: number
+						id: string
 						schoolName: string
 						degree: string
 						date: {
@@ -299,19 +497,25 @@ const editorLogic = kea({
 							endDate: string
 						}
 						description: string
+						hideDescription: boolean
 					}
 				) => {
 					const { schools } = state
-					const updatedSchools = schools.map(
-						(school) =>
-							school.id === id
-								? { ...school, schoolName, degree, date, description }
-								: school
-					)
+					const updatedSchool = {
+						...schools[id],
+						schoolName,
+						degree,
+						date,
+						description,
+						hideDescription
+					}
 
 					return {
 						...state,
-						schools: updatedSchools
+						schools: {
+							...schools,
+							[id]: updatedSchool
+						}
 					}
 				}
 			}
@@ -319,40 +523,34 @@ const editorLogic = kea({
 		experience: [
 			{
 				experienceTitle: 'Work Experience',
-				roles: [
-					{
-						roleId: 654654654,
+				roles: {
+					'role-4cfff7f8-2ef9-4987-b964-f47fda09d017': {
+						id: 'role-4cfff7f8-2ef9-4987-b964-f47fda09d017',
 						jobTitle: 'Pilot',
 						companyName: 'Qatar Airways',
 						date: {
-							startDate: '01/2018',
-							endDate: '02/2020'
+							startDate: 'Start date',
+							endDate: 'End date'
 						},
-						roleDescription: '<li></li>'
-					},
-					{
-						roleId: 5611546584,
-						jobTitle: 'Lead Engineer',
-						companyName: 'Nissan',
-						date: {
-							startDate: '01/2015',
-							endDate: 'Present'
-						},
+						stillWorking: false,
 						roleDescription: '<li></li>'
 					}
-				]
+				}
 			},
 			{
 				updateExperienceTitle: (
 					state: Experience,
 					{ experienceTitle }: { experienceTitle: string }
 				) => ({ ...state, experienceTitle }),
-				addRole: (state: Experience, { role }: { role: IRole }) => ({
-					...state,
-					roles: [ ...state.roles, role ]
-				}),
-				deleteRole: (state: Experience, { roleId }: { roleId: number }) => {
-					const updatedRoles = state.roles.filter((role) => role.roleId !== roleId)
+				addRole: (state: Experience, { role }: { role: IRole }) => {
+					const updatedRoles = { ...state.roles, [role.id]: role }
+					return {
+						...state,
+						roles: updatedRoles
+					}
+				},
+				deleteRole: (state: Experience, { id }: { id: string }) => {
+					const updatedRoles = _.omit(state.roles, id)
 					return {
 						...state,
 						roles: updatedRoles
@@ -365,63 +563,38 @@ const editorLogic = kea({
 						jobTitle,
 						companyName,
 						date,
+						stillWorking,
 						roleDescription
 					}: {
-						id: number
+						id: string
 						jobTitle: string
 						companyName: string
 						date: {
 							startDate: string
 							endDate: string
 						}
+						stillWorking: boolean
 						roleDescription: string
 					}
 				) => {
 					const { roles } = state
-					const updatedRoles = roles.map(
-						(role: IRole) =>
-							role.roleId === id
-								? { ...role, jobTitle, companyName, date, roleDescription }
-								: role
-					)
+					const updatedRoles = {
+						...roles[id],
+						jobTitle,
+						companyName,
+						date,
+						stillWorking,
+						roleDescription
+					}
 
 					return {
 						...state,
-						roles: updatedRoles
+						roles: {
+							...roles,
+							[id]: updatedRoles
+						}
 					}
 				}
-			}
-		],
-		list: [
-			{
-				listTitle: 'List',
-				list: '<li></li>'
-			},
-			{
-				updateListTitle: (
-					state: { listTitle: string; list: string },
-					{ listTitle }: { listTitle: string }
-				) => ({ ...state, listTitle }),
-				updateList: (
-					state: { listTitle: string; list: string },
-					{ list }: { list: string }
-				) => ({ ...state, list })
-			}
-		],
-		textSection: [
-			{
-				textTitle: 'Text',
-				text: ''
-			},
-			{
-				updateTextTitle: (
-					state: { textTitle: string; text: string },
-					{ textTitle }: { textTitle: string }
-				) => ({ ...state, textTitle }),
-				updateText: (
-					state: { textTitle: string; text: string },
-					{ text }: { text: string }
-				) => ({ ...state, text })
 			}
 		]
 	}

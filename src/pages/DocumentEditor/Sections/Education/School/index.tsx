@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { useActions } from 'kea'
 import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined } from '@ant-design/icons'
 
 import {
 	SchoolContainer,
@@ -11,12 +11,11 @@ import {
 	Degree,
 	Date,
 	Description,
-	EditSchool,
 	DeleteSchool
 } from './School.styles'
 
 interface SchoolProps {
-	id: number
+	id: string
 	schoolName: string
 	degree: string
 	date: {
@@ -24,6 +23,7 @@ interface SchoolProps {
 		endDate: string
 	}
 	description: string
+	hideDescription: boolean
 }
 
 const School: React.FC<SchoolProps> = ({
@@ -31,7 +31,8 @@ const School: React.FC<SchoolProps> = ({
 	schoolName,
 	degree,
 	date,
-	description
+	description,
+	hideDescription
 }) => {
 	const schoolTitleRef = useRef(null)
 	const degreeRef = useRef(null)
@@ -47,9 +48,6 @@ const School: React.FC<SchoolProps> = ({
 		<SchoolContainer
 			onMouseOver={() => setEditVisibility(true)}
 			onMouseLeave={() => setEditVisibility(false)}>
-			<EditSchool style={{ display: isEditVisible ? 'block' : 'none' }}>
-				<EditOutlined />
-			</EditSchool>
 			<DeleteSchool
 				style={{ display: isEditVisible ? 'block' : 'none' }}
 				onClick={() => deleteSchool(id)}>
@@ -120,21 +118,24 @@ const School: React.FC<SchoolProps> = ({
 						})}
 				/>
 			</Degree>
-			<Description>
-				<ContentEditable
-					className='description'
-					ref={descriptionRef}
-					html={description}
-					onChange={(e) =>
-						updateSchool({
-							id,
-							schoolName,
-							degree,
-							date,
-							description: e.target.value
-						})}
-				/>
-			</Description>
+			{!hideDescription && (
+				<Description>
+					<ContentEditable
+						data-placeholder='Add description'
+						className='description'
+						ref={descriptionRef}
+						html={description}
+						onChange={(e) =>
+							updateSchool({
+								id,
+								schoolName,
+								degree,
+								date,
+								description: e.target.value
+							})}
+					/>
+				</Description>
+			)}
 		</SchoolContainer>
 	)
 }

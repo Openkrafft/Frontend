@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useValues, useActions } from 'kea'
 import editorLogic from '../../logic'
 import Section from '../SectionWrapper'
@@ -10,11 +10,11 @@ import {
 	MailOutlined,
 	EnvironmentOutlined,
 	SkypeOutlined,
-	PhoneOutlined,
-	EditOutlined
+	PhoneOutlined
 } from '@ant-design/icons'
 
 import { ContactContainer, ContactInformation } from './ContactInfo.styles'
+import globalLogic from 'src/logic'
 
 const iconsMap: any = {
 	EMAIL: <MailOutlined style={{ fontSize: 17, marginRight: 8 }} />,
@@ -28,12 +28,15 @@ const iconsMap: any = {
 
 const ContactInfo: React.FC = () => {
 	const { contacts } = useValues(editorLogic)
-	const { addContact, updateContact, deleteSection } = useActions(editorLogic)
+	const { toggleDrawer } = useActions(globalLogic)
+	const { deleteSection } = useActions(editorLogic)
 	return (
 		<Section
 			showSectionTitle={false}
-			showAddButton
-			onDeleteClick={() => deleteSection('contactInfo')}>
+			showEditButton
+			onDeleteClick={() => deleteSection('contactInfo')}
+			onEditClick={() =>
+				toggleDrawer({ isVisible: true, section: 'contactInfo' })}>
 			<ContactContainer>
 				{contacts.map((contact: Contact) => (
 					<ContactInformation key={contact.contactType}>
