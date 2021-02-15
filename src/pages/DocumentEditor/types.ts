@@ -68,7 +68,7 @@ export interface EducationSection {
 }
 
 export interface Project {
-	id: number
+	id: string
 	projectName: string
 	link?: string
 	projectDescription: string

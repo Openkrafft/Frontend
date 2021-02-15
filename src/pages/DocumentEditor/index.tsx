@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout } from 'antd'
 import AppHeader from '../AppHeader/index'
-import Document from './Document'
+import Document from './Document/index'
 import ZoomButtons from '../../components/ZoomButtons'
 import ToolBar from './ToolBar'
 import SectionEditor from './SectionEditor'
