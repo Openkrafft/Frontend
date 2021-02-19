@@ -69,7 +69,7 @@ export const ProjectDescription = Style.div`
     }
 `
 
-export const EditProject = Style.button`
+export const DeleteProject = Style.button`
     border: none;
     outline: none;
     display: none;
@@ -86,6 +86,11 @@ export const EditProject = Style.button`
         background: #166cbb
     }
 `
-export const DeleteProject = Style(EditProject)`
-    top: 40px
+export const DragProject = Style(DeleteProject)`
+    top: 40px;
+    padding: 7px 8px;
+
+    &:active {
+        cursor: grabbing;
+    }
 `

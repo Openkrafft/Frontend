@@ -81,6 +81,10 @@ const editorLogic = kea({
 		updateProjectsTitle: (projectsTitle: string) => ({ projectsTitle }),
 		addProject: (project: Project) => ({ project }),
 		deleteProject: (id: string) => ({ id }),
+		swapProjects: (sourceIndex: number, destinationIndex: number) => ({
+			sourceIndex,
+			destinationIndex
+		}),
 		updateProject: ({ id, projectName, link, projectDescription }: Project) => ({
 			id,
 			projectName,
@@ -413,6 +417,26 @@ const editorLogic = kea({
 				},
 				deleteProject: (state: Projects, { id }: { id: string }) => {
 					const updatedProjects = _.omit(state.projects, id)
+					return {
+						...state,
+						projects: updatedProjects
+					}
+				},
+				swapProjects: (
+					state: Projects,
+					{
+						sourceIndex,
+						destinationIndex
+					}: { sourceIndex: number; destinationIndex: number }
+				) => {
+					let updatedProjects: any = {}
+					let projectIds = Object.keys(state.projects)
+					projectIds.splice(
+						destinationIndex,
+						0,
+						projectIds.splice(sourceIndex, 1)[0]
+					)
+					projectIds.map((id) => (updatedProjects[id] = state.projects[id]))
 					return {
 						...state,
 						projects: updatedProjects

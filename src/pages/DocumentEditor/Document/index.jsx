@@ -17,7 +17,7 @@ import { Document as PageContainer } from './Document.styles'
 import './styles.css'
 
 const Document = () => {
-	const { width, height, ref: docRef } = useResizeDetector()
+	const { ref: docRef } = useResizeDetector()
 	const { zoom } = useValues(globalLogic)
 	const { skills, list, textSection, sections: currentSections } = useValues(
 		editorLogic
