@@ -33,6 +33,10 @@ const editorLogic = kea({
 			contactType: string
 			contactInfo: string
 		}) => ({ contactType, contactInfo }),
+		swapContactInfo: (sourceIndex: number, destinationIndex: number) => ({
+			sourceIndex,
+			destinationIndex
+		}),
 		deleteContact: (contactType: ContactType) => ({ contactType }),
 		updateContact: (contactInfo: string, contactType: ContactType) => ({
 			contactInfo,
@@ -234,6 +238,16 @@ const editorLogic = kea({
 					return state.map(
 						(contact) => (contact.contactType === contactType ? contactInfo : contact)
 					)
+				},
+				swapContactInfo: (
+					state: Contact[],
+					{
+						sourceIndex,
+						destinationIndex
+					}: { sourceIndex: number; destinationIndex: number }
+				) => {
+					state.splice(destinationIndex, 0, state.splice(sourceIndex, 1)[0])
+					return [ ...state ]
 				}
 			}
 		],

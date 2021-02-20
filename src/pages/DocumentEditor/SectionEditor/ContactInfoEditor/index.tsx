@@ -5,6 +5,8 @@ import editorLogic from '../../logic'
 import { Select, Row, Col, Input, Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { Contact } from '../../types'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 import {
 	LinkedinOutlined,
 	GithubOutlined,
@@ -15,7 +17,8 @@ import {
 	PhoneOutlined,
 	EditOutlined,
 	DeleteOutlined,
-	LinkOutlined
+	LinkOutlined,
+	DragOutlined
 } from '@ant-design/icons'
 
 const { Option } = Select
@@ -33,7 +36,7 @@ const iconsMap: any = {
 
 const ContactInfoEditor: React.FC = () => {
 	const { contacts } = useValues(editorLogic)
-	const { deleteContact, addContact } = useActions(editorLogic)
+	const { deleteContact, addContact, swapContactInfo } = useActions(editorLogic)
 	const contactList = [
 		'Address',
 		'Phone',
@@ -96,23 +99,68 @@ const ContactInfoEditor: React.FC = () => {
 					</Button>
 				</Col>
 			</Row>
-			<div style={{ marginTop: 30 }}>
-				{contacts.map((contact: Contact) => {
-					return (
-						<Row key={contact.contactType} style={{ marginBottom: 20 }}>
-							<Col>{iconsMap[contact.contactType]}</Col>
-							<Col>{contact.contactInfo}</Col>
-							<Col style={{ marginLeft: 'auto' }}>
-								<EditOutlined style={{ cursor: 'pointer' }} />
-								<DeleteOutlined
-									style={{ marginLeft: 20, cursor: 'pointer' }}
-									onClick={() => deleteContact(contact.contactType)}
-								/>
-							</Col>
-						</Row>
-					)
-				})}
-			</div>
+			<DragDropContext onDragEnd={(param, _) => {
+					const srcIndex = param.source.index
+					const destinationIndex = param.destination?.index
+					swapContactInfo(srcIndex, destinationIndex)
+				}}>
+					<Droppable droppableId={`droppable-contact-section`}>
+						{(provided, snapshot) => (
+							<div
+							    style={
+									snapshot.isDraggingOver ? (
+									{
+										backgroundColor: 'rgba(159, 207, 252, 0.1)',
+										border: '1px solid rgba(24, 144, 255, .1)',
+										transition: '.1s ease-in-out',
+										marginTop: 30
+									}
+								) : (
+									{marginTop: 30}
+								)
+							} ref={provided.innerRef} {...provided.droppableProps}>
+								{contacts.map((contact: Contact, i: number) => {
+									return (
+										<Draggable
+										key={contact.contactType}
+										draggableId={`draggable-role-${contact.contactType}`}
+										index={i}>
+											{(provided, snapshot) => (
+												<div ref={provided.innerRef} {...provided.draggableProps}>
+													<Row style={
+																snapshot.isDragging ? (
+																	{
+																		backgroundColor: 'rgba(24, 144, 255, .1)',
+																		border: '1px dashed rgba(24, 144, 255, .6)',
+																		transition: '.1s ease-in-out',
+																		marginBottom: 10
+																	}
+																) : (
+																	{marginBottom: 10}
+																)
+															}>
+														<Col>{iconsMap[contact.contactType]}</Col>
+														<Col>{contact.contactInfo}</Col>
+														<Col style={{ marginLeft: 'auto' }}>
+															<EditOutlined style={{ cursor: 'pointer' }} />
+															<DeleteOutlined
+																style={{ marginLeft: 20, cursor: 'pointer' }}
+																onClick={() => deleteContact(contact.contactType)}
+															/>
+															<DragOutlined style={{ marginLeft: 20 }} { ...provided.dragHandleProps } />
+														</Col>
+													</Row>
+												</div>
+											)}
+										</Draggable>
+									)
+								})}
+								{provided.placeholder}
+							</div>
+						)}
+					</Droppable>
+
+			</DragDropContext>
 		</div>
 	)
 }
