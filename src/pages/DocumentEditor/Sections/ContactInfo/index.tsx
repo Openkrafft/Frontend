@@ -10,7 +10,8 @@ import {
 	MailOutlined,
 	EnvironmentOutlined,
 	SkypeOutlined,
-	PhoneOutlined
+	PhoneOutlined,
+	LinkOutlined
 } from '@ant-design/icons'
 
 import { ContactContainer, ContactInformation } from './ContactInfo.styles'
@@ -23,7 +24,8 @@ const iconsMap: any = {
 	GITHUB: <GithubOutlined style={{ fontSize: 17, marginRight: 8 }} />,
 	LINKEDIN: <LinkedinOutlined style={{ fontSize: 17, marginRight: 8 }} />,
 	SKYPE: <SkypeOutlined style={{ fontSize: 17, marginRight: 8 }} />,
-	TWITTER: <TwitterOutlined style={{ fontSize: 17, marginRight: 8 }} />
+	TWITTER: <TwitterOutlined style={{ fontSize: 17, marginRight: 8 }} />,
+	WEBSITE: <LinkOutlined style={{ fontSize: 17, marginRight: 8 }} />
 }
 
 const ContactInfo: React.FC = () => {
