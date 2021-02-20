@@ -14,7 +14,8 @@ import {
 	SkypeOutlined,
 	PhoneOutlined,
 	EditOutlined,
-	DeleteOutlined
+	DeleteOutlined,
+	LinkOutlined
 } from '@ant-design/icons'
 
 const { Option } = Select
@@ -26,7 +27,8 @@ const iconsMap: any = {
 	GITHUB: <GithubOutlined style={{ fontSize: 17, marginRight: 8 }} />,
 	LINKEDIN: <LinkedinOutlined style={{ fontSize: 17, marginRight: 8 }} />,
 	SKYPE: <SkypeOutlined style={{ fontSize: 17, marginRight: 8 }} />,
-	TWITTER: <TwitterOutlined style={{ fontSize: 17, marginRight: 8 }} />
+	TWITTER: <TwitterOutlined style={{ fontSize: 17, marginRight: 8 }} />,
+	WEBSITE: <LinkOutlined style={{ fontSize: 17, marginRight: 8 }} />
 }
 
 const ContactInfoEditor: React.FC = () => {
@@ -38,7 +40,8 @@ const ContactInfoEditor: React.FC = () => {
 		'Linkedin',
 		'Email',
 		'Skype',
-		'Github'
+		'Github',
+		'Website'
 	].filter(
 		(contact) => !_.find(contacts, { contactType: contact.toUpperCase() })
 	)

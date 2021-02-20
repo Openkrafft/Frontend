@@ -31,6 +31,7 @@ export type ContactType =
 	| 'GITHUB'
 	| 'SKYPE'
 	| 'TWITTER'
+	| 'WEBSITE'
 
 export type Section =
 	| 'header'
