@@ -142,7 +142,6 @@ const ContactInfoEditor: React.FC = () => {
 														<Col>{iconsMap[contact.contactType]}</Col>
 														<Col>{contact.contactInfo}</Col>
 														<Col style={{ marginLeft: 'auto' }}>
-															<EditOutlined style={{ cursor: 'pointer' }} />
 															<DeleteOutlined
 																style={{ marginLeft: 20, cursor: 'pointer' }}
 																onClick={() => deleteContact(contact.contactType)}
