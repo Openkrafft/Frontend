@@ -130,6 +130,8 @@ const editorLogic = kea({
 			sourceIndex,
 			destinationIndex
 		}),
+		addDescriptionList: (id: string) => ({ id }),
+		removeDescriptionList: (id: string) => ({ id }),
 		updateRole: ({
 			id,
 			jobTitle,
@@ -618,6 +620,36 @@ const editorLogic = kea({
 					return {
 						...state,
 						roles: updatedRoles
+					}
+				},
+				addDescriptionList: (state: Experience, { id }: { id: string }) => {
+					const currentRole = state.roles[id]
+					const updatedRole = {
+						...currentRole,
+						roleDescription: `<li>${currentRole.roleDescription}</li>`
+					}
+
+					return {
+						...state,
+						roles: {
+							...state.roles,
+							[id]: updatedRole
+						}
+					}
+				},
+				removeDescriptionList: (state: Experience, { id }: { id: string }) => {
+					const currentRole = state.roles[id]
+					const updatedRole = {
+						...currentRole,
+						roleDescription: currentRole.roleDescription.replace(/<li>|<\/li>/g, '')
+					}
+
+					return {
+						...state,
+						roles: {
+							...state.roles,
+							[id]: updatedRole
+						}
 					}
 				},
 				updateRole: (
