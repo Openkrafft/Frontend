@@ -3,6 +3,9 @@ import { Input, Row, DatePicker, Space, Button, Checkbox } from 'antd'
 import { useActions } from 'kea'
 import editorLogic from 'src/pages/DocumentEditor/logic'
 import ContentEditable from 'react-contenteditable'
+import { UnorderedListOutlined, AlignLeftOutlined } from '@ant-design/icons'
+
+import './styles.css'
 
 interface RoleEditorProps {
 	id: string
@@ -25,7 +28,15 @@ const Role: React.FC<RoleEditorProps> = ({
 	roleDescription
 }) => {
 	const descriptionRef = useRef(null)
-	const { updateRole, deleteRole } = useActions(editorLogic)
+	const {
+		updateRole,
+		deleteRole,
+		addDescriptionList,
+		removeDescriptionList
+	} = useActions(editorLogic)
+	const isList = /<li>/.test(roleDescription)
+
+	console.log('desc', roleDescription)
 
 	return (
 		<Row style={{ marginBottom: 50 }}>
@@ -118,25 +129,37 @@ const Role: React.FC<RoleEditorProps> = ({
 					})}
 				style={{ marginBottom: 10 }}
 			/>
-			<span style={{ marginBottom: 6, display: 'block' }}>Description:</span>
-			{/* <Input.TextArea
-				name='description'
-				value={roleDescription}
-				onChange={(e) =>
-					updateRole({
-						id,
-						jobTitle,
-						companyName,
-						date: {
-							startDate,
-							endDate
-						},
-						stillWorking,
-						roleDescription: e.target.value
-					})}
-				style={{ marginBottom: 10 }}
-				rows={4}
-			/> */}
+			<div className='text-button-container'>
+				<span style={{ marginBottom: 6, display: 'block' }}>Description:</span>
+				<div>
+					<AlignLeftOutlined
+						className='text-button'
+						style={{ background: !isList ? '#d7d7d7' : '#e9e9e9' }}
+						onClick={
+							isList ? (
+								() => removeDescriptionList(id)
+							) : (
+								() => {
+									return
+								}
+							)
+						}
+					/>
+					<UnorderedListOutlined
+						className='text-button'
+						style={{ marginLeft: 5, background: isList ? '#d7d7d7' : '#e9e9e9' }}
+						onClick={
+							!isList ? (
+								() => addDescriptionList(id)
+							) : (
+								() => {
+									return
+								}
+							)
+						}
+					/>
+				</div>
+			</div>
 			<ContentEditable
 				style={{ minHeight: 150, listStyleType: 'disc' }}
 				className='job-description ant-input'
