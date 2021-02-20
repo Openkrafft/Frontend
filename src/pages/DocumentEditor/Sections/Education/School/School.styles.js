@@ -105,3 +105,11 @@ export const DeleteSchool = Style.button`
         background: #166cbb
     }
 `
+export const DragSchool = Style(DeleteSchool)`
+    top: 40px;
+    padding: 7px 8px;
+
+    &:active {
+        cursor: grabbing;
+    }
+`

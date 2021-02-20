@@ -94,6 +94,10 @@ const editorLogic = kea({
 		updateEducationTitle: (educationTitle: string) => ({ educationTitle }),
 		addSchool: (school: School) => ({ school }),
 		deleteSchool: (sectionId: School) => ({ sectionId }),
+		swapSchools: (sourceIndex: number, destinationIndex: number) => ({
+			sourceIndex,
+			destinationIndex
+		}),
 		updateExperienceTitle: (experienceTitle: string) => ({ experienceTitle }),
 		addRole: (role: IRole) => ({ role }),
 		updateSchool: ({
@@ -502,6 +506,22 @@ const editorLogic = kea({
 					{ sectionId }: { sectionId: string }
 				) => {
 					const updatedSchools = _.omit(state.schools, sectionId)
+					return {
+						...state,
+						schools: updatedSchools
+					}
+				},
+				swapSchools: (
+					state: EducationSection,
+					{
+						sourceIndex,
+						destinationIndex
+					}: { sourceIndex: number; destinationIndex: number }
+				) => {
+					let updatedSchools: any = {}
+					let schoolIds = Object.keys(state.schools)
+					schoolIds.splice(destinationIndex, 0, schoolIds.splice(sourceIndex, 1)[0])
+					schoolIds.map((id) => (updatedSchools[id] = state.schools[id]))
 					return {
 						...state,
 						schools: updatedSchools
