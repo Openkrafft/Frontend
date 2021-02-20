@@ -122,6 +122,10 @@ const editorLogic = kea({
 			hideDescription
 		}),
 		deleteRole: (id: string) => ({ id }),
+		swapRoles: (sourceIndex: number, destinationIndex: number) => ({
+			sourceIndex,
+			destinationIndex
+		}),
 		updateRole: ({
 			id,
 			jobTitle,
@@ -575,6 +579,22 @@ const editorLogic = kea({
 				},
 				deleteRole: (state: Experience, { id }: { id: string }) => {
 					const updatedRoles = _.omit(state.roles, id)
+					return {
+						...state,
+						roles: updatedRoles
+					}
+				},
+				swapRoles: (
+					state: Experience,
+					{
+						sourceIndex,
+						destinationIndex
+					}: { sourceIndex: number; destinationIndex: number }
+				) => {
+					let updatedRoles: any = {}
+					let roleIds = Object.keys(state.roles)
+					roleIds.splice(destinationIndex, 0, roleIds.splice(sourceIndex, 1)[0])
+					roleIds.map((id) => (updatedRoles[id] = state.roles[id]))
 					return {
 						...state,
 						roles: updatedRoles

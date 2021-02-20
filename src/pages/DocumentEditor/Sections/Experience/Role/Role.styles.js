@@ -91,3 +91,11 @@ export const DeleteRole = Style.button`
         background: #166cbb
     }
 `
+export const DragRole = Style(DeleteRole)`
+    top: 40px;
+    padding: 7px 8px;
+
+    &:active {
+        cursor: grabbing;
+    }
+`
