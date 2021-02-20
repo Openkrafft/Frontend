@@ -576,8 +576,8 @@ const editorLogic = kea({
 				roles: {
 					'role-4cfff7f8-2ef9-4987-b964-f47fda09d017': {
 						id: 'role-4cfff7f8-2ef9-4987-b964-f47fda09d017',
-						jobTitle: 'Pilot',
-						companyName: 'Qatar Airways',
+						jobTitle: '',
+						companyName: '',
 						date: {
 							startDate: 'Start date',
 							endDate: 'End date'
