@@ -40,7 +40,7 @@ const Experience: React.FC = () => {
 					const destinationIndex = param.destination?.index
 					swapRoles(srcIndex, destinationIndex)
 				}}>
-				<Droppable droppableId={`droppable-experience-${uuidv4()}`}>
+				<Droppable droppableId={`droppable-experience-section`}>
 					{(provided, snapshot) => (
 						<div
 							ref={provided.innerRef}
@@ -59,7 +59,7 @@ const Experience: React.FC = () => {
 							{Object.values(roles).map((role: any, i) => (
 								<Draggable
 									key={role.id}
-									draggableId={`draggable-${role.id}`}
+									draggableId={`draggable-role-${role.id}`}
 									index={i}>
 									{(provided, snapshot) => (
 										<div ref={provided.innerRef} {...provided.draggableProps}>

@@ -41,7 +41,7 @@ const Education: React.FC = () => {
 					const destinationIndex = param.destination?.index
 					swapSchools(srcIndex, destinationIndex)
 				}}>
-				<Droppable droppableId={`droppable-experience-${uuidv4()}`}>
+				<Droppable droppableId={`droppable-education-section`}>
 					{(provided, snapshot) => (
 						<div
 							ref={provided.innerRef}
@@ -60,7 +60,7 @@ const Education: React.FC = () => {
 							{Object.values(schools).map((school: any, i) => (
 								<Draggable
 									key={school.id}
-									draggableId={`draggable-${school.id}`}
+									draggableId={`draggable-school-${school.id}`}
 									index={i}>
 									{(provided, snapshot) => (
 										<div ref={provided.innerRef} {...provided.draggableProps}>

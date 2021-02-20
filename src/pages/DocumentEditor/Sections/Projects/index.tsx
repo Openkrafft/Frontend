@@ -37,7 +37,7 @@ const Projects: React.FC = () => {
 					const destinationIndex = param.destination?.index
 					swapProjects(srcIndex, destinationIndex)
 				}}>
-				<Droppable droppableId={`droppable-projects-${uuidv4()}`}>
+				<Droppable droppableId={`droppable-projects-section`}>
 					{(provided, snapshot) => (
 						<div
 							ref={provided.innerRef}
@@ -56,7 +56,7 @@ const Projects: React.FC = () => {
 							{Object.values(projects).map((project: any, i) => (
 								<Draggable
 									key={project.id}
-									draggableId={`draggable-${project.id}`}
+									draggableId={`draggable-project-${project.id}`}
 									index={i}>
 									{(provided, snapshot) => (
 										<div ref={provided.innerRef} {...provided.draggableProps}>
