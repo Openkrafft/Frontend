@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { useActions } from 'kea'
 import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
-import { DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined, DragOutlined } from '@ant-design/icons'
 
 import {
 	SchoolContainer,
@@ -11,7 +11,8 @@ import {
 	Degree,
 	Date,
 	Description,
-	DeleteSchool
+	DeleteSchool,
+	DragSchool
 } from './School.styles'
 
 interface SchoolProps {
@@ -24,6 +25,8 @@ interface SchoolProps {
 	}
 	description: string
 	hideDescription: boolean
+	dragProps: any
+	isDragging: any
 }
 
 const School: React.FC<SchoolProps> = ({
@@ -32,7 +35,9 @@ const School: React.FC<SchoolProps> = ({
 	degree,
 	date,
 	description,
-	hideDescription
+	hideDescription,
+	dragProps,
+	isDragging
 }) => {
 	const schoolTitleRef = useRef(null)
 	const degreeRef = useRef(null)
@@ -47,7 +52,23 @@ const School: React.FC<SchoolProps> = ({
 	return (
 		<SchoolContainer
 			onMouseOver={() => setEditVisibility(true)}
-			onMouseLeave={() => setEditVisibility(false)}>
+			onMouseLeave={() => setEditVisibility(false)}
+			style={
+				isDragging ? (
+					{
+						backgroundColor: 'rgba(24, 144, 255, .1)',
+						border: '1px dashed rgba(24, 144, 255, .6)',
+						transition: '.1s ease-in-out'
+					}
+				) : (
+					{}
+				)
+			}>
+			<DragSchool
+				style={{ display: isEditVisible ? 'block' : 'none' }}
+				{...dragProps}>
+				<DragOutlined style={{ fontSize: 18 }} />
+			</DragSchool>
 			<DeleteSchool
 				style={{ display: isEditVisible ? 'block' : 'none' }}
 				onClick={() => deleteSchool(id)}>

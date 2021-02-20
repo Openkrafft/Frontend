@@ -2,14 +2,14 @@ import React, { useState, useRef } from 'react'
 import { useActions } from 'kea'
 import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined, DragOutlined } from '@ant-design/icons'
 
 import {
 	ProjectContainer,
 	ProjectName,
 	ProjectLink,
 	ProjectDescription,
-	EditProject,
+	DragProject,
 	DeleteProject
 } from './Project.styles'
 
@@ -18,13 +18,17 @@ interface ProjectProps {
 	projectName: string
 	link?: string
 	projectDescription: string
+	dragProps: any
+	isDragging: any
 }
 
 const Project: React.FC<ProjectProps> = ({
 	id,
 	projectName,
 	link,
-	projectDescription
+	projectDescription,
+	dragProps,
+	isDragging
 }) => {
 	const projectNameRef = useRef(null)
 	const linkRef = useRef(null)
@@ -36,10 +40,23 @@ const Project: React.FC<ProjectProps> = ({
 	return (
 		<ProjectContainer
 			onMouseOver={() => setEditVisibility(true)}
-			onMouseLeave={() => setEditVisibility(false)}>
-			<EditProject style={{ display: isEditVisible ? 'block' : 'none' }}>
-				<EditOutlined />
-			</EditProject>
+			onMouseLeave={() => setEditVisibility(false)}
+			style={
+				isDragging ? (
+					{
+						backgroundColor: 'rgba(24, 144, 255, .1)',
+						border: '1px dashed rgba(24, 144, 255, .6)',
+						transition: '.1s ease-in-out'
+					}
+				) : (
+					{}
+				)
+			}>
+			<DragProject
+				style={{ display: isEditVisible ? 'block' : 'none' }}
+				{...dragProps}>
+				<DragOutlined style={{ fontSize: 18 }} />
+			</DragProject>
 			<DeleteProject
 				style={{ display: isEditVisible ? 'block' : 'none' }}
 				onClick={() => deleteProject(id)}>

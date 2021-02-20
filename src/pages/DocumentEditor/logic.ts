@@ -81,6 +81,10 @@ const editorLogic = kea({
 		updateProjectsTitle: (projectsTitle: string) => ({ projectsTitle }),
 		addProject: (project: Project) => ({ project }),
 		deleteProject: (id: string) => ({ id }),
+		swapProjects: (sourceIndex: number, destinationIndex: number) => ({
+			sourceIndex,
+			destinationIndex
+		}),
 		updateProject: ({ id, projectName, link, projectDescription }: Project) => ({
 			id,
 			projectName,
@@ -90,6 +94,10 @@ const editorLogic = kea({
 		updateEducationTitle: (educationTitle: string) => ({ educationTitle }),
 		addSchool: (school: School) => ({ school }),
 		deleteSchool: (sectionId: School) => ({ sectionId }),
+		swapSchools: (sourceIndex: number, destinationIndex: number) => ({
+			sourceIndex,
+			destinationIndex
+		}),
 		updateExperienceTitle: (experienceTitle: string) => ({ experienceTitle }),
 		addRole: (role: IRole) => ({ role }),
 		updateSchool: ({
@@ -118,6 +126,10 @@ const editorLogic = kea({
 			hideDescription
 		}),
 		deleteRole: (id: string) => ({ id }),
+		swapRoles: (sourceIndex: number, destinationIndex: number) => ({
+			sourceIndex,
+			destinationIndex
+		}),
 		updateRole: ({
 			id,
 			jobTitle,
@@ -418,6 +430,26 @@ const editorLogic = kea({
 						projects: updatedProjects
 					}
 				},
+				swapProjects: (
+					state: Projects,
+					{
+						sourceIndex,
+						destinationIndex
+					}: { sourceIndex: number; destinationIndex: number }
+				) => {
+					let updatedProjects: any = {}
+					let projectIds = Object.keys(state.projects)
+					projectIds.splice(
+						destinationIndex,
+						0,
+						projectIds.splice(sourceIndex, 1)[0]
+					)
+					projectIds.map((id) => (updatedProjects[id] = state.projects[id]))
+					return {
+						...state,
+						projects: updatedProjects
+					}
+				},
 				updateProject: (
 					state: Projects,
 					{ id, projectName, link, projectDescription }: Project
@@ -474,6 +506,22 @@ const editorLogic = kea({
 					{ sectionId }: { sectionId: string }
 				) => {
 					const updatedSchools = _.omit(state.schools, sectionId)
+					return {
+						...state,
+						schools: updatedSchools
+					}
+				},
+				swapSchools: (
+					state: EducationSection,
+					{
+						sourceIndex,
+						destinationIndex
+					}: { sourceIndex: number; destinationIndex: number }
+				) => {
+					let updatedSchools: any = {}
+					let schoolIds = Object.keys(state.schools)
+					schoolIds.splice(destinationIndex, 0, schoolIds.splice(sourceIndex, 1)[0])
+					schoolIds.map((id) => (updatedSchools[id] = state.schools[id]))
 					return {
 						...state,
 						schools: updatedSchools
@@ -551,6 +599,22 @@ const editorLogic = kea({
 				},
 				deleteRole: (state: Experience, { id }: { id: string }) => {
 					const updatedRoles = _.omit(state.roles, id)
+					return {
+						...state,
+						roles: updatedRoles
+					}
+				},
+				swapRoles: (
+					state: Experience,
+					{
+						sourceIndex,
+						destinationIndex
+					}: { sourceIndex: number; destinationIndex: number }
+				) => {
+					let updatedRoles: any = {}
+					let roleIds = Object.keys(state.roles)
+					roleIds.splice(destinationIndex, 0, roleIds.splice(sourceIndex, 1)[0])
+					roleIds.map((id) => (updatedRoles[id] = state.roles[id]))
 					return {
 						...state,
 						roles: updatedRoles

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { useActions } from 'kea'
 import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
-import { DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined, DragOutlined } from '@ant-design/icons'
 
 import {
 	RoleContainer,
@@ -10,7 +10,8 @@ import {
 	CompanyName,
 	Date,
 	JobDescription,
-	DeleteRole
+	DeleteRole,
+	DragRole
 } from './Role.styles'
 
 interface RoleProps {
@@ -23,6 +24,8 @@ interface RoleProps {
 	}
 	stillWorking: boolean
 	roleDescription: string
+	dragProps: any
+	isDragging: any
 }
 
 const Role: React.FC<RoleProps> = ({
@@ -31,7 +34,9 @@ const Role: React.FC<RoleProps> = ({
 	companyName,
 	date,
 	stillWorking,
-	roleDescription
+	roleDescription,
+	dragProps,
+	isDragging
 }) => {
 	const roleTitleRef = useRef(null)
 	const companyNameRef = useRef(null)
@@ -47,7 +52,23 @@ const Role: React.FC<RoleProps> = ({
 		<RoleContainer
 			className='role-container'
 			onMouseOver={() => setEditVisibility(true)}
-			onMouseLeave={() => setEditVisibility(false)}>
+			onMouseLeave={() => setEditVisibility(false)}
+			style={
+				isDragging ? (
+					{
+						backgroundColor: 'rgba(24, 144, 255, .1)',
+						border: '1px dashed rgba(24, 144, 255, .6)',
+						transition: '.1s ease-in-out'
+					}
+				) : (
+					{}
+				)
+			}>
+			<DragRole
+				style={{ display: isEditVisible ? 'block' : 'none' }}
+				{...dragProps}>
+				<DragOutlined style={{ fontSize: 18 }} />
+			</DragRole>
 			<DeleteRole
 				style={{ display: isEditVisible ? 'block' : 'none' }}
 				onClick={() => deleteRole(id)}>
