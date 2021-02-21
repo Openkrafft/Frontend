@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useRef } from 'react'
 import { Input, Row, DatePicker, Space, Checkbox, Button } from 'antd'
 import { useActions } from 'kea'
+import ContentEditable from 'react-contenteditable'
 import editorLogic from '../../../logic'
+import { UnorderedListOutlined, AlignLeftOutlined } from '@ant-design/icons'
+
+import './styles.css'
 
 interface SchoolEditorProps {
 	id: string
@@ -23,7 +27,14 @@ const School: React.FC<SchoolEditorProps> = ({
 	description,
 	hideDescription
 }) => {
-	const { updateSchool, deleteSchool } = useActions(editorLogic)
+	const descriptionRef = useRef(null)
+	const {
+		updateSchool,
+		deleteSchool,
+		addSchoolDescriptionList,
+		removeSchoolDescriptionList
+	} = useActions(editorLogic)
+	const isList = /<li>/.test(description)
 
 	return (
 		<Row style={{ marginBottom: 50 }}>
@@ -61,9 +72,9 @@ const School: React.FC<SchoolEditorProps> = ({
 							description,
 							hideDescription
 						})}
-					style={{ width: 540, marginBottom: 10 }}
+					style={{ width: 554, marginBottom: 10 }}
 				/>
-				<span>End Date:</span>
+				<span>Graduation Date:</span>
 				<DatePicker
 					onChange={(date: any, dateString: string): void =>
 						updateSchool({
@@ -77,7 +88,7 @@ const School: React.FC<SchoolEditorProps> = ({
 							description,
 							hideDescription
 						})}
-					style={{ width: 540, marginBottom: 10 }}
+					style={{ width: 554, marginBottom: 10 }}
 				/>
 			</Space>
 			<span style={{ marginBottom: 6 }}>Degree:</span>
@@ -99,27 +110,39 @@ const School: React.FC<SchoolEditorProps> = ({
 					})}
 				style={{ marginBottom: 10 }}
 			/>
-			<span style={{ marginBottom: 6, display: 'block' }}>Description:</span>
-			<Input.TextArea
-				name='description'
-				value={description}
-				onChange={(e) =>
-					updateSchool({
-						id,
-						schoolName,
-						degree,
-						date: {
-							startDate,
-							endDate
-						},
-						description: e.target.value,
-						hideDescription
-					})}
-				style={{ marginBottom: 10 }}
-				rows={4}
-				disabled={hideDescription}
-			/>
+			<div className='text-button-container'>
+				<span style={{ marginBottom: 6, display: 'block' }}>Description:</span>
+				<div>
+					<AlignLeftOutlined
+						className='text-button'
+						style={{ background: !isList ? '#c7c7c7' : '#e9e9e9' }}
+						onClick={
+							isList ? (
+								() => removeSchoolDescriptionList(id)
+							) : (
+								() => {
+									return
+								}
+							)
+						}
+					/>
+					<UnorderedListOutlined
+						className='text-button'
+						style={{ marginLeft: 5, background: isList ? '#c7c7c7' : '#e9e9e9' }}
+						onClick={
+							!isList ? (
+								() => addSchoolDescriptionList(id)
+							) : (
+								() => {
+									return
+								}
+							)
+						}
+					/>
+				</div>
+			</div>
 			<Checkbox
+				style={{ marginBottom: 15 }}
 				onChange={(e) =>
 					updateSchool({
 						id,
@@ -134,6 +157,24 @@ const School: React.FC<SchoolEditorProps> = ({
 					})}>
 				Hide Description Field
 			</Checkbox>
+			<ContentEditable
+				style={{ minHeight: 150, listStyleType: 'disc' }}
+				className='school-description ant-input'
+				ref={descriptionRef}
+				html={description}
+				onChange={(e) =>
+					updateSchool({
+						id,
+						schoolName,
+						degree,
+						date: {
+							startDate,
+							endDate
+						},
+						description: e.target.value,
+						hideDescription
+					})}
+			/>
 			<Button
 				type='dashed'
 				danger

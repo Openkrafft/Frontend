@@ -89,6 +89,8 @@ const editorLogic = kea({
 			sourceIndex,
 			destinationIndex
 		}),
+		addProjectDescriptionList: (id: string) => ({ id }),
+		removeProjectDescriptionList: (id: string) => ({ id }),
 		updateProject: ({ id, projectName, link, projectDescription }: Project) => ({
 			id,
 			projectName,
@@ -102,6 +104,8 @@ const editorLogic = kea({
 			sourceIndex,
 			destinationIndex
 		}),
+		addSchoolDescriptionList: (id: string) => ({ id }),
+		removeSchoolDescriptionList: (id: string) => ({ id }),
 		updateExperienceTitle: (experienceTitle: string) => ({ experienceTitle }),
 		addRole: (role: IRole) => ({ role }),
 		updateSchool: ({
@@ -134,8 +138,8 @@ const editorLogic = kea({
 			sourceIndex,
 			destinationIndex
 		}),
-		addDescriptionList: (id: string) => ({ id }),
-		removeDescriptionList: (id: string) => ({ id }),
+		addRoleDescriptionList: (id: string) => ({ id }),
+		removeRoleDescriptionList: (id: string) => ({ id }),
 		updateRole: ({
 			id,
 			jobTitle,
@@ -466,6 +470,39 @@ const editorLogic = kea({
 						projects: updatedProjects
 					}
 				},
+				addProjectDescriptionList: (state: Projects, { id }: { id: string }) => {
+					const currentProject = state.projects[id]
+					const updatedProject = {
+						...currentProject,
+						projectDescription: `<li>${currentProject.projectDescription}</li>`
+					}
+
+					return {
+						...state,
+						projects: {
+							...state.projects,
+							[id]: updatedProject
+						}
+					}
+				},
+				removeProjectDescriptionList: (state: Projects, { id }: { id: string }) => {
+					const currentProject = state.projects[id]
+					const updatedProject = {
+						...currentProject,
+						projectDescription: currentProject.projectDescription.replace(
+							/<li>|<\/li>/g,
+							''
+						)
+					}
+
+					return {
+						...state,
+						projects: {
+							...state.projects,
+							[id]: updatedProject
+						}
+					}
+				},
 				updateProject: (
 					state: Projects,
 					{ id, projectName, link, projectDescription }: Project
@@ -541,6 +578,42 @@ const editorLogic = kea({
 					return {
 						...state,
 						schools: updatedSchools
+					}
+				},
+				addSchoolDescriptionList: (
+					state: EducationSection,
+					{ id }: { id: string }
+				) => {
+					const currentSchool = state.schools[id]
+					const updatedSchool = {
+						...currentSchool,
+						description: `<li>${currentSchool.description}</li>`
+					}
+
+					return {
+						...state,
+						schools: {
+							...state.schools,
+							[id]: updatedSchool
+						}
+					}
+				},
+				removeSchoolDescriptionList: (
+					state: EducationSection,
+					{ id }: { id: string }
+				) => {
+					const currentSchool = state.schools[id]
+					const updatedSchool = {
+						...currentSchool,
+						description: currentSchool.description.replace(/<li>|<\/li>/g, '')
+					}
+
+					return {
+						...state,
+						schools: {
+							...state.schools,
+							[id]: updatedSchool
+						}
 					}
 				},
 				updateSchool: (
@@ -636,7 +709,7 @@ const editorLogic = kea({
 						roles: updatedRoles
 					}
 				},
-				addDescriptionList: (state: Experience, { id }: { id: string }) => {
+				addRoleDescriptionList: (state: Experience, { id }: { id: string }) => {
 					const currentRole = state.roles[id]
 					const updatedRole = {
 						...currentRole,
@@ -651,7 +724,7 @@ const editorLogic = kea({
 						}
 					}
 				},
-				removeDescriptionList: (state: Experience, { id }: { id: string }) => {
+				removeRoleDescriptionList: (state: Experience, { id }: { id: string }) => {
 					const currentRole = state.roles[id]
 					const updatedRole = {
 						...currentRole,

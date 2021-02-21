@@ -1,0 +1,19 @@
+.text-button-container {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.text-button {
+	border-radius: 2px;
+	margin-left: 5px;
+	padding: 6px;
+	cursor: pointer;
+	transition: .2s;
+}
+
+.text-button:hover {
+	background: #e0e0e0;
+}
