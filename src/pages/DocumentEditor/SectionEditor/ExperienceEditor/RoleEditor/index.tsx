@@ -31,12 +31,10 @@ const Role: React.FC<RoleEditorProps> = ({
 	const {
 		updateRole,
 		deleteRole,
-		addDescriptionList,
-		removeDescriptionList
+		addRoleDescriptionList,
+		removeRoleDescriptionList
 	} = useActions(editorLogic)
 	const isList = /<li>/.test(roleDescription)
-
-	console.log('desc', roleDescription)
 
 	return (
 		<Row style={{ marginBottom: 50 }}>
@@ -74,7 +72,7 @@ const Role: React.FC<RoleEditorProps> = ({
 							stillWorking,
 							roleDescription
 						})}
-					style={{ width: 540, marginBottom: 10 }}
+					style={{ width: 554, marginBottom: 10 }}
 				/>
 				<span>End Date:</span>
 				<DatePicker
@@ -91,7 +89,7 @@ const Role: React.FC<RoleEditorProps> = ({
 							roleDescription
 						})}
 					disabled={stillWorking}
-					style={{ width: 540, marginBottom: 10 }}
+					style={{ width: 554, marginBottom: 10 }}
 				/>
 				<Checkbox
 					style={{ marginBottom: 15 }}
@@ -134,10 +132,10 @@ const Role: React.FC<RoleEditorProps> = ({
 				<div>
 					<AlignLeftOutlined
 						className='text-button'
-						style={{ background: !isList ? '#d7d7d7' : '#e9e9e9' }}
+						style={{ background: !isList ? '#c7c7c7' : '#e9e9e9' }}
 						onClick={
 							isList ? (
-								() => removeDescriptionList(id)
+								() => removeRoleDescriptionList(id)
 							) : (
 								() => {
 									return
@@ -147,10 +145,10 @@ const Role: React.FC<RoleEditorProps> = ({
 					/>
 					<UnorderedListOutlined
 						className='text-button'
-						style={{ marginLeft: 5, background: isList ? '#d7d7d7' : '#e9e9e9' }}
+						style={{ marginLeft: 5, background: isList ? '#c7c7c7' : '#e9e9e9' }}
 						onClick={
 							!isList ? (
-								() => addDescriptionList(id)
+								() => addRoleDescriptionList(id)
 							) : (
 								() => {
 									return
