@@ -15,7 +15,6 @@ import {
 	EnvironmentOutlined,
 	SkypeOutlined,
 	PhoneOutlined,
-	EditOutlined,
 	DeleteOutlined,
 	LinkOutlined,
 	DragOutlined

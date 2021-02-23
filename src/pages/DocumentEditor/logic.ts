@@ -20,6 +20,10 @@ import { extractTextFromHTML } from '../../utils'
 const editorLogic = kea({
 	actions: {
 		addSection: (section: Section) => ({ section }),
+		swapSections: (sourceIndex: number, destinationIndex: number) => ({
+			sourceIndex,
+			destinationIndex
+		}),
 		deleteSection: (section: Section) => ({ section }),
 		updateHeader: ({ name, title, summary }: Header) => ({
 			name,
@@ -171,6 +175,16 @@ const editorLogic = kea({
 		sections: [
 			[ 'contactInfo' ],
 			{
+				swapSections: (
+					state: Section[],
+					{
+						sourceIndex,
+						destinationIndex
+					}: { sourceIndex: number; destinationIndex: number }
+				) => {
+					state.splice(destinationIndex, 0, state.splice(sourceIndex, 1)[0])
+					return [ ...state ]
+				},
 				addSection: (state: Section[], { section }: { section: Section }) => [
 					...state,
 					section

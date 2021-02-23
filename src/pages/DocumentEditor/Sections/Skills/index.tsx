@@ -11,11 +11,13 @@ import { SkillSection } from '../../types'
 interface SkillsProps {
 	skills: SkillSection
 	id: string
+	dragSectionProps: any
 }
 
 const Skills: React.FC<SkillsProps> = ({
 	id,
-	skills: { skillsTitle, skillsList }
+	skills: { skillsTitle, skillsList },
+	dragSectionProps
 }) => {
 	const listRef = useRef(null)
 	const {
@@ -30,6 +32,7 @@ const Skills: React.FC<SkillsProps> = ({
 		<Section
 			showSectionTitle
 			sectionTitle={skillsTitle}
+			onDragProps={dragSectionProps}
 			onChange={(e) => updateSkillsTitle(e.target.value, id)}
 			onDeleteClick={() => {
 				deleteSection(id)

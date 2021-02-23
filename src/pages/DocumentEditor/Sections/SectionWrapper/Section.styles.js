@@ -37,6 +37,8 @@ export const DeleteSection = Style(EditSection)``
 
 export const AddSection = Style(EditSection)``
 
+export const DragSection = Style(EditSection)``
+
 export const SectionTitle = Style.div`
     .section-title {
         margin-bottom: 15px;

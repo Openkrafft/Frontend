@@ -1,6 +1,11 @@
 import React, { useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import {
+	EditOutlined,
+	DeleteOutlined,
+	PlusOutlined,
+	DragOutlined
+} from '@ant-design/icons'
 
 import {
 	SectionContainer,
@@ -9,6 +14,7 @@ import {
 	EditSection,
 	DeleteSection,
 	AddSection,
+	DragSection,
 	SectionChildElements
 } from './Section.styles'
 
@@ -19,6 +25,8 @@ interface SectionProps {
 	showAddButton?: boolean
 	showEditButton?: boolean
 	showRemoveButton?: boolean
+	showDragButton?: boolean
+	onDragProps: any
 	onAddClick?: (e: React.MouseEvent) => void
 	onEditClick?: (e: React.MouseEvent) => void
 	onDeleteClick?: (e: React.MouseEvent) => void
@@ -31,7 +39,9 @@ const Section: React.FC<SectionProps> = ({
 	showEditButton = true,
 	showRemoveButton = true,
 	showSectionTitle = true,
+	showDragButton = true,
 	sectionTitle = '',
+	onDragProps,
 	onAddClick,
 	onEditClick,
 	onDeleteClick,
@@ -59,6 +69,11 @@ const Section: React.FC<SectionProps> = ({
 					<DeleteSection onClick={onDeleteClick}>
 						<DeleteOutlined />
 					</DeleteSection>
+				)}
+				{showDragButton && (
+					<DragSection {...onDragProps}>
+						<DragOutlined />
+					</DragSection>
 				)}
 			</SectionButtons>
 

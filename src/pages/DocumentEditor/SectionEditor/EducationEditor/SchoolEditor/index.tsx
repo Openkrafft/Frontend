@@ -158,6 +158,7 @@ const School: React.FC<SchoolEditorProps> = ({
 				Hide Description Field
 			</Checkbox>
 			<ContentEditable
+				disabled={hideDescription}
 				style={{ minHeight: 150, listStyleType: 'disc' }}
 				className='school-description ant-input'
 				ref={descriptionRef}
