@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { useValues, useActions } from 'kea'
+import { useActions } from 'kea'
 import editorLogic from '../../logic'
 import globalLogic from 'src/logic'
 import Section from '../SectionWrapper'
@@ -11,11 +11,13 @@ import { TextSection } from '../../types'
 interface TextSectionProps {
 	id: string
 	textSection: TextSection
+	dragSectionProps: any
 }
 
 const Text: React.FC<TextSectionProps> = ({
 	id,
-	textSection: { textTitle, textContent }
+	textSection: { textTitle, textContent },
+	dragSectionProps
 }) => {
 	const listRef = useRef(null)
 	const { toggleDrawer } = useActions(globalLogic)
@@ -29,6 +31,7 @@ const Text: React.FC<TextSectionProps> = ({
 			sectionTitle={textTitle}
 			onChange={(e) => updateTextTitle(e.target.value, id)}
 			onDeleteClick={() => removeTextSection(id)}
+			onDragProps={dragSectionProps}
 			onEditClick={() => toggleDrawer({ isVisible: true, section: id })}>
 			<TextContent>
 				<ContentEditable

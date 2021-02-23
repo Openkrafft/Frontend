@@ -10,11 +10,13 @@ import { ListContent } from './List.styles'
 interface ListProps {
 	list: ListSection
 	id: string
+	dragSectionProps: any
 }
 
 const List: React.FC<ListProps> = ({
 	id,
-	list: { listTitle, listContent }
+	list: { listTitle, listContent },
+	dragSectionProps
 }) => {
 	const listRef = useRef(null)
 	const {
@@ -29,6 +31,7 @@ const List: React.FC<ListProps> = ({
 		<Section
 			showSectionTitle
 			sectionTitle={listTitle}
+			onDragProps={dragSectionProps}
 			onChange={(e) => updateListTitle(e.target.value, id)}
 			onDeleteClick={() => {
 				removeListSection(id)

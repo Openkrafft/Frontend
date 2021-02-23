@@ -8,7 +8,11 @@ import { v4 as uuidv4 } from 'uuid'
 import globalLogic from 'src/logic'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
-const Projects: React.FC = () => {
+interface ProjectProps {
+	dragSectionProps: any
+}
+
+const Projects: React.FC<ProjectProps> = ({ dragSectionProps }) => {
 	const { toggleDrawer } = useActions(globalLogic)
 	const { projects: { projects, projectsTitle } } = useValues(editorLogic)
 	const { addProject, updateProjectsTitle, deleteSection, swapProjects } = useActions(
@@ -27,6 +31,7 @@ const Projects: React.FC = () => {
 			showSectionTitle
 			showAddButton
 			sectionTitle={projectsTitle}
+			onDragProps={dragSectionProps}
 			onChange={(e) => updateProjectsTitle(e.target.value)}
 			onDeleteClick={() => deleteSection('projects')}
 			onAddClick={() => addProject(newProject)}
