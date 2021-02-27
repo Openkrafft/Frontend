@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { useValues, useActions } from 'kea'
+import { useActions } from 'kea'
 import editorLogic from '../../logic'
 import Section from '../SectionWrapper'
 
@@ -11,13 +11,11 @@ import { SkillSection } from '../../types'
 interface SkillsProps {
 	skills: SkillSection
 	id: string
-	dragSectionProps: any
 }
 
 const Skills: React.FC<SkillsProps> = ({
 	id,
-	skills: { skillsTitle, skillsList },
-	dragSectionProps
+	skills: { skillsTitle, skillsList }
 }) => {
 	const listRef = useRef(null)
 	const {
@@ -32,7 +30,6 @@ const Skills: React.FC<SkillsProps> = ({
 		<Section
 			showSectionTitle
 			sectionTitle={skillsTitle}
-			onDragProps={dragSectionProps}
 			onChange={(e) => updateSkillsTitle(e.target.value, id)}
 			onDeleteClick={() => {
 				deleteSection(id)

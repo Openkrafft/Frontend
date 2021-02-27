@@ -8,11 +8,7 @@ import { School as SchoolType } from '../../types'
 import globalLogic from 'src/logic'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
-interface EducationProps {
-	dragSectionProps: any
-}
-
-const Education: React.FC<EducationProps> = ({ dragSectionProps }) => {
+const Education: React.FC = () => {
 	const { toggleDrawer } = useActions(globalLogic)
 	const { education: { educationTitle, schools } } = useValues(editorLogic)
 	const { addSchool, updateEducationTitle, deleteSection, swapSchools } = useActions(
@@ -35,7 +31,6 @@ const Education: React.FC<EducationProps> = ({ dragSectionProps }) => {
 			showSectionTitle
 			showAddButton
 			sectionTitle={educationTitle}
-			onDragProps={dragSectionProps}
 			onChange={(e) => updateEducationTitle(e.target.value)}
 			onDeleteClick={() => deleteSection('education')}
 			onAddClick={() => addSchool(newSchool)}

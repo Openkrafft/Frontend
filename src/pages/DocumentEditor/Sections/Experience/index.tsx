@@ -7,11 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 import globalLogic from 'src/logic'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
-interface ExperienceProps {
-	dragSectionProps: any
-}
-
-const Experience: React.FC<ExperienceProps> = ({ dragSectionProps }) => {
+const Experience: React.FC = () => {
 	const { toggleDrawer } = useActions(globalLogic)
 	const { experience: { roles, experienceTitle } } = useValues(editorLogic)
 	const { addRole, updateExperienceTitle, deleteSection, swapRoles } = useActions(
@@ -34,7 +30,6 @@ const Experience: React.FC<ExperienceProps> = ({ dragSectionProps }) => {
 			showSectionTitle
 			showAddButton
 			sectionTitle={experienceTitle}
-			onDragProps={dragSectionProps}
 			onChange={(e) => updateExperienceTitle(e.target.value)}
 			onAddClick={() => addRole(newRole)}
 			onDeleteClick={() => deleteSection('experience')}

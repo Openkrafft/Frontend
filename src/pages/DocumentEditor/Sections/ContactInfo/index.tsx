@@ -28,11 +28,7 @@ const iconsMap: any = {
 	WEBSITE: <LinkOutlined style={{ fontSize: 17, marginRight: 8 }} />
 }
 
-interface ContactInfoProps {
-	dragSectionProps: any
-}
-
-const ContactInfo: React.FC<ContactInfoProps> = ({ dragSectionProps }) => {
+const ContactInfo: React.FC = () => {
 	const { contacts } = useValues(editorLogic)
 	const { toggleDrawer } = useActions(globalLogic)
 	const { deleteSection } = useActions(editorLogic)
@@ -40,7 +36,6 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ dragSectionProps }) => {
 		<Section
 			showSectionTitle={false}
 			showEditButton
-			onDragProps={dragSectionProps}
 			onDeleteClick={() => deleteSection('contactInfo')}
 			onEditClick={() =>
 				toggleDrawer({ isVisible: true, section: 'contactInfo' })}>

@@ -11,13 +11,11 @@ import { TextSection } from '../../types'
 interface TextSectionProps {
 	id: string
 	textSection: TextSection
-	dragSectionProps: any
 }
 
 const Text: React.FC<TextSectionProps> = ({
 	id,
-	textSection: { textTitle, textContent },
-	dragSectionProps
+	textSection: { textTitle, textContent }
 }) => {
 	const listRef = useRef(null)
 	const { toggleDrawer } = useActions(globalLogic)
@@ -31,7 +29,6 @@ const Text: React.FC<TextSectionProps> = ({
 			sectionTitle={textTitle}
 			onChange={(e) => updateTextTitle(e.target.value, id)}
 			onDeleteClick={() => removeTextSection(id)}
-			onDragProps={dragSectionProps}
 			onEditClick={() => toggleDrawer({ isVisible: true, section: id })}>
 			<TextContent>
 				<ContentEditable
