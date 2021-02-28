@@ -1,6 +1,12 @@
 import React, { useRef, useState } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import {
+	EditOutlined,
+	DeleteOutlined,
+	PlusOutlined,
+	ArrowUpOutlined,
+	ArrowDownOutlined
+} from '@ant-design/icons'
 
 import {
 	SectionContainer,
@@ -9,7 +15,9 @@ import {
 	EditSection,
 	DeleteSection,
 	AddSection,
-	SectionChildElements
+	SectionChildElements,
+	MoveUpSection,
+	MoveDownSection
 } from './Section.styles'
 
 interface SectionProps {
@@ -19,6 +27,10 @@ interface SectionProps {
 	showAddButton?: boolean
 	showEditButton?: boolean
 	showRemoveButton?: boolean
+	showArrowUpButton?: boolean
+	showArrowDownButton?: boolean
+	onMoveUpSection?: (e: React.MouseEvent) => void
+	onMoveDownSection?: (e: React.MouseEvent) => void
 	onAddClick?: (e: React.MouseEvent) => void
 	onEditClick?: (e: React.MouseEvent) => void
 	onDeleteClick?: (e: React.MouseEvent) => void
@@ -31,7 +43,11 @@ const Section: React.FC<SectionProps> = ({
 	showEditButton = true,
 	showRemoveButton = true,
 	showSectionTitle = true,
+	showArrowDownButton = true,
+	showArrowUpButton = true,
 	sectionTitle = '',
+	onMoveDownSection,
+	onMoveUpSection,
 	onAddClick,
 	onEditClick,
 	onDeleteClick,
@@ -45,6 +61,16 @@ const Section: React.FC<SectionProps> = ({
 			onMouseOver={() => setEditVisibility(true)}
 			onMouseLeave={() => setEditVisibility(false)}>
 			<SectionButtons style={{ display: isEditVisible ? 'block' : 'none' }}>
+				{showArrowUpButton && (
+					<MoveUpSection onClick={onMoveUpSection}>
+						<ArrowUpOutlined />
+					</MoveUpSection>
+				)}
+				{showArrowDownButton && (
+					<MoveDownSection onClick={onMoveDownSection}>
+						<ArrowDownOutlined />
+					</MoveDownSection>
+				)}
 				{showAddButton && (
 					<AddSection onClick={onAddClick}>
 						<PlusOutlined />
