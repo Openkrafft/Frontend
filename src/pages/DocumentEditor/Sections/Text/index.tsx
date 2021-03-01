@@ -26,6 +26,7 @@ const Text: React.FC<TextSectionProps> = ({
 	return (
 		<Section
 			showSectionTitle
+			currentSectionId={id}
 			sectionTitle={textTitle}
 			onChange={(e) => updateTextTitle(e.target.value, id)}
 			onDeleteClick={() => removeTextSection(id)}

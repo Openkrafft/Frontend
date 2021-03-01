@@ -29,6 +29,7 @@ const Skills: React.FC<SkillsProps> = ({
 	return (
 		<Section
 			showSectionTitle
+			currentSectionId={id}
 			sectionTitle={skillsTitle}
 			onChange={(e) => updateSkillsTitle(e.target.value, id)}
 			onDeleteClick={() => {

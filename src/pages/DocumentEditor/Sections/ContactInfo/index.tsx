@@ -35,6 +35,7 @@ const ContactInfo: React.FC = () => {
 	return (
 		<Section
 			showSectionTitle={false}
+			currentSectionId='contactInfo'
 			showEditButton
 			onDeleteClick={() => deleteSection('contactInfo')}
 			onEditClick={() =>

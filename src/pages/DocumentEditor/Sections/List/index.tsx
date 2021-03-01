@@ -29,6 +29,7 @@ const List: React.FC<ListProps> = ({
 		<Section
 			showSectionTitle
 			sectionTitle={listTitle}
+			currentSectionId={id}
 			onChange={(e) => updateListTitle(e.target.value, id)}
 			onDeleteClick={() => {
 				removeListSection(id)

@@ -1,4 +1,6 @@
 import React, { useRef, useState } from 'react'
+import { useValues } from 'kea'
+import editorLogic from '../../logic'
 import ContentEditable from 'react-contenteditable'
 import {
 	EditOutlined,
@@ -23,6 +25,7 @@ import {
 interface SectionProps {
 	children: React.ReactNode
 	showSectionTitle?: boolean
+	currentSectionId?: string
 	sectionTitle?: string
 	showAddButton?: boolean
 	showEditButton?: boolean
@@ -39,6 +42,7 @@ interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({
 	children,
+	currentSectionId,
 	showAddButton = false,
 	showEditButton = true,
 	showRemoveButton = true,
@@ -55,18 +59,20 @@ const Section: React.FC<SectionProps> = ({
 }) => {
 	const titleRef = useRef(null)
 	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
+	const { sections } = useValues(editorLogic)
 
 	return (
 		<SectionContainer
 			onMouseOver={() => setEditVisibility(true)}
 			onMouseLeave={() => setEditVisibility(false)}>
 			<SectionButtons style={{ display: isEditVisible ? 'block' : 'none' }}>
-				{showArrowUpButton && (
+				{sections.length === 1 || sections[0] === currentSectionId ? null : (
 					<MoveUpSection onClick={onMoveUpSection}>
 						<ArrowUpOutlined />
 					</MoveUpSection>
 				)}
-				{showArrowDownButton && (
+				{sections.length === 1 ||
+				sections[sections.length - 1] === currentSectionId ? null : (
 					<MoveDownSection onClick={onMoveDownSection}>
 						<ArrowDownOutlined />
 					</MoveDownSection>
