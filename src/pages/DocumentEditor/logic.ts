@@ -331,7 +331,6 @@ const editorLogic = kea({
 					{ listContent, id }: { listContent: string; id: string }
 				) => {
 					let currentListSection = state[id]
-					console.log('currentListSection____', state, listContent, id)
 					const currentListContent = extractTextFromHTML(
 						currentListSection.listContent.replace(listContent, '')
 					)

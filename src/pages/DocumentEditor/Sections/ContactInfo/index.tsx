@@ -32,7 +32,6 @@ const ContactInfo: React.FC = () => {
 	const { contacts, sections } = useValues(editorLogic)
 	const { toggleDrawer } = useActions(globalLogic)
 	const { deleteSection, moveSectionDown } = useActions(editorLogic)
-	console.log(sections)
 	return (
 		<Section
 			showSectionTitle={false}
