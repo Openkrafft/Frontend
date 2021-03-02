@@ -29,6 +29,7 @@ const Experience: React.FC = () => {
 		<Section
 			showSectionTitle
 			showAddButton
+			currentSectionId='experience'
 			sectionTitle={experienceTitle}
 			onChange={(e) => updateExperienceTitle(e.target.value)}
 			onAddClick={() => addRole(newRole)}

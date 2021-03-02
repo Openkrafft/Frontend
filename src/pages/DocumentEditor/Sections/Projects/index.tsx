@@ -26,6 +26,7 @@ const Projects: React.FC = () => {
 		<Section
 			showSectionTitle
 			showAddButton
+			currentSectionId='projects'
 			sectionTitle={projectsTitle}
 			onChange={(e) => updateProjectsTitle(e.target.value)}
 			onDeleteClick={() => deleteSection('projects')}

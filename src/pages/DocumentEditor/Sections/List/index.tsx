@@ -21,7 +21,7 @@ const List: React.FC<ListProps> = ({
 		updateList,
 		updateListTitle,
 		removeListSection,
-		removeListContent
+		deleteSection
 	} = useActions(editorLogic)
 	const { toggleDrawer } = useActions(globalLogic)
 
@@ -29,10 +29,11 @@ const List: React.FC<ListProps> = ({
 		<Section
 			showSectionTitle
 			sectionTitle={listTitle}
+			currentSectionId={id}
 			onChange={(e) => updateListTitle(e.target.value, id)}
 			onDeleteClick={() => {
+				deleteSection(id)
 				removeListSection(id)
-				removeListContent(id)
 			}}
 			onEditClick={() => toggleDrawer({ isVisible: true, section: id })}>
 			<ListContent>

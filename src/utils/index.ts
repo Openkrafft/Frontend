@@ -10,3 +10,8 @@ export function capitalizeFirstLetter(str: string): string {
 export function extractTextFromUUID(uuid: string): string {
 	return uuid.split('-')[0]
 }
+
+export function swapArrayItems(arr: any[], index1: number, index2: number) {
+	;[ arr[index1], arr[index2] ] = [ arr[index2], arr[index1] ]
+	return arr
+}

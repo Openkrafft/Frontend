@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Input, Row, DatePicker, Space, Checkbox, Button } from 'antd'
+import React from 'react'
+import { Input, Row, Button } from 'antd'
 import { useActions } from 'kea'
 import editorLogic from 'src/pages/DocumentEditor/logic'
 

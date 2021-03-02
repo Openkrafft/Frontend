@@ -28,6 +28,7 @@ const Education: React.FC = () => {
 
 	return (
 		<Section
+			currentSectionId='education'
 			showSectionTitle
 			showAddButton
 			sectionTitle={educationTitle}

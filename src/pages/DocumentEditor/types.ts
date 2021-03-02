@@ -112,3 +112,5 @@ export interface TextSection {
 export interface TextSections {
 	[id: string]: TextSection
 }
+
+export type Direction = 'UP' | 'DOWN'

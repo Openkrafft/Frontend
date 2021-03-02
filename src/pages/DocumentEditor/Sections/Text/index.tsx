@@ -19,16 +19,23 @@ const Text: React.FC<TextSectionProps> = ({
 }) => {
 	const listRef = useRef(null)
 	const { toggleDrawer } = useActions(globalLogic)
-	const { removeTextSection, updateTextTitle, updateTextContent } = useActions(
-		editorLogic
-	)
+	const {
+		removeTextSection,
+		updateTextTitle,
+		updateTextContent,
+		deleteSection
+	} = useActions(editorLogic)
 
 	return (
 		<Section
 			showSectionTitle
+			currentSectionId={id}
 			sectionTitle={textTitle}
 			onChange={(e) => updateTextTitle(e.target.value, id)}
-			onDeleteClick={() => removeTextSection(id)}
+			onDeleteClick={() => {
+				deleteSection(id)
+				removeTextSection(id)
+			}}
 			onEditClick={() => toggleDrawer({ isVisible: true, section: id })}>
 			<TextContent>
 				<ContentEditable

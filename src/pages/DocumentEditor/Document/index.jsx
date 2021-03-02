@@ -22,6 +22,8 @@ const Document = () => {
 		editorLogic
 	)
 
+	console.log(list, skills)
+
 	const sections = {
 		contactInfo : <ContactInfo />,
 		experience  : <Experience />,

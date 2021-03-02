@@ -29,12 +29,14 @@ const iconsMap: any = {
 }
 
 const ContactInfo: React.FC = () => {
-	const { contacts } = useValues(editorLogic)
+	const { contacts, sections } = useValues(editorLogic)
 	const { toggleDrawer } = useActions(globalLogic)
-	const { deleteSection } = useActions(editorLogic)
+	const { deleteSection, moveSectionDown } = useActions(editorLogic)
+	console.log(sections)
 	return (
 		<Section
 			showSectionTitle={false}
+			currentSectionId='contactInfo'
 			showEditButton
 			onDeleteClick={() => deleteSection('contactInfo')}
 			onEditClick={() =>
