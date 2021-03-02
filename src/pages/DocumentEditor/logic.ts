@@ -15,11 +15,14 @@ import {
 	Projects
 } from './types'
 import _ from 'lodash'
+import move from 'array-move'
 import { extractTextFromHTML } from '../../utils'
 
 const editorLogic = kea({
 	actions: {
 		addSection: (section: Section) => ({ section }),
+		moveSectionUp: (section: Section) => ({ section }),
+		moveSectionDown: (section: Section) => ({ section }),
 		deleteSection: (section: Section) => ({ section }),
 		updateHeader: ({ name, title, summary }: Header) => ({
 			name,
@@ -60,9 +63,9 @@ const editorLogic = kea({
 			listContent,
 			sectionId
 		}),
-		removeListContent: (listContent: string, sectionId: string) => ({
+		removeListContent: (listContent: string, id: string) => ({
 			listContent,
-			sectionId
+			id
 		}),
 		updateList: (listContent: string, sectionId: string) => ({
 			listContent,
@@ -171,6 +174,20 @@ const editorLogic = kea({
 		sections: [
 			[ 'contactInfo' ],
 			{
+				moveSectionUp: (state: Section[], { section }: { section: Section }) => {
+					const currentSectionIndex = state.indexOf(section)
+					const prevItemIndex = currentSectionIndex - 1
+					let updatedSections = move(state, currentSectionIndex, prevItemIndex)
+
+					return updatedSections
+				},
+				moveSectionDown: (state: Section[], { section }: { section: Section }) => {
+					const currentSectionIndex = state.indexOf(section)
+					const nextItemIndex = currentSectionIndex + 1
+					let updatedSections = move(state, currentSectionIndex, nextItemIndex)
+
+					return updatedSections
+				},
 				addSection: (state: Section[], { section }: { section: Section }) => [
 					...state,
 					section
@@ -311,16 +328,17 @@ const editorLogic = kea({
 				},
 				removeListContent: (
 					state: ListSections,
-					{ listContent, sectionId }: { listContent: string; sectionId: number }
+					{ listContent, id }: { listContent: string; id: string }
 				) => {
-					let currentListSection = state[sectionId]
+					let currentListSection = state[id]
+					console.log('currentListSection____', state, listContent, id)
 					const currentListContent = extractTextFromHTML(
 						currentListSection.listContent.replace(listContent, '')
 					)
 					return {
 						...state,
-						[sectionId]: {
-							...state[sectionId],
+						[id]: {
+							...state[id],
 							listContent: `<li>${currentListContent.join('</li><li>')}</li>`
 						}
 					}
