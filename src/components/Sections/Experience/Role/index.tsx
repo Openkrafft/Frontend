@@ -1,6 +1,4 @@
 import React, { useState, useRef } from 'react'
-import { useActions } from 'kea'
-import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
 import { DeleteOutlined, DragOutlined } from '@ant-design/icons'
 
@@ -13,9 +11,10 @@ import {
 	DeleteRole,
 	DragRole
 } from './Role.styles'
+import { IRole } from 'src/pages/DocumentEditor/types'
 
 interface RoleProps {
-	id: number
+	id: string
 	jobTitle: string
 	companyName: string
 	date: {
@@ -26,6 +25,8 @@ interface RoleProps {
 	roleDescription: string
 	dragProps: any
 	isDragging: any
+	updateRole: (role: IRole) => void
+	deleteRole: (id: string) => void
 }
 
 const Role: React.FC<RoleProps> = ({
@@ -36,7 +37,9 @@ const Role: React.FC<RoleProps> = ({
 	stillWorking,
 	roleDescription,
 	dragProps,
-	isDragging
+	isDragging,
+	updateRole,
+	deleteRole
 }) => {
 	const roleTitleRef = useRef(null)
 	const companyNameRef = useRef(null)
@@ -45,7 +48,6 @@ const Role: React.FC<RoleProps> = ({
 	const endDateRef = useRef(null)
 
 	const { startDate, endDate } = date
-	const { updateRole, deleteRole } = useActions(editorLogic)
 	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
 
 	return (
@@ -86,6 +88,7 @@ const Role: React.FC<RoleProps> = ({
 							jobTitle: e.target.value,
 							companyName,
 							date,
+							stillWorking,
 							roleDescription
 						})}
 				/>
@@ -102,6 +105,7 @@ const Role: React.FC<RoleProps> = ({
 							jobTitle,
 							companyName: e.target.value,
 							date,
+							stillWorking,
 							roleDescription
 						})}
 				/>
@@ -118,6 +122,7 @@ const Role: React.FC<RoleProps> = ({
 							jobTitle,
 							companyName,
 							date: { startDate: e.target.value, endDate },
+							stillWorking,
 							roleDescription
 						})}
 				/>
@@ -133,6 +138,7 @@ const Role: React.FC<RoleProps> = ({
 							jobTitle,
 							companyName,
 							date: { startDate, endDate: e.target.value },
+							stillWorking,
 							roleDescription
 						})}
 				/>
@@ -149,6 +155,7 @@ const Role: React.FC<RoleProps> = ({
 							jobTitle,
 							companyName,
 							date,
+							stillWorking,
 							roleDescription: e.target.value
 						})}
 				/>

@@ -1,29 +1,31 @@
-import React, { useRef } from 'react'
+import React, { ChangeEvent, useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { useActions } from 'kea'
-import editorLogic from '../../logic'
 import globalLogic from 'src/logic'
 import Section from '../SectionWrapper'
-import { ListSection } from '../../types'
 import { ListContent } from './List.styles'
+import { ListSection } from 'src/pages/DocumentEditor/types'
 
 interface ListProps {
 	list: ListSection
 	id: string
+	updateList: (listContent: string, id: string) => void
+	updateListTitle: (e: ChangeEvent<HTMLDivElement>, id: string) => void
+	removeListSection: (id: string) => void
+	deleteSection: (id: string) => void
 }
 
 const List: React.FC<ListProps> = ({
 	id,
-	list: { listTitle, listContent }
+	list,
+	updateList,
+	updateListTitle,
+	removeListSection,
+	deleteSection
 }) => {
 	const listRef = useRef(null)
-	const {
-		updateList,
-		updateListTitle,
-		removeListSection,
-		deleteSection
-	} = useActions(editorLogic)
 	const { toggleDrawer } = useActions(globalLogic)
+	const { listTitle, listContent } = list
 
 	return (
 		<Section

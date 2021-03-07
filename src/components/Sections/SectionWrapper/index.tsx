@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useValues, useActions } from 'kea'
-import editorLogic from '../../logic'
+import editorLogic from '../../../pages/DocumentEditor/logic'
 import ContentEditable from 'react-contenteditable'
 import {
 	EditOutlined,

@@ -1,5 +1,5 @@
 export interface IRole {
-	id: number
+	id: string
 	jobTitle: string
 	companyName: string
 	date: {

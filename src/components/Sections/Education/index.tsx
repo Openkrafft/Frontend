@@ -1,19 +1,27 @@
-import React from 'react'
-import { useValues, useActions } from 'kea'
-import editorLogic from '../../logic'
+import React, { ChangeEvent } from 'react'
 import Section from '../SectionWrapper'
 import School from './School'
 import { v4 as uuidv4 } from 'uuid'
-import { School as SchoolType } from '../../types'
-import globalLogic from 'src/logic'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { EducationSection, School as SchoolType } from 'src/pages/DocumentEditor/types'
 
-const Education: React.FC = () => {
-	const { toggleDrawer } = useActions(globalLogic)
-	const { education: { educationTitle, schools } } = useValues(editorLogic)
-	const { addSchool, updateEducationTitle, deleteSection, swapSchools } = useActions(
-		editorLogic
-	)
+interface EducationProps {
+	toggleDrawer: ({ isVisible, section }: { isVisible: boolean, section: string }) => void
+	education: EducationSection
+	addSchool: (newSchool: SchoolType) => void
+	updateEducationTitle: (e: ChangeEvent<HTMLDivElement>) => void
+	deleteSection: (sectionName: string) => void
+	swapSchools: (srcIndex: number, destinationIndex: number) => void
+	updateSchool: (school: any) => void
+	deleteSchool: (id: string) => void
+}
+
+const Education: React.FC<EducationProps> = ({
+	education: { educationTitle, schools},
+	toggleDrawer,
+	addSchool, updateEducationTitle, deleteSection, swapSchools, updateSchool, deleteSchool
+}) => {
+
 	const newSchool: SchoolType = {
 		id: `school-${uuidv4()}`,
 		schoolName: '',
@@ -39,7 +47,7 @@ const Education: React.FC = () => {
 			<DragDropContext
 				onDragEnd={(param, _) => {
 					const srcIndex = param.source.index
-					const destinationIndex = param.destination?.index
+					const destinationIndex = param.destination?.index!
 					swapSchools(srcIndex, destinationIndex)
 				}}>
 				<Droppable droppableId={`droppable-education-section`}>
@@ -69,6 +77,8 @@ const Education: React.FC = () => {
 												{...school}
 												dragProps={{ ...provided.dragHandleProps }}
 												isDragging={snapshot.isDragging}
+												updateSchool={updateSchool}
+												deleteSchool={deleteSchool}
 											/>
 										</div>
 									)}

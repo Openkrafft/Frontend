@@ -1,6 +1,4 @@
 import React, { useRef, useState } from 'react'
-import { useActions } from 'kea'
-import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
 import { DeleteOutlined, DragOutlined } from '@ant-design/icons'
 
@@ -27,6 +25,8 @@ interface SchoolProps {
 	hideDescription: boolean
 	dragProps: any
 	isDragging: any
+	updateSchool: (school: any) => void
+	deleteSchool: (id: string) => void
 }
 
 const School: React.FC<SchoolProps> = ({
@@ -37,7 +37,9 @@ const School: React.FC<SchoolProps> = ({
 	description,
 	hideDescription,
 	dragProps,
-	isDragging
+	isDragging,
+	updateSchool,
+	deleteSchool
 }) => {
 	const schoolTitleRef = useRef(null)
 	const degreeRef = useRef(null)
@@ -46,7 +48,7 @@ const School: React.FC<SchoolProps> = ({
 	const endDateRef = useRef(null)
 
 	const { startDate, endDate } = date
-	const { updateSchool, deleteSchool } = useActions(editorLogic)
+
 	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
 
 	return (

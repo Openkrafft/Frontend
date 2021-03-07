@@ -1,19 +1,34 @@
-import React from 'react'
-import { useValues, useActions } from 'kea'
-import editorLogic from '../../logic'
+import React, { ChangeEvent } from 'react'
 import Section from '../SectionWrapper'
 import Project from './Project'
-import { Project as ProjectType } from '../../types'
+import { Project as ProjectType, Projects as ProjectsType } from '../../../pages/DocumentEditor/types'
 import { v4 as uuidv4 } from 'uuid'
-import globalLogic from 'src/logic'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
-const Projects: React.FC = () => {
-	const { toggleDrawer } = useActions(globalLogic)
-	const { projects: { projects, projectsTitle } } = useValues(editorLogic)
-	const { addProject, updateProjectsTitle, deleteSection, swapProjects } = useActions(
-		editorLogic
-	)
+interface ProjectsProps {
+	addProject: (project: ProjectType) => void
+	updateProjectsTitle: (e: ChangeEvent<HTMLDivElement>) => void
+	deleteSection: (sectionName: string) => void
+	swapProjects: (srcIndex: number, destinationIndex: number) => void
+	toggleDrawer: (
+		{ isVisible, section }: { isVisible: boolean; section: string }
+	) => void
+	updateProject: (project: ProjectType) => void
+	deleteProject: (id: string) => void
+	projects: ProjectsType
+}
+
+const Projects: React.FC<ProjectsProps> = ({
+	addProject,
+	updateProjectsTitle,
+	deleteSection,
+	swapProjects,
+	toggleDrawer,
+	updateProject,
+	deleteProject,
+	projects
+}) => {
+	const { projects: projectsList, projectsTitle } = projects
 
 	const newProject: ProjectType = {
 		id: `project-${uuidv4()}`,
@@ -35,7 +50,7 @@ const Projects: React.FC = () => {
 			<DragDropContext
 				onDragEnd={(param, _) => {
 					const srcIndex = param.source.index
-					const destinationIndex = param.destination?.index
+					const destinationIndex = param.destination?.index!
 					swapProjects(srcIndex, destinationIndex)
 				}}>
 				<Droppable droppableId={`droppable-projects-section`}>
@@ -54,7 +69,7 @@ const Projects: React.FC = () => {
 								)
 							}
 							{...provided.droppableProps}>
-							{Object.values(projects).map((project: any, i) => (
+							{Object.values(projectsList).map((project: any, i) => (
 								<Draggable
 									key={project.id}
 									draggableId={`draggable-project-${project.id}`}
@@ -65,6 +80,8 @@ const Projects: React.FC = () => {
 												{...project}
 												dragProps={{ ...provided.dragHandleProps }}
 												isDragging={snapshot.isDragging}
+												updateProject={updateProject}
+												deleteProject={deleteProject}
 											/>
 										</div>
 									)}
