@@ -1,7 +1,4 @@
 import React, { useState, useRef } from 'react'
-import { useValues, useActions } from 'kea'
-import editorLogic from '../../logic'
-import globalLogic from 'src/logic'
 import ContentEditable from 'react-contenteditable'
 
 import { EditOutlined } from '@ant-design/icons'
@@ -12,15 +9,28 @@ import {
 	Summary,
 	EditHeader
 } from './Header.styles'
+import { Header } from 'src/pages/DocumentEditor/types'
 
-const ResumeHeader: React.FC = () => {
+interface HeaderProps {
+	updateHeader: (
+		{ name, title, summary }: { name: string; title: string; summary: string }
+	) => void
+	header: Header
+	toggleDrawer: (
+		{ isVisible, section }: { isVisible: boolean; section: string }
+	) => void
+}
+
+const ResumeHeader: React.FC<HeaderProps> = ({
+	updateHeader,
+	header,
+	toggleDrawer
+}) => {
 	const nameRef = useRef(null)
 	const positionRef = useRef(null)
 	const summaryRef = useRef(null)
 
-	const { updateHeader } = useActions(editorLogic)
-	const { header: { name, title, summary } } = useValues(editorLogic)
-	const { toggleDrawer } = useActions(globalLogic)
+	const { name, title, summary } = header
 	const [ isVisible, setVisibility ] = useState<boolean>(false)
 
 	return (

@@ -1,6 +1,4 @@
 import React, { useState, useRef } from 'react'
-import { useActions } from 'kea'
-import editorLogic from '../../../logic'
 import ContentEditable from 'react-contenteditable'
 import { DeleteOutlined, DragOutlined } from '@ant-design/icons'
 
@@ -12,14 +10,17 @@ import {
 	DragProject,
 	DeleteProject
 } from './Project.styles'
+import { Project as ProjectType } from 'src/pages/DocumentEditor/types'
 
 interface ProjectProps {
-	id: number
+	id: string
 	projectName: string
 	link?: string
 	projectDescription: string
 	dragProps: any
 	isDragging: any
+	updateProject: (project: ProjectType) => void
+	deleteProject: (id: string) => void
 }
 
 const Project: React.FC<ProjectProps> = ({
@@ -28,13 +29,14 @@ const Project: React.FC<ProjectProps> = ({
 	link,
 	projectDescription,
 	dragProps,
-	isDragging
+	isDragging,
+	updateProject,
+	deleteProject
 }) => {
 	const projectNameRef = useRef(null)
 	const linkRef = useRef(null)
 	const projectDescriptionRef = useRef(null)
 
-	const { updateProject, deleteProject } = useActions(editorLogic)
 	const [ isEditVisible, setEditVisibility ] = useState<boolean>(false)
 
 	return (

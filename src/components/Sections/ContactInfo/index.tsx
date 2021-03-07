@@ -1,8 +1,5 @@
 import React from 'react'
-import { useValues, useActions } from 'kea'
-import editorLogic from '../../logic'
 import Section from '../SectionWrapper'
-import { Contact } from '../../types'
 import {
 	LinkedinOutlined,
 	GithubOutlined,
@@ -15,7 +12,7 @@ import {
 } from '@ant-design/icons'
 
 import { ContactContainer, ContactInformation } from './ContactInfo.styles'
-import globalLogic from 'src/logic'
+import { Contact } from 'src/pages/DocumentEditor/types'
 
 const iconsMap: any = {
 	EMAIL: <MailOutlined style={{ fontSize: 17, marginRight: 8 }} />,
@@ -28,10 +25,19 @@ const iconsMap: any = {
 	WEBSITE: <LinkOutlined style={{ fontSize: 17, marginRight: 8 }} />
 }
 
-const ContactInfo: React.FC = () => {
-	const { contacts, sections } = useValues(editorLogic)
-	const { toggleDrawer } = useActions(globalLogic)
-	const { deleteSection, moveSectionDown } = useActions(editorLogic)
+interface ContactInfoProps {
+	contacts: Contact[]
+	toggleDrawer: (
+		{ isVisible, section }: { isVisible: boolean; section: string }
+	) => void
+	deleteSection: (sectionName: string) => void
+}
+
+const ContactInfo: React.FC<ContactInfoProps> = ({
+	contacts,
+	toggleDrawer,
+	deleteSection
+}) => {
 	return (
 		<Section
 			showSectionTitle={false}

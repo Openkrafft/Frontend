@@ -1,30 +1,33 @@
-import React, { useRef } from 'react'
+import React, { useRef, ChangeEvent } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { useActions } from 'kea'
-import editorLogic from '../../logic'
 import globalLogic from 'src/logic'
 import Section from '../SectionWrapper'
 
 import { TextContent } from './Text.styles'
-import { TextSection } from '../../types'
+import { TextSection } from '../../../pages/DocumentEditor/types'
 
 interface TextSectionProps {
 	id: string
 	textSection: TextSection
+	toggleDrawer: (
+		{ isVisible, section }: { isVisible: boolean; section: string }
+	) => void
+	removeTextSection: (id: string) => void
+	updateTextTitle: (e: ChangeEvent<HTMLDivElement>, id: string) => void
+	updateTextContent: (skillsList: string, id: string) => void
+	deleteSection: (id: string) => void
 }
 
 const Text: React.FC<TextSectionProps> = ({
 	id,
-	textSection: { textTitle, textContent }
+	textSection: { textTitle, textContent },
+	toggleDrawer,
+	removeTextSection,
+	updateTextTitle,
+	updateTextContent,
+	deleteSection
 }) => {
 	const listRef = useRef(null)
-	const { toggleDrawer } = useActions(globalLogic)
-	const {
-		removeTextSection,
-		updateTextTitle,
-		updateTextContent,
-		deleteSection
-	} = useActions(editorLogic)
 
 	return (
 		<Section
